@@ -1,0 +1,38 @@
+---
+title: "Hickman Problem Set 8, Stats S520"
+author: "Keith Hickman"
+date: "October 20, 2017"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Problem 1. 
+$n = 100$
+
+$\overline{x} = 745.1$
+
+$s = 238.1$
+
+1.  Company says bulbs burn for 800 hours.  Formulate null and alternative hypotheses that are appropriate for this situation. Calculate a significance probability. Do these results warrant rejecting the null hypothesis at a significance level of ?? = 0.05?
+
+We are interested in determining whether the average light bulb life is sufficiently less than 800 hours, $H_1$, (no one would be complaining if the lightbulbs lasted longer than advertised). The null hypothesis is that the bulbs do last 800 hours. Additionally, we want to show the probability of obtaining a mean of ~745 hours on 100 samples if the true mean were 800. Here, we have set up the hypothesis to avoid a Type I error, which would be the expenditure of money for a study only to find out that the bulbs actually do last 800 hours.  We'll select a relatively low p-value of $.05$ to account for this. 
+
+Because the hypothesis specifies a direction, we will use a left-tailed test.   Here, we know the variance, so we'll use the Z-score:
+
+  $z = \frac{\overline{X} - \mu_0}{\frac{\sigma}{\sqrt{n}}}$
+
+  $\frac{745.1 - 800}{\frac{238.1}{\sqrt{100}}} = -2.306$
+
+We can then plug this value into our ``pnorm`` calculation: 
+```{r}
+pnorm(-2.3)
+```
+
+Since .011 is less than our selected $p$ value of .05, we can reject the null hypothesis.  
+
+

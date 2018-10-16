@@ -1,0 +1,101 @@
+---
+title: "Module 13 Notes"
+output: html_notebook
+---
+
+```{r}
+anorexia <- read.csv("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\StatsS520\\Module13\\anorexia.txt", sep = " ", header=TRUE)
+anorexia
+summary(anorexia)
+```
+
+Can't assume independence because the before and after treatments are on the same individual. We're interested in the differences:
+
+```{r}
+all.diffs <- anorexia$After - anorexia$Before
+summary(all.diffs)
+```
+
+
+Split the groups into three different groups: 
+```{r}
+cog.diff <- all.diffs[anorexia$Treatment=="Cognitive"]
+family.diff <- all.diffs[anorexia$Treatment=="Family"]
+std.diff <- all.diffs[anorexia$Treatment=="Standard"]
+
+boxplot(cog.diff, family.diff, std.diff)
+```
+
+
+We should compare the following characteristics across all three variables:
+- Standard deviation
+- normality 
+
+```{r}
+sd(cog.diff)
+sd(family.diff)
+sd(std.diff)
+```
+```{r}
+qqnorm(cog.diff)
+qqnorm(family.diff)
+qqnorm(std.diff)
+```
+
+There's some non-normal indications here.
+
+Now find the group means and the grand mean, and set the values of N we forgot earlier: 
+```{r}
+cogmean <- mean(cog.diff)
+familymean <- mean(family.diff)
+stdmean <- mean(std.diff)
+grandmean <- mean(all.diffs)
+ncog <- length(cog.diff)
+nfamily <- length(family.diff)
+nstd <- length(std.diff)
+N = length(anorexia$Treatment)
+```
+
+Find the total sum of squares, between sum of squares, and within sum of squares. And the degrees of freedom. And the mean squares
+```{r}
+SST <- sum((all.diffs - grandmean)^2)
+total.df = N - 1
+
+SSB <- ncog * (cogmean - grandmean)^2 + nfamily * (familymean - grandmean)^2 + nstd *
+(stdmean - grandmean)^2
+SSB
+between.df <- 2
+
+between.meansquare <- SSB/BS.df
+between.meansquare
+
+SSW <- ((ncog-1) * var(cog.diff)) + ((nstd - 1) * var(std.diff)) + ((nfamily - 1) * var(family.diff))
+SSW
+
+within.df <- N-3
+within.meansquare <- SSW/within.df
+within.meansquare
+```
+
+Now we obtain our F statistic: 
+```{r}
+F <- between.meansquare/within.meansquare
+F
+
+1-pf(F, between.df, within.df)
+
+```
+
+```{r}
+anova(lm(all.diffs ~ anorexia$Treatment))
+```
+
+
+#Problem 2
+Trosset 12.6B
+
+```{r}
+p2.data <- fread("http://mypage.iu.edu/~mtrosset/StatInfeR/Data/sickle.dat", sep = " ")
+p2.data
+```
+

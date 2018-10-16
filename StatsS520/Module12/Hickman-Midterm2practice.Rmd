@@ -1,0 +1,186 @@
+---
+title: "Hickman_Midterm2Practice"
+author: "Keith Hickman"
+date: "November 8, 2017"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Problem 1
+(a) What is the experimental unit? The wolf spider is the unit, the measurement is walking speed. 
+
+(b) Give null and alternative hypotheses for an appropriate two-tailed t-test. If the null
+hypothesis is true, what is the distribution of the t-statistic?
+The null $H_0: \mu = 0$
+
+The researchers are interested in showing that praying mantis excrement has an effect on the walking speed of spider, so that's our alternative hypothesis, $H_1: \mu \neq 0$, or that there will be some effect on the walking speed.  This leaves $H_0: \mu = 0$ at $\alpha = .05$ 
+
+The experiment does not specify a direction, e.g. faster or slower walking speeds, so we will use a two-tailed test here (also, the question specifies it). 
+
+(c) The P-value (significance probability) was calculated to be 0.053, so the null hypothesis was not rejected. From this and the other information given, is it correct to conclude that we are sure that wolf spiders' walking speed is not affected by praying mantis excrement? Explain.
+
+We can't reject the null for this experiment outright, but with a p-value so close to the significance level, rejecting the null and calling it a day isn't advisable either. Best solution is to gather more data. 
+
+#Problem 2
+We should use the binom probabilities. 
+
+```{r}
+p.hat <- 1844/3600
+upper_bound <- p.hat + 1.96 * (sqrt(p.hat*(1-p.hat)/3600))
+lower_bound <- p.hat - 1.96 * (sqrt(p.hat*(1-p.hat)/3600))
+upper_bound
+lower_bound
+```
+
+```{r}
+p.hat2 <- 828/1560
+upper_bound2 <- p.hat2 + 1.96 * (sqrt(p.hat*(1-p.hat)/1560))
+lower_bound2 <- p.hat2 - 1.96 * (sqrt(p.hat*(1-p.hat)/1560))
+upper_bound2
+lower_bound2
+```
+
+
+
+#Problem 3
+```{r, fig.height=3, fig.width=3}
+ozone <- read.csv("C:/Users/khickman/Desktop/Personal/IUMSDS/StatsS520/Module12/ozone.txt")
+ozone <- ozone[,1]
+summary(ozone)
+plot(density(ozone), xlab="Ozone Levels",main="Ozone Density Plot")
+```
+
+The variable is not normally distributed: it is right-skewed. 
+1) Calculate the p-value. 
+
+95% confidence interval: 
+```{r}
+mu <- mean(ozone)
+se <- sd(ozone)/sqrt(116)
+mu
+se
+upper <- mu + 1.96 * se
+upper
+
+lower <- mu - 1.96 * se
+lower
+```
+
+Notes: be careful about calculating standard error: standard error is the standard deviation of the sample divided by the square root of n. 
+To convert to standard units (z-score): (Xbar - mu) / (sd/sqrt(n)
+
+To find confidence interval in an iid variable: 
+
+mean(variable) +/- conf.interval * sd(variable)/sqrt(n)
+* for the confidence interval, assuming normality, plug in your conf 1-a conf interval to the qnorm function. 
+
+
+# Problem 4: 
+What parameters are we going for? 
+
+1) Mean/median or proportion or delta (mean_1 - mean_2)
+
+2) Can we assume normality? Verify normality via use of plots. 
+  - Calculate Z or T stats. 
+  - If n is large, use Z. 
+  - If proportion is parameter, use Z. 
+  - If mean/delta is param: 
+    - if you know SD, use Z
+    - if you don't know SD, use T stat. 
+    
+3) Make your inference
+  - Point estimation
+  - Set Estimation
+  - Hypothesis testing? 
+
+Test null hypothesis for $\mu \leq 16$. Find p-value, give conclusion. 
+$H_0: \mu \leq 16$, $H_1: \mu > 16$. We'll want to show that the average age of the breakfast club older than 16. 
+
+Find the t-statistic, then find the p-value.  We're using the t-stat vs. z because n is not large, and we don't know the true standard deviation. 
+We can assume normality, as there are no outliers and the values appear to be somewhat evenly distributed. 
+
+```{r}
+ages <- c(18, 13, 18, 16, 12, 16, 17, 17, 20, 18)
+x_bar <- mean(ages)
+x_bar  
+s <- sd(ages)
+s
+p <- (x_bar - 16)/(s/sqrt(length(ages)))
+p
+
+pnorm(p)
+```
+
+```{r, fig.height=3, fig.width=5}
+ages = c(18, 13, 18, 16, 12, 16, 17, 17, 20, 18)
+qqnorm(ages)
+sd(ages)
+```
+
+They're testing a couple of different ideas here: 
+For normal distributions, decide when/where to use t vs. z, then find p-value and conduct p-test. Assess hypothesis. Confidence interval/set estimation.
+For non-normal distributions, you can't assume the underlying distribution is normal. If it violates assumptions of normality, avoid standard normal and t-test methods. 
+
+## Problem 5
+Wave mooring problem. 
+
+**Chapter 10 - one-sample location problems. **
+
+List experimental unit, measurements taken/how many, how many populations, parameters of interest, and significance test. 
+
+Parameter of interest = mean, we do need a significance test. 
+
+Hypothesis will be about the difference in means (not the change). 
+
+(a) What test should we use?  
+We should use a one-sample, two-tailed t-test. 
+Two tailed t-test, as we don't know the population variance and n is not large so we can't rely on the CLT. 
+
+(b) Write down the null and alternative hypotheses for a one-sample t-test, and calculate an appropriate t-statistic.
+Here, the null hypothesis will state that there is no difference between the two methods. $H_0: \mu_0 - \mu_1 =0$ or $\Delta = 0$. 
+The alternative hypothesis is that there is a difference. I'll call this $\Delta \neq 0$, though I'm really interested in showing whether the significantly cheaper method is better. In this case, I don't know which method is cheaper. 
+Where $\mu_1$ = method1 and $\mu_2$ = method two, our t-statistic is as follows: 
+```{r}
+waves <- read.csv("c:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\StatsS520\\Module12\\waves.txt", header=FALSE)
+method1 <- waves[0:18,]
+method2 <- waves[19:36,]
+summary(method1)
+summary(method2)
+
+delta.hat <- mean(method2) - mean(method1)
+delta.hat
+
+var(method1)
+
+std.error <- sqrt(var(method1)/18 + var(method2)/18)
+std.error
+
+t.test(method2, method1, alt="greater")
+
+Tw <- delta.hat/std.error
+Tw
+
+df <- (var(method1)/18+var(method2)/18)^2 / ((var(method1)/18)^2/17 + (var(method2)/18)^2/17)
+df
+
+p.value <- 2 * pt(Tw, df)
+p.value
+
+conf_upper <- (mean(method2) - mean(method1)) + qt(.975, df)* std.error
+conf_lower <- (mean(method2) - mean(method1)) - qt(.975, df)* std.error
+conf_upper
+conf_lower
+```
+
+Our 95% confidence interval states that 95% of the time, our mean difference between method 2 and method 1 will fall between -2.302 and ~2.4
+
+
+
+
+
+

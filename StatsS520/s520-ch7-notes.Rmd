@@ -1,0 +1,516 @@
+---
+title: 'Chapter 7: Data and the plug-in principle'
+author: "S520"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache=TRUE)
+```
+
+These notes are written to accompany Trosset chapter 7.
+
+## Reading data into R
+
+### Data as a vector
+
+You can enter data manually using the `c()` function.
+
+```{r}
+die = c(1, 2, 3, 4, 5, 6)
+```
+
+However, with more than a few data points, you'll want to scan data in from other files you have lying around.
+
+Let's say you want to read in the file `nerve.txt` that's posted on Canvas. The file just consists of one set of numbers -- waiting times (in seconds) between successive pulses along a nerve fiber. We'd like to read this into R as one object. To do this, first save the file on to your own computer, somewhere where you can easily find it. For example, I keeping all the data files I use for teaching in a folder unimaginatively called "Teaching". I have a copy of `nerve.txt` in that folder. To read in the data as a vector called `nerve`, I firstly make sure that my working directory is `Teaching`. You can set your working directory in RStudio by going to the Session menu and selecting "Set Working Directory" (easiest), or by using the `setwd()` command. Then I run:
+
+```{r}
+nerve = scan("nerve.txt")
+head(nerve)
+```
+
+Note that you need plain quotes, not smart quotes. The `head()` function lists the first few elements of the data set. We check that these are what we expected.
+
+If you ever get lost, the `getwd()` function will tell your current working directory.
+
+```{r}
+getwd()
+```
+
+Finally, the `file.choose()` command can be used instead of specifying a filename. The line `nerve = scan(file.choose())` brings up a GUI window that lets you select the file location. However, this is bad practice because once you have more than a few data files, it's very easy to forget where they are, and if you have several version of the same file, it's impractical to keep track of which is which.
+
+### Data frames
+
+Most real data doesn't just contain one variable -- it may contain a few, or hundreds. If we have several variables measured for the same individuals, we can read in the data as a **data frame**. The file `singer.txt` contains the heights of 235 singers in the New York Choral Society. After downloading the file to your working directory, run:
+
+```{r}
+singer = read.table("singer.txt", header=TRUE)
+head(singer)
+```
+
+The data frame `singer` contains two variables: a numeric variable, `height`, and a non-numeric "factor" variable, `voice.part`. Suppose we only deal with the heights of the singers. We can isolate this variable:
+
+```{r}
+singer$height
+```
+
+If we only wanted the heights of the first ten singers in the data set:
+
+```{r}
+singer$height[1:10]
+```
+
+Finally, instead of a file location on our computer, we can also load in data directly from the Internet, if it's in a friendly form. One friendly data set is the catalog of 2014 earthquakes from the Southern California Earthquake Center:
+
+```{r}
+earthquake.data = read.table("https://service.scedc.caltech.edu/ftp/catalogs/SCEC_DC/2014.catalog")
+head(earthquake.data)
+```
+
+Looking at the documentation, the magnitude of the earthquake is given in the fifth column. Let's pull this out and give it a name. To select a column of a data frame:
+
+```{r}
+magnitude = earthquake.data[,5]
+```
+
+How many earthquakes are there in the catalog? Here are a couple of ways to find out:
+
+```{r}
+length(magnitude)
+nrow(earthquake.data)
+```
+
+If you have data stored in some proprietary format (e.g. Excel, SPSS, SAS) then you'll either need to convert to an easy-to-read format first (e.g. save an Excel spreadsheet as a .csv file) or install a package that lets R read data from those formats (at the time of writing, the `rio` package seems to be the one that works most generally.) To install a package that you haven't previously downloaded, make sure you're connected to the internet and then use the `install.packages()` function:
+
+```{r eval=FALSE}
+install.packages("rio")
+```
+
+Then to actually use the package you downloaded, run the `library()` function:
+
+```{r}
+library(rio)
+```
+
+For just about any package you care about, there's a ton of information on how to use it floating around the web. Google is your friend.
+
+## The plug-in principle
+
+*Trosset 7.1*
+
+Can we connect data to all that probability we learned, or was the first month of the course just a waste of time? Fortunately, there's an extremely simple solution: Assign a probability of $1/n$ to each observation in the data set, where $n$ is the number of observations in the data set. This results in a discrete distribution called the **empirical distribution**.
+
+Just like any other probability distribution, the empirical distribution can be describe by its CDF. Let's say we want to find the CDF of the earthquake magnitudes at $y = 1$. Since each earthquake has a probability of $1/n$ attached to it, the CDF at 1 is the number of earthquakes that have a magnitude of 1 or less, multiplied by $1/n$.
+
+```{r}
+sum(magnitude <= 1) / length(magnitude)
+```
+
+Well, we don't just want to know the CDF of the empirical distribution at magnitude 1, we want to know the CDF of the empirical distribution for *all* magnitudes. It's easiest to study the **empirical CDF**, or **ECDF**, as a graph:
+
+```{r}
+plot(ecdf(magnitude))
+```
+
+The empirical distribution is discrete, so it doesn't have a PDF. So to estimate the PDF, we need more than the plug-in principle. We'll come back to this later.
+
+### A quick aside on graphs
+
+If you're using R Markdown, graphs are easy, but then you have to learn R Markdown. Otherwise, you have a couple of options. In RStudio, you can just go to the graph window, click "Export", and save the displayed graph as a .png or .pdf file. For reproducibility reasons, it's better to use code to save your graph, as follows:
+
+```{r, eval=FALSE}
+plot(ecdf(magnitude))
+dev.print(pdf, "myGreatGraph.pdf")
+```
+
+This saves the graph as a PDF file called `myGreatGraph.pdf` in your working directory. You can then insert it into whatever documents you wish.
+
+### Plug-in mean and variance
+
+*Trosset 7.2*
+
+The **plug-in mean**, also called the **sample mean**, is the expected value of the empirical distribution. Since the empirical distribution is discrete and all data points have probability $1/n$, this just means we add up the numbers and divide by $n$. So it's the same as the mean you learned in grade school.
+
+```{r}
+n = length(magnitude)
+sum(magnitude) / n
+mean(magnitude)
+```
+
+Similarly, the **plug-in variance** is the variance of the empirical distribution. Remember our shortcut for finding variance. Find the expected value of $X^2$ (this would be `mean(x^2)`), find the square of the expected value (this would be `mean(x)^2`), then take the difference.
+
+```{r}
+mean(magnitude^2) - mean(magnitude)^2
+```
+
+Note that the `var()` function does *not* give you the plug-in variance -- it gives you something slightly different:
+
+```{r}
+var(magnitude)
+```
+
+The fifth significant figure of variance really isn't a big deal, so we ignore this issue for now. (But if this nags at you, skip ahead to pp. 201-202 of Trosset for the spoiler.)
+
+### If you estimated it, then you shoulda put a hat on it
+
+The usual way to notate something that's estimated from data is to put a hat on it. For the plug-in mean of the magnitudes, we write
+
+$$
+\hat{\mu}_n = 1.128
+$$
+
+For the plug-in variance, we write
+
+$$
+\hat{\sigma_n^2} = 0.38
+$$
+
+The subscript $n$ is a good reminder that we are dealig with something estimated from a finite amount of data. However I often omit it because I am lazy.
+
+## Plug-in quantiles
+
+*Trosset 7.3*
+
+We previously defined quantiles for continuous random variables, but the empirical distribution is discrete. We can amend our definition:
+
+> Let $X$ be a random variable and let $0 < \alpha < 1$. If $P(X < q) \le \alpha$ and $P(X > q) \le 1 - \alpha$, then $q$ is an $\alpha$-quantile of $X$.
+
+Let's focus on the $0.5$-quantile. Suppose our data is $1, 2, 3, 4, 5$. The plug-in principle says to assign a probability of $1/5$ to each of these. Is 3 the plug-in median? By the empirical distribution, $P(X < 3) = 0.4$ and $P(X > 3) = 0.4$, so yes, it is.
+
+What if our data is $1, 2, 3, 4, 5, 6$? Now note that all real numbers between 3 and 4 (inclusive) satisfy the definition. So technically, any $3 \le q \le 4$ is a $0.5$-quantile. Well, we want a unique value, so we'll declare the plug-in median to be the midpoint of all the $0.5$-quantiles -- that's 3.5. Does R agree?
+
+```{r}
+x1 = c(1, 2, 3, 4, 5)
+quantile(x1, 0.5)
+median(x1)
+x2 = c(1, 2, 3, 4, 5, 6)
+quantile(x2, 0.5)
+median(x2)
+```
+
+R agrees. Pretty much every statistician agrees.
+
+Unfortunately, statisticians stop agreeing when it comes to quartiles. For example, for the data set $(1, 2, 3, 4, 5, 6)$, our plug-in method gives 2 as the first quartile and 5 as the third quartile. What does R say?
+
+```{r}
+quantile(x2, c(0.25, 0.75))
+```
+
+To get R to agree with our plug-in estimates, we need to tell R to use "type 2" quantiles:
+
+```{r}
+quantile(x2, c(0.25, 0.75), type=2)
+```
+
+Whatever. The type of quantile you use is profoundly unimportant. If using different methods for finding sample quantiles gives you vastly different results, you should take a bigger sample. ("Take a bigger sample" will be a mantra for this course.)
+
+## The five-number summary and the boxplot
+
+We can get a good idea about what a set of data looks like by finding:
+
+- The minimum value
+- The first quartile
+- The median
+- The third quartile
+- The maximum
+
+The `summary()` function gives you this five-number summary, and throws in the sample mean as a bonus.
+
+```{r}
+summary(magnitude)
+```
+
+Instead of a list of numbers, it's easier to interpret the five-number summary by displaying it as a **boxplot**. We draw a "box" that starts from the first quartile and ends at the third quartile. Inside the box, draw a line to show the median. Then add "whiskers" from $q_1$ to the minimum, and from $q_3$ to the maximum. Or, if there are **outliers** that don't fit the pattern of the data, draw the whiskers to the furthest non-outliers non-outliers and mark the outliers with dots.
+
+```{r}
+x100 = 1:100 # Sequence of counting numbers
+boxplot(x100)
+x100a = c(1:100, 200)
+boxplot(x100a)
+boxplot(x100, x100a)
+```
+
+One boxplot by itself is kind of boring, but drawing boxplots side-by-side on the same scale lets us make comparisons easily.
+
+Let's try the boxplot out on the magnitude data.
+
+```{r}
+boxplot(magnitude)
+```
+
+This is pretty ugly -- if you're identifying hundreds of outliers, then maybe they're not really outliers. We can turn outlier detection off:
+
+```{r}
+boxplot(magnitude, range=0)
+```
+
+### Prettier graphs
+
+Most of R's plots have reasonable defaults for things like axis labels, but some don't, and most of the time you'll want to specify the axis labels yourself anyway. Within any plotting command, there are **arguments** that let you control how your plot looks -- just like the `range` argument we specified above. Here's an example:
+
+```{r}
+earthquake2013 = read.table("https://service.scedc.caltech.edu/ftp/catalogs/SCEC_DC/2013.catalog")
+magnitude2013 = earthquake2013[,5]
+boxplot(magnitude2013, magnitude, range=0,
+  main="Boxplots of SCEC earthquake catalog magnitudes",
+  ylab="Magnitude",
+  names=c(2013, 2014))
+```
+
+We can see that typical, earthquakes in the 2014 catalog were a little bigger than earthquakes in the 2013 catalog.
+
+### Try it yourself
+
+The file `richlist.txt` on Canvas contains the wealth (in billions of U.S. dollars) of the 100 richest people in the world. Load the data into R and:
+
+1. Graph the ECDF.
+2. Find the five-number summary.
+3. Draw a boxplot of the data.
+
+## What is a QQ plot?
+
+Let's simulate 50 observations
+from a normal distribution.
+
+```{r}
+x = rnorm(50, 0, 1)
+sort(x)
+```
+
+If we repeat this, we'll get different values.
+So what *should* the values be?
+One answer to this is to take fifty
+evenly-spaced quantiles
+from the standard normal distribution.
+
+```{r}
+qnorm(seq(0.01, 0.99, 0.02))
+plot(qnorm(seq(0.01, 0.99, 0.02)),
+     sort(x))
+```
+
+The scatterplot is well-approximated by the line
+$y = x$. What if we tried this with data simulated
+from a non-standard normal distribution?
+
+```{r}
+x1 = rnorm(50, mean=10, sd=20)
+plot(qnorm(seq(0.01, 0.99, 0.02)),
+     sort(x1))
+```
+
+While it's no longer the line $y = x$,
+it's still pretty close to a straight line.
+
+This kind of plot, which plots quantiles of the data against quantiles of the normal, is called a **normal probability plot** or a **normal quantile-quantile plot** or a **normal QQ plot**.
+Here's an easier way to generate it:
+
+```{r}
+qqnorm(x1)
+```
+
+Of course, this is just one set of random data.
+Let's repeat this a few times and see how similar the plots are. We'll use the `par()` function to set up a two-by-two grid of graphs.
+
+```{r}
+par(mfrow=c(2,2))
+
+qqnorm(x1)
+
+x2 = rnorm(50, mean=10, sd=20)
+qqnorm(x2)
+
+x3 = rnorm(50, mean=10, sd=20)
+qqnorm(x3)
+
+x4 = rnorm(50, mean=10, sd=20)
+qqnorm(x4)
+```
+
+In each case, we get pretty close to a straight line, allowing for a little wiggliness at the extremes. What if we try this for non-normal distributions?
+
+```{r}
+par(mfrow=c(2,2))
+
+y1 = runif(50)
+qqnorm(y1)
+
+y2 = 10 * runif(50) + 40
+qqnorm(y2)
+
+y3 = rexp(50)
+qqnorm(y3)
+
+y4 = rnorm(50) / rnorm(50)
+qqnorm(y4)
+par(mfrow=c(1,1)) # reset to single graph
+```
+
+In all of these QQ plots we see not just a little wiggliness but a systematic bend in the graphs. They're not normal.
+
+## Heights of the New York Choral Society
+
+Let's return to the choral singer heights.
+
+```{r}
+singer = read.table("singer.txt",
+  header=TRUE)
+head(singer)
+length(singer$height)
+summary(singer$height)
+var(singer$height)
+sd(singer$height)
+plot(ecdf(singer$height))
+boxplot(singer$height)
+```
+
+We quickly see the singers' heights have a reasonably symmetric distribution. But is it normal?
+
+```{r}
+qqnorm(singer$height)
+```
+
+Here we run into a problem. The data is rounded to the nearest inch, so the distribution is in practice discrete.
+This means the our normal QQ plot will look lumpy. We can get around this by "unrounding" the data: add some random
+noise to approximate what the data would have looked like without rounding.
+
+```{r}
+fakeheights = singer$height +
+  runif(235, min=-0.5, max=0.5)
+qqnorm(fakeheights)
+```
+
+The data doesn't quite look normal --
+there's a bit of an "S" shape in the QQ plot.
+
+So how does the data depart from normality? To get a rough idea of
+the PDF, we can draw a histogram
+of the data .
+
+```{r}
+hist(singer$height,
+     breaks=59.5:76.5)
+```
+
+The histogram is a perfectly OK graph to draw. However it does suffer from the limitation that it's "blocky," whereas the (unrounded) distribution of heights should be smooth. The **kernel density plot** can be thought of as a smooth version of the histogram. Here's the density plot for the singer heights:
+
+```{r}
+plot(density(singer$height))
+```
+
+Very roughly speaking, the density plot puts down a "kernel" (lump) of probability at each observed $x$, then adds the kernels together. See what happens if you build the density plot up kernel by kernel:
+
+```{r eval=FALSE}
+plot(density(singer$height[1:2]))
+plot(density(singer$height[1:3]))
+plot(density(singer$height[1:4]))
+plot(density(singer$height[1:5]))
+plot(density(singer$height[1:10]))
+plot(density(singer$height[1:30]))
+plot(density(singer$height[1:100]))
+plot(density(singer$height))
+```
+
+Read Trosset chapter 7.4 for the technical details (or take a nonparametric statistics course.)
+We'll just focus on interpreting the plots.
+It looks like the distribution of heights might have two peaks. Maybe these correspond to women and men? We can look at the two sets of heights separately:
+
+```{r}
+womens.heights = singer$height[1:128]
+mens.heights = singer$height[129:235]
+summary(womens.heights)
+summary(mens.heights)
+boxplot(womens.heights, mens.heights)
+
+hist(mens.heights, breaks=63.5:76.5)
+qqnorm(mens.heights+
+  runif(107, min=-0.5, max=0.5))
+```
+
+The men's heights look a lot closer to normal. You can check whether this is also true of the women's heights.
+
+Finally, we could look at the height split up across the eight vocal parts:
+
+```{r}
+boxplot(singer$height~singer$voice.part,
+  cex.axis=0.7, #makes x labels smaller
+  ylab="Height (in)")
+```
+
+
+
+## Stereogram fusion times
+
+A stereogram is an image seen in 3D
+by presenting different 2D images to
+the left and right eyes. An experiment
+was carried out to determine whether
+giving visual information changed the time required for people to see the 3D image. In the file `stereograms.txt`, group 1 was a control group (no visual information) and group 2 was a treatment group (visual information.)
+
+```{r}
+stereograms = read.table("stereograms.txt",
+  header=TRUE)
+head(stereograms)
+summary(stereograms)
+boxplot(stereograms$time)
+boxplot(stereograms$time~stereograms$group)
+```
+
+It's clear that the two sets of data have very different distributions.
+
+```{r}
+hist(stereograms$time[stereograms$group==1])
+hist(stereograms$time[stereograms$group==2])
+qqnorm(stereograms$time[stereograms$group==1])
+qqnorm(stereograms$time[stereograms$group==2])
+```
+
+Both distributions are skewed, and certainly not normal. With right-skewed positive data, a useful trick is to take (natural) logs: the logs are often much closer to having a normal distribution, and are possible to interpret (effects that are additive on the log scale are multiplicative on the original scale.)
+
+```{r}
+qqnorm(log(stereograms$time[stereograms$group==1]))
+qqnorm(log(stereograms$time[stereograms$group==2]))
+```
+
+We have **log transformed** the data. Other transformations like square roots can occasionally be useful, but they often do not have a straightforward interpretation. Trosset discusses transformations in his chapter 7.6, and his concluding advice is wise: "never transform unless there is a good reason to do so."
+
+
+
+## Case study: Are forearm lengths normally distributed?
+
+We reproduce the example of Trosset 7.5 here with minimal annotation. See Trosset for commentary.
+
+```{r}
+# Read in data
+forearms = scan("http://mypage.iu.edu/~mtrosset/StatInfeR/Data/forearms.dat")
+# Create three side-by-side plots
+par(mfrow=c(1,3))
+# To switch back to a single plot:
+# par(mfrow=c(1,1))
+# Draw boxplot, QQ plot, density plot
+boxplot(forearms, main="Box plot")
+qqnorm(forearms)
+plot(density(forearms), main="PDF estimate")
+# Write a function to calculate IQR/SD
+iqrsd = function(x){
+  x.mean = mean(x)
+  x.var = mean(x^2) - x.mean^2
+  q = as.vector(quantile(x, probs=c(.25, .75)))
+  x.iqr = q[2] - q[1]
+  return(x.iqr / sqrt(x.var))
+}
+# Compare QQ plot of data to QQ plots of simulated data
+par(mfrow=c(2,2))
+qqnorm(forearms, main="Actual data")
+n = length(forearms)
+qqnorm(rnorm(n), main="Simulated data")
+qqnorm(rnorm(n), main="Simulated data")
+qqnorm(rnorm(n), main="Simulated data")
+# IQR/SD of data
+iqrsd(forearms)
+# IQR/SD of ten simulated data set
+replicate(10, iqrsd(rnorm(n)))
+```
+

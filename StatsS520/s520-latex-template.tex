@@ -1,0 +1,56 @@
+\documentclass[11pt]{article}
+\usepackage{fullpage}
+
+\title{LaTeX notation template}
+\author{S520}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Permutations and combinations}
+
+\begin{eqnarray*}
+P(n, r) &=& \frac{n!}{(n - r)!} \\
+C(n, r) &=& \frac{n!}{r! (n - r)!}
+\end{eqnarray*}
+
+You can also use bracket notation for combinations:
+
+\[
+{{n}\choose{r}} = \frac{n!}{r! (n - r)!}
+\]
+
+\section*{Piecewise functions}
+
+\[
+f(x) = \left\{
+\begin{array}{cl}
+0.2 & 0 \le x < 3 \\
+0.1 & 3 \le x < 7 \\
+0 & \textrm{otherwise}
+\end{array}
+\right.
+\]
+
+\section*{Probabilities}
+
+I just write $P(X \le a)$, $P(X < a)$, $P(X \ge a)$, $P(X > a)$, $P(a < X < b)$.
+
+\section*{Expectation and variance}
+
+Expected value of discrete $X$:
+\[
+E(X) \equiv EX = \sum_x x \cdot f(x).
+\]
+Expected value of $X^2$:
+\[
+E(X^2) = \sum_x x^2 \cdot f(x).
+\]
+
+\end{document}
+
+
+
+

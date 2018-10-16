@@ -1,0 +1,383 @@
+---
+title: "Problem Set 11"
+author: "Keith Hickman"
+date: "November 19, 2017"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+#Problem 1
+Trosset 12.6 A. 
+
+
+```{r, fig.height=5, fig.width=5}
+library(data.table)
+p1.data <- read.csv("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\StatsS520\\Module13\\mydata.csv", header=FALSE)
+p1.data
+```
+
+## 1.1. 
+Use side-by-side boxplots and normal probability plots to investigate the ANOVA assumptions of normality and homoscedasticity. Do these assumptions seem plausible? Why or why not?
+
+Boxplots: 
+```{r, fig.height=4, fig.width=4}
+## Split the dataset into three different groups, A, B, and C: 
+p1.a <- subset(p1.data, V2=="A")
+p1.b <- subset(p1.data, V2=="B")
+p1.c <- subset(p1.data, V2=="C")
+
+#Checking variables to make sure they worked:
+#p1.a
+#p1.b
+#p1.c
+```
+
+Conditioned boxplot for our three variables: 
+```{r, fig.height=4, fig.width=5}
+boxplot(p1.a$V1, p1.b$V1, p1.c$V1, range=0, names=c("A", "B", "C"))
+```
+
+At first glance, there appears to be quite a bit of difference in the median and quantiles between these three variables. The boxplots are a bit misleading I believe, because the scale is relatively small. If we were to zoom out, the values would be much closer together.
+
+Normality plots for all variables:
+```{r, fig.height=4, fig.width=5}
+qqnorm(p1.a$V1)
+```
+
+There is definitely a non-normal appearance here, especially at the tails. I'm confident this is a non-normal variable
+
+```{r}
+qqnorm(p1.b$V1)
+```
+No straight line here, either, though this one looks a bit closer to normal. With a small sample size, however, we can't assume normality.
+
+```{r}
+qqnorm(p1.c$V1)
+```
+Most of the variable looks relatively normal, with the exception of one outlier. 
+
+Finally, let's compare the standard deviation of all three variables:
+```{r}
+sd(p1.a$V1)
+sd(p1.b$V1)
+sd(p1.c$V1)
+```
+
+All three variances are relatively close - within .06 or so.  However, relatively speaking, there's supporting evidence that the variables have different standard deviations and thus variances $sd^2$. The assumption of homoscedasticity is a bit strained here. Variable ``A`` has a greater variance than B and C by about .04. We could use a log or square root transform, but let's proceed under the assumption of both normality and homoscedasticity.
+
+##1.2
+Use ANOVA to test the null hypothesis that the three sites have the same mean salinity. Use a significance level of $\alpha$ = 0.05 and organize your calculations in an ANOVA table.
+
+Our null hypothesis is $H_0: \mu_1 = \mu_2 = \mu_3$ where mean of variables A, B, and C in our dataset are $\mu_1, \mu_2, \mu_3$ respectively. 
+
+Lengths: 
+```{r}
+N <- length(p1.a$V1) + length(p1.b$V1) + length(p1.c$V1)
+N
+
+a.n <- length(p1.a$V1)
+b.n <- length(p1.b$V1)
+c.n <- length(p1.c$V1)
+
+mean.a <- mean(p1.a$V1)
+mean.b <- mean(p1.b$V1)
+mean.c <- mean(p1.c$V1)
+```
+
+Total Sum of Squares, Grand Mean and Degrees of Freedom:
+```{r}
+allvar <- c(p1.a$V1, p1.b$V1, p1.c$V1)
+allvar
+allvar.df <- length(allvar) - 1
+allvar.df
+
+grandmean <- mean(allvar)
+
+SST <- sum((allvar - grandmean)^2)
+total.df = N - 1
+```
+
+Between Sum of Squares
+```{r}
+SSB <- a.n * (mean.a - grandmean)^2 + b.n * (mean.b - grandmean)^2 + c.n * (mean.c - grandmean)^2
+SSB
+between.df <- 2
+
+between.meansquare <- SSB/between.df
+between.meansquare
+```
+
+Within Sum of Squares
+```{r}
+SSW <- ((a.n-1) * var(p1.a$V1)) + ((b.n - 1) * var(p1.b$V1)) + ((c.n - 1) * var(p1.c$V1))
+SSW
+
+within.df <- N-3
+within.meansquare <- SSW/within.df
+within.meansquare
+```
+
+F-statistic: Between MS / Within MS
+```{r}
+F <- between.meansquare / within.meansquare
+F
+```
+
+P-value calculation using the F statistic, and two degrees of freedom: 
+```{r}
+1 - pf(F, between.df, within.df)
+```
+
+This is an extremely small p-value and well below our significance value $\alpha$ of .05, indicating that there is strong evidence against the null and in support of the alternative hypothesis. This makes sense from an initial analysis of our data using boxplots and ``qqnorm`` functions. This means that within our dataset, it appears that there is a difference in the average salinity across the different sample spaces. 
+
+Checking using the ANOVA function: 
+```{r}
+anova(lm(allvar ~ p1.data$V2))
+```
+Everything looks good! 
+
+#Problem 2
+Trosset 12.6 B.
+Read in the data:
+```{r}
+p2.data <- read.csv("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\StatsS520\\Module13\\sickle.csv", header=FALSE)
+p2.data
+```
+
+##2.1.
+Use side-by-side boxplots and normal probability plots to investigate the ANOVA assumptions of normality and homoscedasticity. Do these assumptions seem plausible? Why or why not?
+
+Here, our null hypothesis is $H_0: \mu_1 = \mu_2 = \mu_3$ where the expected value of the variables SS, ST, and SC are $\mu_1, \mu_2$, and $\mu_3$ respectively. 
+
+Let's create three variables first:
+
+```{r}
+
+ss <- subset(p2.data, V2=="SS")
+st <- subset(p2.data, V2=="ST")
+sc <- subset(p2.data, V2=="SC")
+
+##Check the variables:
+#ss
+#st
+#sc
+```
+
+Visually analyze the data with boxplots and qqnorm. 
+```{r, fig.height=4, fig.width=5}
+boxplot(ss$V1, st$V1, sc$V1, xlab="SS, ST, SC")
+```
+The medians of each variable are clearly different: SS is the lowest, SC is the highest. 
+Let's check normality on the groups:
+```{r, fig.height=3, fig.width=4}
+qqnorm(ss$V1)
+qqnorm(sc$V1)
+qqnorm(st$V1)
+```
+
+SS: A fairly straight line and no outliers. Normality assumption seems OK here.
+SC: Similar distribution to the ``SS`` variable. Some skewness at the right tail, but overall nothing that obviously would violate the normality assumption.
+ST: Again, no real concerns - we can assume normality on all three variables. 
+Additionally, we have $n = 41$. Since $n \geq 30$, we have a large enough sample to rely on the Central Limit Theorem. 
+
+
+Finally, let's check our assumptions of homoscedasticity with sd(): 
+```{r}
+sd(ss$V1)
+sd(sc$V1)
+sd(st$V1)
+```
+
+.84, .94 and 1.28. It's safe to say that the normality assumption is met, but we may have some concerns with an assumption that all three variances are the same. The differences are relatively minor considering the dataset, so we can proceed under the assumption of both normality and homoscedasticity. 
+
+
+##2.2
+Use ANOVA to test the null hypothesis that the three types of sickle cell disease have the same mean hemoglobin levels. Use a significance level of $\alpha$ = 0.05 and organize your calculations in an ANOVA table.
+
+```{r}
+mean.ss <- mean(ss$V1)
+mean.sc <- mean(sc$V1)
+mean.st <- mean(st$V1)
+
+n.ss = length(ss$V1)
+n.st = length(st$V1)
+n.sc = length(sc$V1)
+N = n.ss + n.st + n.sc
+```
+
+Total Sum of Squares, Grand mean and Degrees of Freedom:
+```{r, fig.width=7}
+all.s <- p2.data[,1]
+grand.mean <- mean(all.s)
+
+SST <- sum((all.s - grand.mean)^2)
+total.df = N - 1
+
+SSB <- n.ss * (mean.ss - grand.mean)^2 + n.st * (mean.st - grand.mean)^2 + n.sc * (mean.sc - grand.mean)^2
+SSB
+
+#Since we have three variables (SC, ST, and SS) we have 3-1 degrees of freedom.
+between.df <- 2
+
+between.meansquare <- SSB/between.df
+between.meansquare
+
+SSW <- ((n.ss-1) * var(ss$V1)) + ((n.st - 1) * var(st$V1)) + ((n.sc - 1) * var(sc$V1))
+SSW
+
+within.df <- N-3
+within.meansquare <- SSW/within.df
+within.meansquare
+```
+
+
+Now we can take the ratio of between mean square to within mean square for our F statistic, and use that to calculate our p-value. 
+```{r}
+F <- between.meansquare/within.meansquare
+F
+
+1-pf(F, between.df, within.df)
+```
+
+Again, an extremely small p-value suggests evidence against the null. Let's check the calculations are correct with ANOVA: 
+
+```{r}
+anova(lm(all.s ~ p2.data$V2))
+```
+
+The values look the same using Anova as with our calculations. Additionally, the p-value here is indicated as significantly small enough to reject the null with this data. With our n = 41, this seems like compelling evidence that there is a difference between the three means. 
+
+
+#Problem 3
+Trosset 12.6 G
+
+Read in the data: 
+```{r}
+p3.data <- read.csv("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\StatsS520\\Module13\\mice.csv")
+p3.data
+```
+
+##3.1
+Using the above data, investigate the ANOVA assumptions of normality and homoscedasticity. Do these assumptions seem plausible for these data? Why or why not?
+
+```{r}
+normal <- subset(p3.data, Class=="Normal")
+allox <- subset(p3.data, Class=="Alloxan")
+alloxins <- subset(p3.data, Class=="AlloxIns")
+## check that it worked: 
+##allox
+##alloxins
+```
+
+```{r, fig.height=4, fig.width=5}
+boxplot(normal$Value, allox$Value, alloxins$Value, range=0, names = c("Normal", "Alloxan", "Alloxan+Insulin"), ylab = "Serum Levels")
+```
+
+The variables have roughly the same median, and possibly the same variance, though the alloxan-diabetic mice treated with insulin had lower serum levels on average, and at the tails. 
+
+Let's check the qqnorm plots:
+```{r, fig.height=4, fig.width=5}
+qqnorm(normal$Value)
+qqnorm(allox$Value)
+qqnorm(alloxins$Value)
+
+```
+
+Some definitely non-normal characteristics in all three variables. 
+
+Let's check homoscedasticity: 
+
+```{r}
+sd(normal$Value)
+sd(allox$Value)
+sd(alloxins$Value)
+```
+
+The serum levels in the first two (Normal, Alloxan) are very close, but the third variable, Alloxan+Insulin has noticeably less variance. We can assume normality, but homoscedasticity might be a stretch. 
+
+##3.2.  
+Now transform the data by taking the square root of each measurement. Using the transformed data, investigate the ANOVA assumptions of normality and homoscedasticity. Do these assumptions seem plausible for the transformed data? Why or why not?
+
+```{r}
+norm.sq <- sqrt(normal$Value)
+allox.sq <- sqrt(allox$Value)
+alloxins.sq <- sqrt(alloxins$Value)
+```
+
+```{r, fig.height=4, fig.width=5}
+boxplot(norm.sq, allox.sq, alloxins.sq, range=0, 
+        names=c("Normal", "Alloxan", "Alloxan+Insulin"), 
+        xlab="Square Roots")
+```
+
+```{r, fig.height=4, fig.width=5}
+qqnorm(norm.sq)
+qqnorm(allox.sq)
+qqnorm(alloxins.sq)
+```
+
+These qqnorm plots indicate that the transformed variables are much closer to normal. There is one apparent outliers with the alloxan+insulin variable, but the normality assumption is safe here. 
+
+Let's investigate homoscedasticity:
+
+```{r}
+sd(norm.sq)
+sd(allox.sq)
+sd(alloxins.sq)
+```
+
+Again, our third variable is slightly lower, but the transformed variances are fairly close. We can proceed under the assumptions required by ANOVA. 
+
+##3.3 
+Using the transformed data, construct an ANOVA table. State the null and alternative hypotheses tested by this method. Should the null hypothesis be rejected at the $\alpha$ = 0.05 level?
+
+```{r}
+all.v <- c(norm.sq, allox.sq, alloxins.sq)
+all.v
+anova(lm(all.v ~ p3.data$Class))
+
+```
+
+The null hypothesis, $H_0: \mu_1 = \mu_2 = \mu_3$ where Normal, Alloxan, and Alloxan+Insulin are $\mu_1, \mu_2$, and $\mu_3$ respectively, cannot be rejected with a p-value of .16, which is well above our significance level of .05, so it appears that there is no difference between the means and the treatment does not have an effect. 
+
+##3.4. 
+Using the transformed data, construct suitable contrasts for investigating the research questions framed above. State appropriate null and alternative hypotheses and test them using the method of Bonferroni t-tests. At what significance level should these hypotheses be tested in order to maintain a family rate of Type I error equal to 5%? Which null hypotheses should be rejected?
+We would like to use Bonferroni tests to compare the following variables: 
+
+Normal : Alloxan
+
+Alloxan : alloxan + insulin
+
+Alloxan + insulin : normal
+
+At $\alpha$ = .05.  To find the appropriate significance level, we take $.05/ 3$, and will look for an average significance level of .0167 across three Welch's t-tests. 
+
+
+Normal : Alloxan
+$H_0: \mu_1 - \mu_2 = 0$ where the expected value of the antibody response of normal mice is $\mu_1$ and the expected response of the antibody response of mice with alloxan diabetes is $\mu_2$. We can conduct a Welch's t-test. The alternative hypothesis $H_1: \mu_1 - \mu_2 \neq 0$.  
+```{r}
+t.test(normal$Value, allox$Value)
+```
+
+Our p-value here is .93, which is not small, and we cannot therefore reject the null here. 
+
+Moving on to the second contrast, Alloxan : Alloxan-Insulin:
+$H_0: \mu_1 - \mu_2 = 0$ where the expected value of the antibody response of alloxan diabetic mice is $\mu_1$ and the expected response of the antibody response of mice with alloxan diabetes treated with insulin is $\mu_2$. We can conduct a Welch's t-test. The alternative hypothesis $H_1: \mu_1 - \mu_2 \neq 0$.
+
+```{r}
+t.test(allox$Value, alloxins$Value)
+```
+
+Again, the p-value is .10, which means we do not have enough evidence to reject the null for this contrast.  
+
+Finally, comparing the Alloxan-diabetic mice treated with insulin to the Normal mice (which is probably our main contrast of interest). Our null - $H_0: \mu_1 - \mu_2 = 0$ where the expected value of the antibody response of normal mice is $\mu_1$ and the expected response of the antibody response of mice with alloxan diabetes treated with insulin is $\mu_2$. We can conduct a Welch's t-test. The alternative hypothesis $H_1: \mu_1 - \mu_2 \neq 0$.
+
+```{r}
+t.test(normal$Value, alloxins$Value)
+```
+The smallest of the p-values yet, though still not small at .09.  We have failed to reject null hypotheses in all three contrasts. 

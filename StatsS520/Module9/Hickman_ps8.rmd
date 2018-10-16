@@ -1,0 +1,118 @@
+---
+title: "Hickman Problem Set 8, Stats S520"
+author: "Keith Hickman"
+date: "October 22, 2017"
+output:
+  word_document: default
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Problem 1
+$n = 100$
+
+$\overline{x} = 745.1$
+
+$s = 238.1$
+
+1.  Company says bulbs burn for 800 hours.  Formulate null and alternative hypotheses that are appropriate for this situation. Calculate a significance probability. Do these results warrant rejecting the null hypothesis at a significance level of ?? = 0.05?
+
+The null hypothesis is that the bulbs burn an average of 800 hours, or mathematically, $H_0: \mu_0 \geq 800$.  The alternative hypothesis is that the light bulbs life is sufficiently less than 800 hours, $H_1: \mu_1 < 800$, (no one would be complaining if the lightbulbs lasted longer than advertised). To being, we can obtain the test statistic by obtaining of ~745 on 100 samples if the true mean were 800. Here, we have set up the hypothesis to avoid a Type I error, which would be the expenditure of money for a study only to find out that the bulbs actually do last 800 hours.  We'll select a relatively low p-value of $.05$ to account for this. 
+
+Because the hypothesis specifies a direction, we will use a left-tailed test.   Here, we know the variance, so we'll use the Z-score:
+
+  $z = \frac{\overline{X} - \mu_0}{\frac{\sigma}{\sqrt{n}}}$
+
+  $\frac{745.1 - 800}{\frac{238.1}{\sqrt{100}}} = -2.306$
+
+We can then plug this value into our ``pnorm`` calculation: 
+```{r}
+pnorm(-2.306)
+```
+
+Since .011 is less than our selected $p$ value of .05, we can safely reject the null hypothesis and further investigate whether the study shows that the light bulbs actually last less than the advertised 800 hours. 
+
+
+#Problem 2 Trosset 9.6.7
+2. Formulate null and alternative hypotheses that are appropriate for this situation. Calculate a significance probability. Do these results warrant rejecting the null hypothesis at a significance level of $\alpha$ = 0.05?
+
+The null hypothesis is that normal, random change between the two tests given is equal to $0$ ($H_0$). Mathematically, $H_0: \mu_0 = 0$ The alternative hypothesis $H_1$ is that $\mu_1 \neq 0$.
+
+The significance probability can be calculated by using a test statistic $Z_n$ as follows: 
+
+```{r}
+z = (-.1833 - 0)/(5.18633/sqrt(60))
+z
+```
+
+To calculate the significance probability, we can plug our test statistic into the pnorm function. Because the hypothesis does not specify a direction, we want to perform a two-tailed test:
+```{r}
+2* (1- pnorm(abs(z)))
+```
+
+Here, the significance probability is significantly above our $\alpha$ of .05, thus we cannot reject the null hypothesis of $\mu_0 = 0$.  
+
+#Problem 3
+
+```{r}
+n = 61
+x_bar = 6.5
+s = 12
+mu0 = 0
+
+t_stat = (x_bar - mu0)/(s/sqrt(n))
+
+t_stat
+```
+
+A right-tailed test is appropriate, because the hypothesis specifies a direction; e.g. we're interested in testing whether reggae music improves the student's test scores.  The Null hypothesis $H_0: \mu_0 \leq 0$ says that the students scores will change on average less than or equal to zero points.  The Alternative Hypothesis $H_1: \mu_1 > 0$ states that the students scores will improve.  I would additionally specify a significance level a bit higher than $.05$ at $.10$ as the cost of a Type I error is hopefully minimal, and we can accept some higher degree of risk. 
+
+Plugging in our test statistic of 4.230552:
+
+```{r}
+1 - pnorm(t_stat)
+
+```
+
+This is an extremely small p-value, much lower than our significance level, which indicates that we can't reject the null hypothesis.  The study provides intially interesting evidence, though not entirely convincing with n = 61, as there could be several confounding factors, including the fact that the students took two math tests back-to-back and may have been more prepared for the second.
+
+
+#Problem 4
+a) Mathematical hypothesis for null and alternative hypotheses: 
+$H_0: \mu_0 \leq p$
+$H_1: \mu_1 > p$
+
+b) i is true.
+
+c) Assuming the null hypothesis is true, find the P value if a student guesses 13 out of 20 correct (with $p = .5$)
+```{r}
+1 - pbinom(12, 20, .5)
+```
+
+I don't think is compelling enough evidence to reject the null hypothesis - there is a roughly 13% probability that this result could be due to random guessing (null hypothesis)
+
+
+d) P value if a student guesses 19 out of 20 correct. 
+```{r}
+1 - pbinom(18, 20, .5)
+```
+ 
+There is almost certainly compelling enough evidence to reject the null hypothesis and conduct more tests, as the likelihood of guessing 19 of 20 correct assuming the null hypothesis is very unlikely. 
+
+
+#Problem 5
+What is the significance probability? Based on this sample, can we conclude that the proportion of airline passengers willing to pay for onboard Wi-Fi service is different than 10%? Use $\alpha$ = .05
+
+My null hypothesis is that 10% or fewer passengers will pay for onboard wifi, or $H_0: \mu_0 \leq .1$.  The Alternative hypothesis is that more than 10% of the passengers will pay for onboard wifi, or $H_1: \mu_1 > .1$
+
+The significance probability can be calculated as follows:
+
+```{r}
+2 * (1 - pbinom(19, 125, .1))
+```
+
+The significance probability of .04 is just below our significance level of .05, which means we have enough evidence to reject the null hypothesis.

@@ -1,0 +1,101 @@
+Read in the data, create our variables:
+```{r}
+install.packages("binom")
+library(binom)
+
+baseball.wins =
+  read.table("baseball-wins.txt",
+  header=TRUE)
+year1.wins = baseball.wins$year1.wins
+year2.wins = baseball.wins$year2.wins
+```
+
+Plot and examine the data for bivariate normality
+
+```{r}
+qqnorm(year1.wins)
+qqnorm(year2.wins)
+plot(year1.wins, year2.wins)
+## binorm.scatter(cbind(year1.wins,
+##  year2.wins))
+```
+
+
+Look at metrics for each dataset and the correlation:
+```{r}
+cor(year1.wins, year2.wins)
+mean(year1.wins)
+mean(year2.wins)
+sd(year1.wins)
+sd(year2.wins)
+```
+
+We know that $\overline{y} = \hat{\beta_1} + \hat{\beta_2} * \overline{x}$ where $\beta_1$ = the Y-intercept and $\beta_2$ = the slope of regression line. 
+
+We find $\beta_1$ by multiplying $r$ by the ratio of standard deviations of x and y
+
+How do we turn this into a regression model? 
+We want to model the value of Y given the value of X. 
+
+```{r}
+lm(year2.wins ~ year1.wins)
+# our intercept = 39.06 and slope ~ .51
+# The intercept says that if x was 0, what would Y be?  
+# If year 1 was 0, year 2 would be 39.  
+# Intercept is more of a convenience?  What happens in the middle of a dataset? 
+# We locate the regression line by putting it in the middle of the dataset. 
+# Average values of X and Y.  
+
+plot(year1.wins, year2.wins)
+abline(lm(year2.wins ~ year1.wins),
+  col="red")
+# The abline is used for point predictions. Based on a lower correlation, your predictions are probably going to have a significant error.  Don't just use year over year performance! The same principals hold, but you can't just use these things wholesale. 
+
+``` 
+
+
+We just want to make predictions based on our regression lines: 
+Let's plug in our numbers. 
+How do we predict the number of wins for 2016?  Let's look at 2015, put in the y-intercept 
+and the slope, and crank out some numbers: 
+
+```{r}
+# 2015: ARI had 79 wins
+# Prediction for 2016
+39.0826 + 0.5173 * 79
+
+# 2015: STL had 100 wins
+# Prediction for 2016
+39.0826 + 0.5173 * 100
+
+# 2015: PHI had 63 wins
+# Prediction for 2016
+39.0826 + 0.5173 * 63
+
+# Compare to y=x
+plot(year1.wins, year2.wins)
+abline(0, 1, col="blue")
+
+# Slope isn't 1 becase of
+# regression toward the mean
+# Estimated slope
+
+slope = cor(year1.wins, year2.wins) *
+  sd(year2.wins)/sd(year1.wins)
+
+# Estimated intercept
+mean(year2.wins) - slope *
+  mean(year1.wins)
+
+summary(lm(year2.wins ~ year1.wins))
+```
+
+```{r}
+# According to the bivariate normal,
+# what's the prob. a team that won
+# 63 games last year will win at least
+# 81 games this year?
+mean63 = 39.0826 + 0.5173 * 63
+rse = 9.77
+1 - pnorm(81, mean63, rse)
+```

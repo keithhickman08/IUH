@@ -1,0 +1,512 @@
+ps.1 <- predict(s.1, ts)
+cm.1 <- table(ps.1, ts$mpglevel) #confusion matrix
+100*(1-sum(diag(cm.1))/sum(cm.1))
+#Default cost of 1
+s1 <- svm(mpglevel ~ ., tr,C=1)
+ps1 <- predict(s1, ts)
+cm1 <- table(ps1, ts$mpglevel) #confusion matrix
+100*(1-sum(diag(cm1))/sum(cm1))
+##Cost of 5
+s5 <- svm(mpglevel ~ ., tr,C=5)
+ps5 <- predict(s5, ts)
+cm5 <- table(ps5, ts$mpglevel) #confusion matrix
+100*(1-sum(diag(cm5))/sum(cm5))
+## Cost of 10
+s10 <- svm(mpglevel ~ ., tr,C=10)
+ps10 <- predict(s10, ts)
+cm10 <- table(ps10, ts$mpglevel) #confusion matrix
+100*(1-sum(diag(cm10))/sum(cm10))
+## Cost of 100
+s100 <- svm(mpglevel ~ ., tr,C=100)
+ps100 <- predict(s100, ts)
+cm100 <- table(ps100, ts$mpglevel) #confusion matrix
+100*(1-sum(diag(cm100))/sum(cm100))
+#Low Cost, Gamma, and Degree
+svm1 <- svm(mpglevel ~ ., tr,C=1, degree=1, gamma=1)
+ps111 <- predict(svm1, ts)
+cm111 <- table(ps111, ts$mpglevel) #confusion matrix
+100*(1-sum(diag(cm111))/sum(cm111))
+#High Cost, Gamma, Degree
+s100 <- svm(mpglevel ~ ., tr,C=100, degree=3, gamma=10)
+ps100 <- predict(s100, ts)
+cm100 <- table(ps100, ts$mpglevel) #confusion matrix
+100*(1-sum(diag(cm100))/sum(cm100))
+library(ISLR)
+install.packages("dplyr")
+library(dplyr)
+View(Caravan)
+Caravan$Purchase <- as.character(ifelse(Caravan$Purchase=="Yes", 1, 0))
+train <- Caravan[1:1000,]
+test <- Caravan[1001:5822,]
+## View(Caravan)
+typeof(Caravan$Purchase)
+##install.packages("gbm")
+##library(gbm)
+model <- gbm(Purchase ~ ., data=test,n.trees = 1000,shrinkage = .01)
+install.packages("gbm")
+library(gbm)
+model <- gbm(Purchase ~ ., data=test,n.trees = 1000,shrinkage = .01)
+library(gbm)
+install.packages("gbm")
+library(gbm)
+model <- gbm(Purchase ~ ., data=test,n.trees = 1000,shrinkage = .01)
+summary(model, plotit = FALSE)
+## library(caret)
+library(e1071)
+model = train(mydata.training,'nb',trControl=trainControl(method='cv',number=10))
+model <- NaiveBayes(mydata.training$ ~ ., data = tr)
+install.packages(ISLR)
+library(ISLR)
+install.packages("dplyr")
+install.packages("dplyr")
+knitr::opts_chunk$set(echo = TRUE)
+install.packages("dplyr")
+install.packages("dplyr")
+library(dplyr)
+View(Caravan)
+##install.packages("gbm")
+library(gbm)
+knitr::opts_chunk$set(cache=TRUE)
+x2 = c(1, 2, 3, 4, 5, 6)
+quantile(x2, 0.5)
+median(x2)
+quantile(x2, 0.5)
+quantile(x2, c(0.25, 0.75))
+quantile(x2, c(0.25, 0.75), type=2)
+x100 = 1:100 # Sequence of counting numbers
+boxplot(x100)
+x100a = c(1:100, 200)
+boxplot(x100a)
+boxplot(magnitude)
+earthquake2013 = read.table("https://service.scedc.caltech.edu/ftp/catalogs/SCEC_DC/2013.catalog")
+magnitude2013 = earthquake2013[,5]
+boxplot(magnitude2013, magnitude, range=0,
+main="Boxplots of SCEC earthquake catalog magnitudes",
+ylab="Magnitude",
+names=c(2013, 2014))
+qnorm(seq(0.01, 0.99, 0.02))
+plot(qnorm(seq(0.01, 0.99, 0.02)),
+sort(x))
+x1 = rnorm(50, mean=10, sd=20)
+plot(qnorm(seq(0.01, 0.99, 0.02)),
+sort(x1))
+qqnorm(x1)
+par(mfrow=c(2,2))
+qqnorm(x1)
+x2 = rnorm(50, mean=10, sd=20)
+qqnorm(x2)
+x3 = rnorm(50, mean=10, sd=20)
+qqnorm(x3)
+x4 = rnorm(50, mean=10, sd=20)
+qqnorm(x4)
+par(mfrow=c(2,2))
+y1 = runif(50)
+qqnorm(y1)
+knitr::opts_chunk$set(cache=TRUE)
+uniform.means = replicate(1000, mean(runif(5)))
+qqnorm(uniform.means)
+sample.means.1 = replicate(1000, mean(sample(salaries.all, size=1)))
+qqnorm(sample.means.1)
+sample.means.10 = replicate(1000, mean(sample(salaries.all, size=10)))
+getwd()
+setwd("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\StatsS520\\Final"
+)
+getwd()
+knitr::opts_chunk$set(echo = TRUE)
+summary(singers)
+singers <- read.table("singer.txt", header=TRUE)
+summary(singers)
+bass = singers[voice.part == c("Bass 1", "Bass 2")]
+summary(singers)
+bass = singers[singers$voice.part == c("Bass 1", "Bass 2")]
+bass = singers$voice.part == c("Bass 1", "Bass 2")
+bass = which(singers$voice.part == c("Bass 1", "Bass 2"))
+bass = singers[voice.part == c("Bass 1", "Bass 2"))]
+bass = singers[voice.part == c("Bass 1", "Bass 2")]
+singers <- read.table("singer.txt", header=TRUE)
+summary(singers)
+bass = singers[voice.part == c("Bass 1", "Bass 2")]
+bass = singers$voice.part == c("Bass 1", "Bass 2")
+bass <- subset(singers, voice.part==c("Bass 1", "Bass 2"))
+bass <- subset(singers, voice.part==c("Bass 1")
+bass <- df[grep("^ Bass",rownames(singers)),]
+bass <- df[grep("^ Bass",rownames(singers))]
+bass
+bass <- subset(singers, voice.part=="Bass 1"
+bass
+bass <- subset(singers, voice.part=="Bass 1")
+bass
+bass <- subset(singers, voice.part=="^Bass")
+bass
+bass <- c(subset(singers, voice.part=="Bass 1"),subset(singers, voice.part=="Bass 2")
+bass
+bass <- c(subset(singers, voice.part=="Bass 1"),subset(singers, voice.part=="Bass 2"))
+bass
+bass <- df(c(subset(singers, voice.part=="Bass 1"),subset(singers, voice.part=="Bass 2")))
+bass <- as.data.frame(c(subset(singers, voice.part=="Bass 1"),subset(singers, voice.part=="Bass 2")))
+bass <- as.vector(c(subset(singers, voice.part=="Bass 1"),subset(singers, voice.part=="Bass 2")))
+bass
+knitr::opts_chunk$set(echo = TRUE)
+##Load Libraries, Data, and perform Initial Analysis
+library(data.table)
+library(DMwR2)
+library(ggplot2)
+library(dplyr)
+library(corrplot)
+library(forcats)
+train <- fread("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\AppliedDataMining\\HW6\\train.csv")
+test <- fread("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\AppliedDataMining\\HW6\\test.csv")
+summary(train)
+str(train)
+#OverallQual
+#GarageCars
+#MoSold
+#YrSold
+#GarageYrBlt
+#Fireplaces
+#BsmtFullBath
+#BsmtHalfBath
+#FullBath
+#HalfBath
+#BedroomAbvGr
+#KitchenAbvGr
+train$OverallQual <- as.factor(train$OverallQual)
+train$GarageCars <- as.factor(train$GarageCars)
+train$MoSold <- as.factor(train$MoSold)
+train$YrSold <- as.factor(train$YrSold)
+train$GarageYrBlt <- as.factor(train$GarageYrBlt)
+train$Fireplaces <- as.factor(train$Fireplaces)
+train$BsmtFullBath <- as.factor(train$BsmtFullBath)
+train$BsmtHalfBath <- as.factor(train$BsmtHalfBath)
+train$FullBath <- as.factor(train$FullBath)
+train$HalfBath <- as.factor(train$HalfBath)
+train$BedroomAbvGr <- as.factor(train$BedroomAbvGr)
+train$KitchenAbvGr <- as.factor(train$KitchenAbvGr)
+summary(train)
+cat_var <- names(train)[which(sapply(train, is.character))]
+cat_var
+numeric_var <- names(train)[which(sapply(train, is.numeric))]
+numeric_var
+str(numeric_var)
+Missing_indices <- sapply(train,function(x)sum(is.na(x)))
+Missing_Summary <- data.frame(index = names(train),Missing_Values=Missing_indices)
+Missing_Summary[Missing_Summary$Missing_Values > 0,]
+train$Alley[which(is.na(train$Alley))] <- "None"
+table(train$Alley)
+train$Alley[which(is.na(train$Alley))] <- "None"
+train$MoSold[which(is.na(train$MoSold))] <- "None"
+train$Fireplaces[which(is.na(train$Fireplaces))] <- "None"
+#Transform Garage Characteristics on homes that have no garages:
+train$GarageCond[which(is.na(train$GarageCond))] <- "None"
+train$GarageYrBlt[which(is.na(train$GarageYrBuilt))] <- "None"
+train$GarageType[which(is.na(train$GarageType))] <- "None"
+train$GarageCars[which(is.na(train$GarageCars))] <- "None"
+train$GarageFinish[which(is.na(train$GarageFinish))] <- "None"
+train$GarageQual[which(is.na(train$GarageQual))] <- "None"
+## Check to make sure it's still working as intended:
+table(train$GarageQual)
+train.numeric <- train[,.SD, .SDcols =numeric_var]
+train.numeric <- train.numeric
+summary(train.numeric)
+train.numeric[is.na(train.numeric$LotFrontage), "LotFrontage"] <- mean(train.numeric$LotFrontage, na.rm = TRUE)
+summary(train.numeric)
+## That worked, so we'll continue with the remaining variables.
+train.numeric[is.na(train.numeric$MasVnrArea), "MasVnrArea"] <- mean(train.numeric$MasVnrArea, na.rm = TRUE)
+train.numeric[is.na(train.numeric$BsmtFinSF2), "BsmtFinSF2"] <- mean(train.numeric$BsmtFinSF2, na.rm = TRUE)
+train.numeric[is.na(train.numeric$BsmtUnfSF), "BsmtUnfSF"] <- mean(train.numeric$BsmtUnfSF, na.rm = TRUE)
+train.numeric[is.na(train.numeric$TotalBsmtSF), "TotalBsmtSF"] <- mean(train.numeric$TotalBsmtSF, na.rm = TRUE)
+train.numeric[is.na(train.numeric$BsmtUnfSF), "BsmtUnfSF"] <- mean(train.numeric$BsmtUnfSF, na.rm = TRUE)
+train.numeric[is.na(train.numeric$GarageArea), "GarageArea"] <- mean(train.numeric$GarageArea, na.rm = TRUE)
+summary(train.numeric)
+pca.train <- prcomp(train.numeric)
+pca.train2 <- princomp(train.numeric)
+summary(pca.train2)
+loadings(pca.train2)
+lm.sales <- lm(SalePrice ~ ., data = train.numeric)
+summary(lm.sales)
+plot(lm.sales)
+library(rpart)
+rt.sales <- rpart(SalePrice ~ ., data=train)
+summary(rt.sales)
+bass <- singers[grep("^ Bass",rownames(singers))]
+bass
+bass(head)
+head(bass)
+bass <- singers[grep("^ Bass",rownames(singers))]
+bass <- singers[grep("^Bass",rownames(singers))]
+head(bass)
+summary(singers)
+bass <- singers[grep("Bass-",rownames(singers))]
+head(bass)
+bass <- singers[grep("Bass",rownames(singers))]
+head(bass)
+anova(lm(singers$voice.part ~ singers$height))
+bass <- singers[grep("Bass 1", singers$voice.part), ]
+bass
+bass <- singers[grep("Bass-", singers$voice.part), ]
+bass
+bass <- singers[grep("^ Bass", singers$voice.part), ]
+bass
+bass <- singers[grep("Bass*", singers$voice.part), ]
+bass
+soprano <- singers[grep("Soprano*", singers$voice.part), ]
+tenor <- singers[grep("Tenor*", singers$voice.part), ]
+alto <- singers[grep("Alto*", singers$voice.part), ]
+View(alto)
+grand.mean = mean(singers$height)
+n1 = length(bass)
+n2 = length(soprano)
+n3 = length(tenor)
+n4 = length(also)
+n4 = length(alto)
+grand.mean = mean(singers$height)
+mean1 = mean(bass)
+mean2 = mean(soprano)
+mean3 = mean(tenor)
+mean4 = mean(alto)
+SSB = n1*(mean1-grand.mean)^2 + n2*(mean2-grand.mean)^2 + n3*(mean3-grand.mean)^2 + n4(mean4-grand.mean)^2
+SSB = n1*(mean1-grand.mean)^2 + n2*(mean2-grand.mean)^2 + n3*(mean3-grand.mean)^2 + n4*(mean4-grand.mean)^2
+SSW = (n1-1)*var(bass) + (n2-1)*var(soprano) + (n3-1)*var(tenor) + (n4-1)*var(alto)
+SSW = (n1-1)*var(bass) + (n2-1)*var(soprano) + (n3-1)*var(tenor) + (n4-1)*var(alto)
+SST = SSB + SSW
+between.meansquare = SSB/2
+between.meansquare = SSB/2
+within.meansquare = SSW/235
+F = between.meansquare / within.meansquare
+within_df <- length(rownames(singers)) - 4
+between.meansquare = SSB/between_df
+within.meansquare = SSW/within_df
+between_df <- 3
+within_df <- length(rownames(singers)) - 4
+between.meansquare = SSB/between_df
+within.meansquare = SSW/within_df
+F = between.meansquare / within.meansquare
+1 - pf(F, df1=3, df2=234)
+anova(lm(singers$voice.part ~ singers$height))
+(SSB = n1*(mean1-grand.mean)^2 + n2*(mean2-grand.mean)^2 + n3*(mean3-grand.mean)^2 + n4*(mean4-grand.mean)^2)
+(SSW = (n1-1)*var(bass) + (n2-1)*var(soprano) + (n3-1)*var(tenor) + (n4-1)*var(alto))
+View(bass)
+View(soprano)
+View(alto)
+View(tenor)
+n1 = length(rownames(bass))
+n2 = length(rownames(soprano))
+n3 = length(rownames(tenor))
+n4 = length(rownames(alto))
+grand.mean = mean(singers$height)
+mean1 = mean(bass)
+mean1 = mean(bass$height)
+mean2 = mean(soprano$height)
+mean3 = mean(tenor$height)
+mean4 = mean(alto$height)
+(SSB = n1*(mean1-grand.mean)^2 + n2*(mean2-grand.mean)^2 + n3*(mean3-grand.mean)^2 + n4*(mean4-grand.mean)^2)
+(SSW = (n1-1)*var(bass) + (n2-1)*var(soprano) + (n3-1)*var(tenor) + (n4-1)*var(alto))
+(SST = SSB + SSW)
+bass <- singers[grep("Bass*", singers$voice.part), 1]
+bass <- singers[grep("Bass*", singers$voice.part), 1]
+soprano <- singers[grep("Soprano*", singers$voice.part), 1]
+tenor <- singers[grep("Tenor*", singers$voice.part), 1]
+alto <- singers[grep("Alto*", singers$voice.part), 1]
+n1 = length(bass)
+n2 = length(soprano)
+n3 = lengthrownames(tenor)
+n3 = length(tenor)
+n4 = length(alto)
+mean1 = mean(bass)
+mean2 = mean(soprano)
+mean3 = mean(tenor)
+mean4 = mean(alto)
+(SSB = n1*(mean1-grand.mean)^2 + n2*(mean2-grand.mean)^2 + n3*(mean3-grand.mean)^2 + n4*(mean4-grand.mean)^2)
+(SSW = (n1-1)*var(bass) + (n2-1)*var(soprano) + (n3-1)*var(tenor) + (n4-1)*var(alto))
+(SST = SSB + SSW)
+between_df <- 3
+within_df <- length(singers) - 4
+within_df <- length(singers$height) - 4
+between.meansquare = SSB/between_df
+within.meansquare = SSW/within_df
+F = between.meansquare / within.meansquare
+1 - pf(F, df1=3, df2=234)
+between_df <- 3
+within_df <- length(singers$height) - 4
+between.meansquare = SSB/between_df
+within.meansquare = SSW/within_df
+F = between.meansquare / within.meansquare
+(1 - pf(F, df1=3, df2=234))
+1 - pf(F, df1=3, df2=231)
+between_df <- 3
+within_df <- length(singers$height) - 4
+1 - pf(F, between_df, within_df)
+anova(lm(singers$voice.part ~ singers$height))
+(SST = SSB + SSW)
+(SSB = n1*(mean1-grand.mean)^2 + n2*(mean2-grand.mean)^2 + n3*(mean3-grand.mean)^2 + n4*(mean4-grand.mean)^2)
+(SSW = (n1-1)*var(bass) + (n2-1)*var(soprano) + (n3-1)*var(tenor) + (n4-1)*var(alto))
+(1 - pf(F, between_df, within_df))
+(F = between.meansquare / within.meansquare)
+(1 - pf(F, between_df, within_df))
+within.meansquare = SSW/within_df
+between.meansquare = SSB/between_df
+within.meansquare = SSW/within_df
+anova(lm(singers$height ~ singers$voice.part))
+anova(lm(singers$voice.part ~ singers$height))
+anova(lm(singers$height ~ singers$voice.part))
+sa.Delta.hat = mean(soprano) - mean(alto)
+tb.Delta.hat <- mean(tenor) - mean(bass)
+se1 <- sqrt(var(soprano)/n2 + var(alto)/n4)
+se2 <- sqrt(var(tenor)/n3 + var(bass)/n1)
+t.2 = tb.Delta.hat/se2
+t.1
+#Welch's t-stat
+t.1 = sa.Delta.hat/se1
+t.2 = tb.Delta.hat/se2
+t.1
+t.2
+nu1 = (var(soprano)/n2 + var(alto)/n4)^2/((var(soprano)/n2)^2/(n2-1) + (var(alto)/n4)^2/(n4-1))
+nu2 <- (var(tenor)/n3 + var(bass)/n1)^2/((var(tenor)/n3)^2/(n3-1) + (var(bass)/n1)^2/(n1-1))
+nu1
+P.value1 <- 2 * (1 - pt(abs(t.1), df = nu1))
+P.value2 <- 2 * (1 - pt(abs(t.2), df = nu2))
+P.value2
+P.value1
+P.value1
+P.value2
+highschool <- read.table("highschool.txt", header=TRUE)
+summary(highschool)
+highschool <- read.table("highschool.txt", header=FALSE)
+summary(highschool)
+college <- read.table("college.txt", header=FALSE)
+summary(college)
+plot(density(highschool, college))
+plot(density(highschool))
+summary(highschool)
+View(college)
+plot(ecdf(highschool))
+plot(density(highschool))
+plot(density(college))
+plot(density(highschool, college))
+plot(density(as.numeric(college)))
+highschool <- as.numeric(highschool)
+highschool <- as.vector(highschool)
+plot(density(highschool))
+highschool <- as.numeric(highschool)
+highschool <- as.integer(highschool)
+highschool <- as.numeric(unlist(highschool))
+plot(density(highschool))
+plot(density(highschool))
+plot(density(highschool))
+plot(density(highschool))
+college <- as.numeric(unlist(college))
+plot(density(college))
+lines(density(college), col="red")
+plot(density(highschool))
+lines(density(college), col="red")
+lines(density(college), col="red", main="PDF of High School/College Earnings")
+plot(density(highschool))
+lines(density(college), col="red", main="PDF of High School/College Earnings")
+plot(density(highschool))
+lines(density(college), col="red")
+n1 <- length(highschool)
+n2 <- length(college)
+p7nu <- (var(highschool)/n1 + var(college)/n2)^2/((var(highschool)/n1)^2/(n1-1)+(var(college)/n2)^2/n2-1)
+p7Delta.hat <- mean(college) - mean(highschool)
+mu2 <- mean(college)
+mu1 <- mean(highschool)
+p7Delta.hat <- mu1 - mu2
+se = sqrt(var(highschool)/n1 + var(college)/n2)
+p7se = sqrt(var(highschool)/n1 + var(college)/n2)
+p7.tstat <- p7Delta.hat/p7se
+(p7.tstat <- p7Delta.hat/p7se)
+P7.pvalue = 2*(1-pt(abs(p7.tstat), df=p7nu))
+P7.pvalue
+plot(density(log(highschool)))
+lines(density(log(college), col="red")
+plot(density(log(highschool)))
+lines(density(log(college)), col="red")
+plot(density(highschool))
+lines(density(college), col="red")
+qqnorm(highschool)
+plot(density(highschool))
+plot(density(highschool))
+lines(density(college), col="red")
+highschool <- log(highschool)
+college <- log(college)
+n1 <- length(highschool)
+n2 <- length(college)
+mu1 <- mean(highschool)
+mu2 <- mean(college)
+p7Delta.hat <- mu1 - mu2
+p7se = sqrt(var(highschool)/n1 + var(college)/n2)
+p7nu <- (var(highschool)/n1 + var(college)/n2)^2/((var(highschool)/n1)^2/(n1-1)+(var(college)/n2)^2/n2-1)
+(p7.tstat <- p7Delta.hat/p7se)
+P7.pvalue = 2*(1-pt(abs(p7.tstat), df=p7nu))
+P7.pvalue
+highschool <- read.table("highschool.txt", header=FALSE)
+highschool <- as.numeric(unlist(highschool))
+college <- read.table("college.txt", header=FALSE)
+college <- as.numeric(unlist(college))
+plot(density(highschool))
+lines(density(college), col="red")
+plot(density(highschool))
+lines(density(college), col="red")
+n1 <- length(highschool)
+n2 <- length(college)
+mu2 <- mean(college)
+p7Delta.hat <- mu1 - mu2
+p7se = sqrt(var(highschool)/n1 + var(college)/n2)
+p7nu <- (var(highschool)/n1 + var(college)/n2)^2/((var(highschool)/n1)^2/(n1-1)+(var(college)/n2)^2/n2-1)
+(p7.tstat <- p7Delta.hat/p7se)
+P7.pvalue = 2*(1-pt(abs(p7.tstat), df=p7nu))
+P7.pvalue
+P7.pvalue
+P7.pvalue = 2*(1-pt(abs(p7.tstat), df=p7nu))
+(p7.tstat <- p7Delta.hat/p7se)
+P7.pvalue = 2*(1-pt(abs(p7.tstat), df=p7nu))
+P7.pvalue
+highschool <- read.table("highschool.txt", header=FALSE)
+highschool <- read.table("highschool.txt", header=FALSE)
+highschool <- as.numeric(unlist(highschool))
+college <- read.table("college.txt", header=FALSE)
+college <- as.numeric(unlist(college))
+summary(highschool)
+summary(college)
+n1 <- length(highschool)
+n2 <- length(college)
+mu1 <- mean(highschool)
+mu2 <- mean(college)
+p7Delta.hat <- mu1 - mu2
+p7se = sqrt(var(highschool)/n1 + var(college)/n2)
+p7nu <- (var(highschool)/n1 + var(college)/n2)^2/((var(highschool)/n1)^2/(n1-1)+(var(college)/n2)^2/n2-1)
+(p7.tstat <- p7Delta.hat/p7se)
+P7.pvalue = 2*(1-pt(abs(p7.tstat), df=p7nu))
+P7.pvalue
+q <- qt(0.975, df=p7nu)
+lower <- p7Delta.hat - q*p7se
+upper <- p7Delta.hat + q*p7se
+lower
+upper
+p7nu <- (var(highschool)/n1 + var(college)/n2)^2/((var(highschool)/n1)^2/(n1-1)+(var(college)/n2)^2/n2-1)
+q <- qt(0.975, df=p7nu)
+lower <- p7Delta.hat - q*p7se
+upper <- p7Delta.hat + q*p7se
+lower
+upper
+p7nu <- (var(highschool)/n1 + var(college)/n2)^2/((var(highschool)/n1)^2/(n1-1)+(var(college)/n2)^2/n2-1)
+q <- qt(0.975, df=p7nu)
+lower <- p7Delta.hat - q*p7se
+upper <- p7Delta.hat + q*p7se
+c(lower, upper)
+t.test(college, highschool)
+P7.pvalue = 2*(pt(p7.tstat), df=p7nu)
+P7.pvalue = 2*(pt(p7.tstat)), df=p7nu)
+P7.pvalue = 2*(pt(p7.tstat) df=p7nu)
+P7.pvalue = 2*(pt(p7.tstat), df=p7nu)
+P7.pvalue = (pt(p7.tstat)
+P7.pvalue
+P7.pvalue = pt(p7.tstat)
+P7.pvalue
+P7.pvalue = 2 * pt(p7.tstat)
+P7.pvalue = (2 * pt(p7.tstat, df=p7nu)
+P7.pvalue = (2 * pt(p7.tstat, df=p7nu))
+(pt(t, 130-1))
+(t <- (98.5 - 98.6) / (.73 / sqrt(130)))
+pnorm(t)
+(pt(t, 130-1))

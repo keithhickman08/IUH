@@ -1,0 +1,220 @@
+---
+title: "Homework Problem Set 6"
+author: "Keith Hickman"
+date: "October 8, 2017"
+output:
+  word_document: default
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+## Problem 1 
+Trosset 7.7.1 a-e
+
+#a)  
+Graph the empirical cdf of x. *I copied the values from the text into a csv format*
+```{r}
+ex7 <- read.table("c:/Users/khickman/Desktop/Personal/IUMSDS/StatsS520/Module6/ex7.csv")
+data <- ex7
+summary(data)
+data <- data[,1]
+plot(ecdf(data), main = "Ecdf 7.7.1")
+```
+
+#b) 
+Compute the plug-in estimates of the population mean and variance.
+**Mean:** 
+```{r}
+lendata <- length(data)
+meandata <- mean(data)
+meandata
+```
+
+**Variance:**
+```{r}
+vardata <- (sum(data^2)/lendata) - meandata^2
+vardata
+```
+
+#(c) 
+Compute the plug-in estimates of the population median and interquartile range. 
+**Median:**
+```{r}
+median(data)
+```
+
+**IQR:**
+```{r}
+quant75 <- quantile(data,.75)
+
+quant25 <- quantile(data,.25)
+
+IQR <- quant75 - quant25
+IQR
+
+## or 
+iqr <- function(x) 
+  {q <- as.vector(quantile(x,probs=c(.25,.75))) 
+  return(q[2]-q[1])
+  } 
+iqr(data)
+ 
+```
+
+#(d) 
+Compute the ratio of the plug-in estimate of the interquartile range to the square root of the plug-in estimate of the variance. 
+```{r}
+sqrt(vardata)
+iqr(data) / (sqrt(vardata))
+```
+**The ratio of IQR to standard deviation is 1.43**
+
+#(e) 
+Construct a boxplot.
+```{r}
+boxplot(data, main = "Boxplot of 7.7.1")
+```
+
+##Problem 2
+**Trosset 7.7.2**
+```{r}
+pulse <- read.table("c:/Users/khickman/Desktop/Personal/IUMSDS/StatsS520/Module6/pulserates.csv")
+summary(pulse)
+pulse <- pulse[,1]
+```
+
+#a) 
+Empirical cdf of X:
+```{r}
+plot(ecdf(pulse), main = "Ecdf 7.7.2")
+```
+
+#(b) 
+Compute the plug-in estimates of the population mean and variance. 
+**Mean:**
+```{r}
+mpulse <- mean(pulse)
+mpulse
+```
+**Variance**
+```{r}
+varpulse <- mean(pulse^2) - mpulse^2
+varpulse
+```
+
+#(c) 
+Compute the plug-in estimates of the population median and interquartile range. 
+**Median**
+```{r}
+median(pulse)
+```
+**IQR**
+```{r}
+iqrpulse <- iqr(pulse)
+iqrpulse
+```
+
+
+#(d) 
+Compute the ratio of the plug-in estimate of the interquartile range to the square root of the plug-in estimate of the variance. 
+```{r}
+iqrpulse / sqrt(varpulse)
+```
+
+
+#(e) 
+Construct a boxplot. 
+```{r}
+boxplot(pulse, main = "Boxplot 7.7.2")
+```
+
+#(f) 
+Construct a normal probability plot. 
+```{r}
+qqnorm(pulse, main = "QQ Plot of 7.7.2")
+```
+
+
+#(g) 
+Construct a kernel density estimate. 
+```{r}
+plot(density(pulse), main = "Density Plot of 7.7.2")
+```
+
+
+#(h) 
+Do you think that this sample was drawn from a normal distribution? Why or why not?
+Yes, this sample was drawn from a normal distribution, as evidenced by the various plots and metrics.  First, the box plot shows no outlying values and normally distributed .25q, .75q, and median values.  Second, the Normal QQ plot is linear and does not diverge significantly at either extreme. The density plot is normal as well. Additionally, mean and median are very close together, and the IQR/standard deviation ratio is close to 1 indicating a centrally and normally dispersed distribution. 
+
+##Problem 3
+Trosset 7.7.4
+#(a) 
+Graph the empirical cdf of x. 
+
+```{r}
+ex74 <- read.table("c:/Users/khickman/Desktop/Personal/IUMSDS/StatsS520/Module6/sample7_4.csv")
+summary(ex74)
+ex74 <- ex74[,1]
+plot(ecdf(ex74), main = "Ecdf of 7.7.4")
+```
+#(b) 
+Calculate the plug-in estimates of the mean, the variance, the median, and the interquartile range. 
+
+**Mean**
+```{r}
+mean74 <- mean(ex74)
+mean74
+```
+
+**Median:**
+```{r}
+median(ex74)
+```
+
+**Variance**
+```{r}
+??var
+var74 <- var(ex74)
+var74
+```
+
+**IQR**
+```{r}
+iqr74 <- iqr(ex74)
+iqr74
+```
+
+
+#(c) 
+Take the square root of the plug-in estimate of the variance and compare it to the plug-in estimate of the interquartile range. Do you think that x was drawn from a normal distribution? Why or why not? 
+```{r}
+iqr74/(sqrt(var74))
+```
+
+#(d) 
+Use the qqnorm function to create a normal probability plot. Do you think that x was drawn from a normal distribution? Why or why not? 
+```{r}
+qqnorm(ex74,main = "QQ Plot for ex 7.7.4")
+```
+
+#(e) 
+Do you think this sample was drawn from a normal distribution? Why or why not? This sample was not drawn from normally distributed data, and is right-skewed. The strongest evidence of this is possibly examining the QQ plot, which shows the extreme values moving well away from the central values at either end of the distribution graph. Additionally, the boxplot (below) shows two outliers well above 2 standard deviations above the .75 quantile. Finally, the IQR/standard deviation ratio is below 1, which is a signal that that the data is more dispersed and could potentially be non-normal.
+
+
+
+```{r}
+log74 <- log(ex74)
+??qqnorm
+qqnorm(log74, main = "QQ Plot - Log of 7.7.4")
+```
+
+```{r}
+boxplot(ex74, main = "Boxplot 7.7.4")
+```
+

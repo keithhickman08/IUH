@@ -1,0 +1,512 @@
+ggtitle("The Histogram of territory distribution (Territory Code)") +
+xlab("") + ylab("")
+ggplot(territorydist,aes(x=standardized)) +
+geom_histogram(aes(y=standardized)) +
+geom_density(color="red") + geom_rug() +
+ggtitle("The Histogram of territory distribution (Territory Code)") +
+xlab("") + ylab("")
+ggplot(territorydist,aes(x=standardized)) +
+geom_histogram(aes(y=standardized), stat="identity") +
+geom_density(color="red") + geom_rug() +
+ggtitle("The Histogram of territory distribution (Territory Code)") +
+xlab("") + ylab("")
+ggplot(territorydist,aes(x=standardized)) +
+geom_histogram(aes(y=standardized), stat="identity") +
+geom_density(color="red") + geom_rug() +
+ggtitle("The Histogram of territory distribution (Territory Code)") +
+xlab("") + ylab("")
+summary(territorydist)
+territorydist <- na.omit(territorydist)
+boxplot(standardized ~ territorycode, territorydist, main="Invoiced Amount Distribution")
+summary(territorydist)
+bpRule <- function(x, const=1.5, positions=FALSE) {
+x <- x[!is.na(x)]
+qs <- quantile(x,probs = c(0.25,0.75))
+iqr <- qs[2]-qs[1]
+if (!positions) x[x < qs[1]-const*iqr | x > qs[2]+const*iqr]
+else which(x < qs[1]-const*iqr | x > qs[2]+const*iqr)
+}
+> bpRule(algae$a1)
+bpRule <- function(x, const=1.5, positions=FALSE) {
+x <- x[!is.na(x)]
+qs <- quantile(x,probs = c(0.25,0.75))
+iqr <- qs[2]-qs[1]
+if (!positions) x[x < qs[1]-const*iqr | x > qs[2]+const*iqr]
+else which(x < qs[1]-const*iqr | x > qs[2]+const*iqr)
+}
+bpRule(algae$a1)
+bpRule(territorydist$standardized)
+territorydist$standardized <- bprule(territorydist$standardized)
+territorydist$standardized <- bpRule(territorydist$standardized)
+bpRule(territorydist$standardized)
+territorydist$stdclaen <- bpRule(territorydist$standardized)
+territorystdclean <- bpRule(territorydist$standardized)
+hist(territorystdclean)
+territoryIVCclean <- bpRule(territorydist$netivcamt)
+hist(territoryIVCclean)
+hist(territoryIVCclean)
+subset(territorydist, netivcamt<12500)
+subset12k <- subset(territorydist, netivcamt<12500)
+hist(subset12k)
+subset12k <- subset(territorydist, netivcamt<12500)
+subset12k <- subset(territorydist, netivcamt<12500)
+hist(subset12k)
+subset12k <- subset(territorydist, netivcamt<12500)
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(DMwR2)
+summary(territorydist)
+territorydist <- na.omit(territorydist)
+boxplot(standardized ~ territorycode, territorydist, main="Invoiced Amount Distribution")
+bpRule <- function(x, const=1.5, positions=FALSE) {
+x <- x[!is.na(x)]
+qs <- quantile(x,probs = c(0.25,0.75))
+iqr <- qs[2]-qs[1]
+if (!positions) x[x < qs[1]-const*iqr | x > qs[2]+const*iqr]
+else which(x < qs[1]-const*iqr | x > qs[2]+const*iqr)
+}
+bpRule(territorydist$standardized)
+territorystdclean <- bpRule(territorydist$standardized)
+territoryIVCclean <- bpRule(territorydist$netivcamt)
+hist(territorystdclean)
+hist(territoryIVCclean)
+subset12k <- subset(territorydist, netivcamt<12500)
+##hist(subset12k)
+subset12k
+hist(subset12k$netivcamt)
+subset12k <- subset(territorydist, netivcamt<600)
+subset12k <- subset(territorydist, netivcamt<6000)
+subset12k
+hist(subset12k$netivcamt)
+subset12k <- subset(territorydist, netivcamt<1000)
+subset1k <- subset(territorydist, netivcamt<1000)
+subset1k
+hist(subset1k$netivcamt)
+boxplot(subset1k$netivcamt ~ territorycode,territorydist)
+boxplot(subset1k$netivcamt ~ territorycode,subset1k)
+subset1k <- subset(territorydist, netivcamt<2000)
+subset1k
+hist(subset1k$netivcamt)
+boxplot(subset1k$netivcamt ~ territorycode,subset1k)
+subset1k <- subset(territorydist, netivcamt<2000)
+subset1k
+bpRule <- function(x, const=1.5, positions=FALSE) {
+x <- x[!is.na(x)]
+qs <- quantile(x,probs = c(0.25,0.75))
+iqr <- qs[2]-qs[1]
+if (!positions) x[x < qs[1]-const*iqr | x > qs[2]+const*iqr]
+else which(x < qs[1]-const*iqr | x > qs[2]+const*iqr)
+}
+bpRule(territorydist$standardized)
+##territorystdclean <- bpRule(territorydist$standardized)
+##territoryIVCclean <- bpRule(territorydist$netivcamt)
+hist(territorystdclean)
+hist(territoryIVCclean, main="Distribution of Invoiced Values")
+boxplot(standardized ~ territorycode, territorydist, main="Distribution of Invoiced Amounts")
+territoryIVCclean <- bpRule(territorydist$netivcamt)
+boxplot(netivcamt ~ territorycode, territorydist, main="Distribution of Invoiced Amounts")
+summary(territorydist)
+library(data.table)
+territorydist <- read_csv("C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/territorydist.csv")
+knit_with_parameters('C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/territorydistribution.rmd')
+??read_csv
+library(readr)
+territorydist <- read_csv("C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/territorydist.csv")
+summary(territorydist)
+hist(territoryIVCclean, main="Distribution of Invoiced Values")
+subset1k <- subset(territorydist, netivcamt<2000)
+subset1k
+hist(subset1k$netivcamt)
+boxplot(subset1k$netivcamt ~ territorycode,subset1k)
+```{r}
+summary(territorydist)
+territorydist <- na.omit(territorydist)
+boxplot(netivcamt ~ territorycode, territorydist, main="Distribution of Invoiced Amounts")
+hist(territoryIVCclean, main="Distribution of Invoiced Values")
+subset1k <- subset(territorydist, netivcamt<2000)
+subset1k
+hist(subset1k$netivcamt)
+boxplot(subset1k$netivcamt ~ territorycode,subset1k)
+subset1k
+hist(subset1k$netivcamt)
+boxplot(subset1k$netivcamt ~ territorycode,subset1k)
+subset1k <- subset(territorydist, netivcamt<2000)
+subset1k
+hist(subset1k$netivcamt, main="Histogram of Net Invoiced Amounts < $2000")
+boxplot(subset1k$netivcamt ~ territorycode,subset1k, main="Boxplot by Territory")
+territoryIVCclean <- bpRule(territorydist$netivcamt)
+hist(territoryIVCclean, main="Distribution of Invoiced Values")
+subset1k <- subset(territorydist, netivcamt<2000)
+subset1k
+hist(subset1k$netivcamt, main="Histogram of Net Invoiced Amounts < $2000")
+boxplot(subset1k$netivcamt ~ territorycode,subset1k, main="Boxplot by Territory")
+territoryIVCclean <- bpRule(territorydist$netivcamt)
+qqplot(subset1k$netivcamt)
+qqplot(subset1k$netivcamt)
+territorydist <- read_csv("C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/territorydist.csv")
+territorytime <- read_csv("C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/territorydist.csv")
+territorydist <- read_csv("C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/territorydist.csv")
+summary(territorytime)
+territorytime <- read_csv("C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/territorytimeseries.csv")
+territorytime <- read_csv("C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/timeseries.csv")
+territorytime$Year <- as.factor(territorytime$Year)
+territorytime$Month <- as.factor(territorytime$Month)
+summary(territorytime)
+plot(territorytime$year)
+barplot(x=territorytime$year,y=territorytime$East)
+barplot(x=territorytime$Year,y=territorytime$East)
+barplot(x=territorytime$Year,y=territorytime$East)
+annual_east <- table(territorytime$East)
+ggplot(territorytime, aes(x=Year)) + geom_bar() + ggtitle("East Territory Annual Performance")
+ggplot(annual_east, aes(x=Year)) + geom_bar() + ggtitle("East Territory Annual Performance")
+barplot(annual_east)
+annual_east <- table(territorytime$East,x=Year,y=East)
+ggplot(territorytime$East, aes(x=Year)) + geom_bar() + ggtitle("East Territory Annual Performance")
+qplot(territorytime$East, aes(x=Year)) + geom_bar() + ggtitle("East Territory Annual Performance")
+hist(territorytime$East)
+hist(tt_east)
+tt_east <- territorytime$East
+tt_north <- territorytime$North
+tt_south <- territorytime$South
+tt_oot <- territorytime$OOT
+hist(tt_east)
+hist(tt_north)
+hist(tt_south)
+hist(tt_oot)
+hist(tt_east,bins=10)
+hist(tt_east,bins=8)
+hist(tt_east,bins=6)
+hist(tt_east,breaks=6)
+hist(tt_east,breaks=10)
+hist(tt_east,breaks=8)
+hist(tt_north, breaks=8, main = "8 Breaks North Territory")
+hist(tt_south, breaks=8,main="8 Breaks South Territory")
+hist(tt_oot,breaks=8, main="8 Break OOT")
+hist(tt_oot,breaks=8, main="8 Break OOT",xlab="Bins in $")
+hist(tt_east,breaks=8, main="8 Breaks East Territory",xlab="Bins in $")
+hist(tt_north, breaks=8, main = "8 Breaks North Territory",xlab="Bins in $")
+hist(tt_south, breaks=8,main="8 Breaks South Territory",xlab="Bins in $")
+hist(tt_oot,breaks=8, main="8 Break OOT",xlab="Bins in $")
+east_table <- territorytime[,0:2]
+line(east_table$Year,east_table$East)
+east_table <- territorytime[,1:3]
+line(east_table$Year,east_table$East)
+lineplot(east_table$Year,east_table$East)
+barplot(east_table$Year,east_table$East)
+scatterplot(east_table$Year,east_table$East)
+scatter(east_table$Year,east_table$East)
+plot(east_table)
+barplot(east_table)
+barplot(east_table$East)
+barplot(east_table$East,east_table$Year)
+barplot(east_table$East
+barplot(east_table$East)
+barplot(east_table$East)
+barplot(east_table$East,xlab=east_table$Year)
+barplot(east_table$East, names=Year)
+barplot(east_table$East, names.arg=Year)
+barplot(east_table$East, names.arg=east_table$Year)
+?barplot
+north_timebar <- territorytime[,c(1,2,4)]
+south_timebar <- territorytime[,c(1,2,5)]
+oot_timebar <- territorytime[,c(1,2,6)]
+barplot(east_timebar$East, names.arg=east_timebar$Year,xlab="Year")
+east_timebar <- territorytime[,1:3]
+east_timebar <- territorytime[,1:3]
+north_timebar <- territorytime[,c(1,2,4)]
+south_timebar <- territorytime[,c(1,2,5)]
+oot_timebar <- territorytime[,c(1,2,6)]
+barplot(east_timebar$East, names.arg=east_timebar$Year,xlab="Year")
+barplot(north_timebar$North, names.arg=north_timebar$Year,xlab="Year")
+barplot(south_timebar$South, names.arg=south_timebar$Year,xlab="Year")
+barplot(oot_timebar$OOT, names.arg=oot_timebar$Year,xlab="Year")
+barplot(east_timebar$East, names.arg=east_timebar$Year,xlab="Year")
+territoryIVCclean <- bpRule(territorydist$netivcamt)
+hist(territoryIVCclean, main="Distribution of Invoiced Values")
+r
+hist(territoryIVCclean, main="Distribution of Invoiced Values")
+territoryIVCclean <- bpRule(territorydist$netivcamt)
+boxplot(tt_east)
+mean(tt_east)
+mean(tt_north)
+mean(tt_south)
+mean(tt_oot)
+mean(tt_east)
+mean(tt_north)
+mean(tt_south)
+mean(tt_oot)
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(DMwR2)
+library(data.table)
+library(readr)
+territorydist <- read_csv("C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/territorydist.csv")
+summary(territorydist)
+territorydist <- na.omit(territorydist)
+boxplot(netivcamt ~ territorycode, territorydist, main="Distribution of Invoiced Amounts")
+subset1k <- subset(territorydist, netivcamt<2000)
+subset1k
+hist(subset1k$netivcamt, main="Histogram of Net Invoiced Amounts < $2000")
+boxplot(subset1k$netivcamt ~ territorycode,subset1k, main="Boxplot by Territory")
+territorytime <- read_csv("C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/timeseries.csv")
+summary(territorytime)
+territorytime$Year <- as.factor(territorytime$Year)
+subset2k <- subset(territorydist, netivcamt<2000)
+subset2k
+hist(subset1k$netivcamt, main="Histogram of Net Invoiced Amounts < $2000")
+boxplot(subset1k$netivcamt ~ territorycode,subset1k, main="Boxplot by Territory")
+subset2k
+hist(subset2k$netivcamt, main="Histogram of Net Invoiced Amounts < $2000")
+boxplot(subset2k$netivcamt ~ territorycode,subset2k, main="Boxplot by Territory")
+territorytime <- read_csv("C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/timeseries.csv")
+summary(territorytime)
+territorytime$Year <- as.factor(territorytime$Year)
+territorytime <- read_csv("C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/timeseries.csv")
+summary(territorytime)
+territorytime$Year <- as.factor(territorytime$Year)
+territorytime$Month <- as.factor(territorytime$Month)
+summary(territorytime)
+tt_east <- territorytime$East
+tt_north <- territorytime$North
+tt_south <- territorytime$South
+tt_oot <- territorytime$OOT
+territorytime <- read_csv("C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/timeseries.csv")
+summary(territorytime)
+territorytime$Year <- as.factor(territorytime$Year)
+territorytime$Month <- as.factor(territorytime$Month)
+summary(territorytime)
+tt_east <- territorytime$East
+tt_north <- territorytime$North
+tt_south <- territorytime$South
+tt_oot <- territorytime$OOT
+hist(tt_east,breaks=8, main="8 Breaks East Territory",xlab="Bins in $")
+hist(tt_north, breaks=8, main = "8 Breaks North Territory",xlab="Bins in $")
+hist(tt_south, breaks=8,main="8 Breaks South Territory",xlab="Bins in $")
+hist(tt_oot,breaks=8, main="8 Break OOT",xlab="Bins in $")
+east_timebar <- territorytime[,1:3]
+north_timebar <- territorytime[,c(1,2,4)]
+south_timebar <- territorytime[,c(1,2,5)]
+oot_timebar <- territorytime[,c(1,2,6)]
+barplot(east_timebar$East, names.arg=east_timebar$Year,xlab="Year")
+barplot(north_timebar$North, names.arg=north_timebar$Year,xlab="Year")
+barplot(south_timebar$South, names.arg=south_timebar$Year,xlab="Year")
+library(ggplot2)
+library(DMwR2)
+library(data.table)
+library(readr)
+territorydist <- read_csv("C:/Users/khickman/
+Desktop/Personal/IUMSDS/AppliedDataMining/territorydist.csv")
+territorydist <- read_csv("C:/Users/khickman/
+Desktop/Personal/IUMSDS/AppliedDataMining/territorydist.csv")
+summary(territorydist)
+territorydist <- read_csv("C:/Users/khickman/
+Desktop/Personal/IUMSDS/AppliedDataMining/territorydist.csv")
+summary(territorydist)
+territorydist <- read_csv("C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/territorydist.csv")
+summary(territorydist)
+hist(tt_east,breaks=8, main="8 Breaks East Territory",xlab="Bins in $")
+hist(tt_north, breaks=8, main = "8 Breaks North Territory",xlab="Bins in $")
+hist(tt_east,breaks=8, main="8 Breaks East Territory",xlab="Bins in $")
+hist(tt_south, breaks=8,main="8 Breaks South Territory",xlab="Bins in $")
+North.count <- as.data.frame(subset1k)
+subset1kdf <- as.data.frame(subset1k)
+subset1k.df <- as.data.frame(subset1k)
+North.count <- count(subset1k.df(subset1k.df$territorycode="North"))
+North.count <- count(subset1k.df(subset1k.df,territorycode="North"))
+library(dplyr)
+North.count <- count(subset1k.df(subset1k.df,territorycode="North"))
+subset1k.df <- as.data.frame(subset1k)
+North.count()
+North.count
+North.count <- count(subset1k.df,territorycode="North")
+North.count
+North.count <- count(subset1k,territorycode="North")
+North.count
+North.count <- count(subset1k,"North")
+North.count
+North.count <- count(subset1k,"East")
+North.count
+North.count <- count(territorydist,"East")
+North.count
+count(territorydist$territorycode="East")
+count(territorydist$territorycode,vars="East")
+count(territorydist,vars="East")
+count(territorydist,vars="territorycode")
+count(territorydist, c("territorycode","East")
+count(territorydist, c("territorycode","East")
+territorydist[list("East")]
+territorydist[.("East")]
+td.table <- as.table(territorydist)
+td.table <- as.table(subset1k)
+td.table <- as.data.frame(subset1k)
+td.table[.("East")]
+td.table[list("East")]
+td.table["East"]
+count(territorydist$territorycode["East"])
+type(subset1k)
+summary(subset1k)
+territorydist$territorycode["East"]
+territorydist$territorycode["East"]
+count(territorydist$territorycode["East"])
+df["East"]
+df$territorycode["East"]
+subsetnorth <- subset(territorydist, territorycode="East")
+subsetnorth
+length(subsetnorth)
+count(subsetnorth)
+knitr::opts_chunk$set(echo = TRUE)
+qnorm(.95)
+qnorm(.975)
+n = 1025
+x_bar = .61
+sd_error = sqrt(.61*(.61-.39)/n)
+upper_bound <- sd_error + qnorm(.975)
+lower_bound <- sd_error - qnorm(.975)
+upper_bound
+lower_bound
+sd_error
+sd_error = sqrt(x_bar*(1-x_bar)/n)
+sd_error
+upper_bound <- sd_error + qnorm(.975)
+lower_bound <- sd_error - qnorm(.975)
+upper_bound
+lower_bound
+n = 1025
+x_bar = .61
+sd_error = sqrt(x_bar * (1-x_bar) / n)
+upper_bound <- sd_error + qnorm(.975) * sd_error
+lower_bound <- sd_error - qnorm(.975) * sd_error
+upper_bound
+lower_bound
+upper_bound <- x_bar + qnorm(.975) * sd_error
+lower_bound <- x_bar - qnorm(.975) * sd_error
+upper_bound
+lower_bound
+n = 1025
+x_bar = .61
+sd_error = sqrt(x_bar * (1-x_bar) / n)
+upper_bound <- x_bar + qnorm(.975) * sd_error
+lower_bound <- x_bar - qnorm(.975) * sd_error
+upper_bound
+lower_bound
+getwd()
+setwd("C"
+))
+setwd("C:/Users/khickman/Desktop/Personal/IUMSDS/StatsS520/Module10"
+)
+getwd()
+sd_error
+C(upper_bound, lower_bound)
+pring(upper_bound, lower_bound)
+print(upper_bound, lower_bound)
+lower_bound <- x_bar - qnorm(.975) * sd_error
+upper_bound
+lower_bound
+n <- 1025
+x_bar <- .61
+sd_error <- sqrt(x_bar * (1-x_bar) / n)
+upper_bound <- x_bar + qnorm(.975) * sd_error
+lower_bound <- x_bar - qnorm(.975) * sd_error
+upper_bound
+lower_bound
+q <- qnorm(.975)
+L <- .02
+nL2 <- (2*q*sd_error)^2
+nL2
+nL2 <- (2*q*sd_error/L)^2
+nL2
+L <- 2
+nL2 <- (2*q*sd_error/L)^2
+nL2
+L <- .02
+nL2 <- (2*q*sd_error/L)^2
+nL2
+nL2 <- 2 * q *(sqrt(x_bar * (1-x_bar) / n))
+nL2
+n = 800
+nL2 <- 2 * q *(sqrt(x_bar * (1-x_bar) / n))
+nL2
+n = 2000
+nL2 <- 2 * q *(sqrt(x_bar * (1-x_bar) / n))
+nL2
+n = 3000
+nL2 <- 2 * q *(sqrt(x_bar * (1-x_bar) / n))
+nL2
+n = 4000
+nL2 <- 2 * q *(sqrt(x_bar * (1-x_bar) / n))
+nL2
+n = 5000
+nL2 <- 2 * q *(sqrt(x_bar * (1-x_bar) / n))
+nL2
+n = 6000
+nL2 <- 2 * q *(sqrt(x_bar * (1-x_bar) / n))
+nL2
+n = 6500
+nL2 <- 2 * q *(sqrt(x_bar * (1-x_bar) / n))
+nL2
+n = 7000
+nL2 <- 2 * q *(sqrt(x_bar * (1-x_bar) / n))
+nL2
+n = 7800
+nL2 <- 2 * q *(sqrt(x_bar * (1-x_bar) / n))
+nL2
+n = 7900
+nL2 <- 2 * q *(sqrt(x_bar * (1-x_bar) / n))
+nL2
+n = 8000
+nL2 <- 2 * q *(sqrt(x_bar * (1-x_bar) / n))
+nL2
+n = 9000
+nL2 <- 2 * q *(sqrt(x_bar * (1-x_bar) / n))
+nL2
+q <- qnorm(.975)
+q
+n = 9046
+nL2 <- 2 * q *(sqrt(x_bar * (1-x_bar) / n))
+nL2
+t.stat
+t.stat <- (x_bar - mu)/(s/sqrt(n))
+t.stat
+x_bar <- 3.19
+mu <- 0
+s <- 104.0118
+n <- 400
+t.stat <- (x_bar - mu)/(s/sqrt(n))
+t.stat
+x_bar <- 11.5
+mu <- 0
+s <- 21
+n <- 10
+t.stat <- (x_bar - mu)/(s/sqrt(n))
+t.stat
+qnorm(1.73)
+pnorm(1.73)
+t.stat
+P.value = 1 - pt(t.stat, df = n-1)
+P.value
+P.value = 1 - pt(t.stat, df = 10-1)
+P.value
+P.value = pt(t.stat, df = 10-1)
+P.value
+t.stat
+pnorm(3.47)
+library(readr)
+crab_count <- read_delim("C:/Users/khickman/Desktop/Personal/IUMSDS/StatsS520/Module10/crab-count.txt",
+"  ", escape_double = FALSE, trim_ws = TRUE)
+View(crab_count)
+crab_count <- read_delim("C:/Users/khickman/Desktop/Personal/IUMSDS/StatsS520/Module10/crab-count.txt", "  ", escape_double = FALSE, trim_ws = TRUE)
+view(crab_count)
+crab_count <- crab_count[,c(1,3,5,7)]
+qqplot(crab_count$CHANGE)
+qqplot(crab_count$COUNT2011, crab_count$COUNT2012)
+x_bar <- 11.5
+mu <- 0
+s <- 21
+n <- 10
+t.stat <- (x_bar - mu)/(s/sqrt(n))
+t.stat
+shoshoni <- read.csv("shoshoni.csv,header=TRUE")
+shoshoni <- read.csv("shoshoni.csv",header=TRUE)
+shoshoni
+shoshoni <- read.csv("shoshoni.csv",header=FALSE)
+shoshoni

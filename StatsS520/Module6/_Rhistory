@@ -1,0 +1,512 @@
+names(mydata)
+dim(mydata)
+describe(mydata)
+install.packages("data.table")
+library(data.table)
+describe(mydata)
+View(mydata)
+filter(mydata, !complete.cases(mydata))
+View(mydata)
+filter(mydata, complete.cases(mydata))
+summary(mydata)
+mydata.na <- mydata[is.na(mydata)]
+view(mydata.na)
+View(mydata.na)
+install.packages("data.table")
+install.packages("data.table")
+library(data.table)
+mydata <- OJ
+dim(mydata)
+View(mydata)
+summary(mydata)
+mydata.na <- mydata[is.na(mydata)]
+View(mydata.na)
+mydata.na <- mydata[is.na(mydata)]
+summary(mydata.na)
+view(mydata.train)
+mydata.train <- (mydata[,1:900])
+mydata.train <- (mydata[1:900,]):
+view(mydata.train)
+mydata.train <- (mydata[1:900,]):
+View(mydata.train)
+mydata.train <- (mydata[1:900,]):
+View(mydata.train)
+mydata.train <- (mydata[1:900,])
+View(mydata.train)
+summary(mydata.train)
+mydata.test <- (mydata{901:1070,)
+mydata.test <- (mydata[901:1070,])
+mydata.test <- (mydata[901:1070,])
+summary(mydata.test)
+mydata.train <- sample.int(n = nrow(mydata), size = floor(.84*nrow(data)), replace = F)
+set.seed(101)
+mydata.train <- sample.int(n = nrow(mydata), size = floor(.84*nrow(data)), replace = F)
+mydata.train <- sample.int(n = nrow(mydata), size = floor(.84*nrow(mydata)), replace = F)
+summary(mydata.train)
+mydata.train <- sample(seq_len(nrow(mydata), size = floor(.84*nrow(mydata))))
+smp_size = floor(.84*nrow(mydata)
+mydata.train <- sample(seq_len(nrow(mydata), size = smp_size)))
+smp_size = floor(.84*nrow(mydata))
+mydata.train <- sample(seq_len(nrow(mydata), size = smp_size)))
+mydata.train <- sample(seq_len(nrow(mydata), size = smp_size))
+mydata.train <- sample(seq_len(nrow(mydata), smp_size))
+mydata.train <- sample(seq_len(nrow(mydata))
+summary(mydata.train)
+mydata.test <- (mydata[901:1070,])
+mydata.train <- sample(seq_len(nrow(mydata))
+summary(mydata.train)
+mydata.test <- (mydata[901:1070,])
+mydata.train <- sample(seq_len(nrow(mydata)))
+summary(mydata.train)
+data(mydata)
+mydata <- OJ
+data(mydata)
+summary(mydata)
+mydata.training <- (mydata[1:900,])
+mydata.testing <- (mydata[901:1070,])
+summary(mydata.training)
+summary(mydata.testing)
+View(mydata.training)
+View(mydata.testing)
+sample(1:10,4,replace=FALSE,prob = NULL)
+data(mydata)
+mydata.traininglabels <- (mydata[1:900,1])
+mydata.testinglabels <- (mydata[901:1070,1])
+smp_size <- floor(.84 * nrow(mydata))
+smp_size
+mydata.training <- sample(seq_len(nrow(mydata)), size = smp_size)
+mydata.training <- mydata[train_ind]
+train_ind <- sample(seq_len(nrow(mydata)), size = smp_size)
+mydata.training <- mydata[train_ind]
+mydata.training <- mydata[train_ind,]
+mydata.testing <- mydata[-train_ind,]
+view(mydata.training)
+View(mydata.training)
+summary(mydata.training)
+summary(mydata.testing)
+mydata.training <- (mydata[1:900,2:18])
+mydata.training <- (mydata[1:900,2:19])
+mydata.training <- (mydata[1:900,2:1
+8])
+mydata.training <- (mydata[1:900,2:18])
+mydata.testing <- (mydata[901:1070,2:18])
+install.packages("DMwR2")
+summary(mydata.training)
+mydata.training <- (mydata[1:900,])
+mydata.testing <- (mydata[901:1070,])
+summary(mydata.training)
+ct1 <- rpartXse(Purchase ~ ., mydata.training)
+install.packages("DMwR2")
+ct1 <- rpartXse(Purchase ~ ., mydata.training)
+ct1 <- rpartXse(Purchase ~ ., mydata.training)
+ct1 <- rpart(Purchase ~ ., mydata.training)
+library("rpart", lib.loc="C:/Program Files/R/R-3.3.3/library")
+install.packages("rpart")
+install.packages("rpart")
+install.packages("rpart")
+library(DMwR2)
+ct1 <- rpart(Purchase ~ ., mydata.training)
+ct1 <- rpartXse(Purchase ~ ., mydata.training)
+ct3 <- rpartXse(Purchase ~ ., mydata.testing, se=1)
+ct2 <- rpartXse(Purchase ~ ., mydata.testing, se=.5)
+library(rpart.plot)
+prp(ct1, type=0, extra=101)
+library(rpart.plot)
+install.packages("rpart.plot")
+install.packages("rpart.plot")
+library(rpart.plot)
+prp(ct1, type=0, extra=101)
+prp(ct2, type=0, extra=101)
+prp(ct3, type=0, extra=101)
+View(mydata.training)
+performanceEstimate?
+performanceEstimation?
+)
+library(performanceEstimation)
+install.packages("performanceEstimation")
+library(performanceEstimation)
+r<- performanceEstimation(
+PredTask(Purchase ~., mydata.testing),
+workflowVariants(learner="rpartXse",
+learner.pars=list(se=c(0, .5, 1))),
+EstimationTask(metrics=c("mse","mae"),
+method=CV(nReps=3,nFolds=10))
+)
+library(DMwR2)
+library(rpart.plot)
+r<- performanceEstimation(
+PredTask(Purchase ~., mydata.testing),
+workflowVariants(learner="rpartXse",
+learner.pars=list(se=c(0, .5, 1))),
+EstimationTask(metrics=c("mse","mae"),
+method=CV(nReps=3,nFolds=10))
+)
+summary(mydata.testing)
+r<- performanceEstimation(
+PredTask(Purchase ~., mydata.testing),
+workflowVariants(learner="rpartXse",
+learner.pars=list(se=c(0, .5, 1))),
+EstimationTask(metrics=c("mse","mae"),
+method=CV(nReps=3,nFolds=10))
+)
+r<- performanceEstimation(
+PredTask(Purchase ~ ., mydata.training),
+workflowVariants(learner="rpartXse",
+learner.pars=list(se=c(0, .5, 1))),
+EstimationTask(metrics=c("mse","mae"),
+method=CV(nReps=3,nFolds=10))
+)
+r<- performanceEstimation(
+PredTask(PriceCH ~ ., mydata.training),
+workflowVariants(learner="rpartXse",
+learner.pars=list(se=c(0, .5, 1))),
+EstimationTask(metrics=c("mse","mae"),
+method=CV(nReps=3,nFolds=10))
+)
+summary(r)
+View(mydata.training)
+mydata.training$PurchaseVec <-
+r<- performanceEstimation(
+PredTask(Purchase ~ ., mydata.training),
+workflowVariants(learner="rpart",
+learner.pars=list(se=c(0, .5, 1))),
+EstimationTask(metrics=c("mse","mae"),
+method=CV(nReps=3,nFolds=10))
+)
+mydata.training$PurchaseVec <-
+r<- performanceEstimation(
+PredTask(Purchase ~ ., mydata.training),
+workflowVariants(learner="rpartXse",
+learner.pars=list(se=c(0, .5, 1))),
+EstimationTask(metrics=c("mse","mae"),
+method=CV(nReps=3,nFolds=10))
+)
+dummy(PurchaseVec, mydata)
+install.packages("dummy")
+library(dummy)
+dummy(PurchaseVec, mydata)
+dummy(Purchase, mydata.training)
+dummy(mydata.training$Purchase)
+PurchaseVec <- as.factor(mydata.training$Purchase)
+View(mydata.training)
+mydata$PurchaseVec <- as.factor(mydata.training$Purchase)
+mydata.training$PurchaseVec <- as.factor(mydata.training$Purchase)
+View(mydata.training)
+mydata.training$PurchaseVec <- as.integer(mydata.training$Purchase)
+mydata.training$PurchaseVec <- as.integer(mydata.training$Purchase)
+View(mydata.training)
+r<- performanceEstimation(
+PredTask(Purchase ~ ., mydata.training),
+workflowVariants(learner="rpartXse",
+learner.pars=list(se=c(0, .5, 1))),
+EstimationTask(metrics=c("mse","mae"),
+method=CV(nReps=3,nFolds=10))
+)
+summary(ct1)
+summary(ct2)
+summary(ct3)
+ct.train1 <- rpartXse(Purchase ~ ., mydata.training, se=0)
+ct.train2 <- rpartXse(Purchase ~ ., mydata.training, se=.5)
+ct.train3 <- rpartXse(Purchase ~ ., mydata.training, se=1)
+summary(ct.train1)
+mydata.testing <- (mydata[901:1070,])
+view(mydata.testing)
+view(mydata.testing)
+View(mydata.testing)
+mydata.testing <- (mydata[901:1070,])
+View(mydata.testing)
+mydata.testing <- (mydata[901:1070,2:18])
+View(mydata.testing)
+mydata.testing <- (mydata[901:1070,])
+View(mydata.testing)
+r<- performanceEstimation(
+PredTask(Purchase ~ ., mydata.testing),
+workflowVariants(learner="rpartXse",
+learner.pars=list(se=c(0, .5, 1))),
+EstimationTask(metrics=c("mse","mae"),
+method=CV(nReps=3,nFolds=10))
+)
+mydata.training <- mydata.training[,1:18]
+View(mydata.training)
+r<- performanceEstimation(
+PredTask(Purchase ~ ., mydata.training),
+workflowVariants(learner="rpartXse",
+learner.pars=list(se=c(0, .5, 1))),
+EstimationTask(metrics=c("mse","mae"),
+method=CV(nReps=3,nFolds=10))
+)
+mydata$purchasefac <- as.factor(mydata.training$Purchase)
+mydata.training$purchasefac <- as.factor(mydata.training$Purchase)
+View(mydata.training)
+mydata.training$purchasefac <- as.int(mydata.training$Purchase)
+mydata.training$purchasefac <- as.integer(mydata.training$Purchase)
+View(mydata.training)
+r<- performanceEstimation(
+PredTask(purchasefac ~ ., mydata.training),
+workflowVariants(learner="rpartXse",
+learner.pars=list(se=c(0, .5, 1))),
+EstimationTask(metrics=c("mse","mae"),
+method=CV(nReps=3,nFolds=10))
+)
+summary(r)
+mydata.training$purchasefac <- as.factor(mydata.training$Purchase)
+r<- performanceEstimation(
+PredTask(purchasefac ~ ., mydata.training),
+workflowVariants(learner="rpartXse",
+learner.pars=list(se=c(0, .5, 1))),
+EstimationTask(metrics=c("mse","mae"),
+method=CV(nReps=3,nFolds=10))
+)
+View(mydata.training)
+ct.test1 <- rpartXse(Purchase ~ ., mydata.testing, se=0)
+ct.test2 <- rpartXse(Purchase ~ ., mydata.testing, se=.5)
+ct.test3 <- rpartXse(Purchase ~ ., mydata.testing, se=1)
+prp(ct.test1, type=0, extra=101)
+summary(ct.test1)
+ct.train1 <- rpartXse(Purchase ~ ., mydata.training, se=0)
+ct.train2 <- rpartXse(Purchase ~ ., mydata.training, se=.5)
+ct.train3 <- rpartXse(Purchase ~ ., mydata.training, se=1)
+prp(ct.train1, type=0, extra=101)
+prp(ct.train2, type=0, extra=101)
+prp(ct.train3, type=0, extra=101)
+summary(ct.train1)
+mydata.training <- mydata.training[,1:18]
+View(mydata.training)
+set.seed(1234)
+View(mydata.training)
+ct.train1 <- rpartXse(Purchase ~ ., mydata.training, se=0)
+ct.train2 <- rpartXse(Purchase ~ ., mydata.training, se=.5)
+ct.train3 <- rpartXse(Purchase ~ ., mydata.training, se=1)
+prp(ct.train1, type=0, extra=101)
+prp(ct.train2, type=0, extra=101)
+prp(ct.train3, type=0, extra=101)
+summary(ct.train1)
+summary(ct.train2)
+mydata.training <- mydata %>% select(Purchase) %>% mutate(Purchase = factor(Purchase))
+mydata.training <- mydata(select(Purchase), mutate(Purchase = factor(Purchase)))
+mydata.training <- mydata.training[,1:18, rm.na = TRUE]
+mydata.training <- mydata.training([,1:18,], rm.na=TRUE)
+mydata.training <- mydata.training([,1:18], rm.na=TRUE)
+mydata.training <- mydata.training([,1:18], rm.na=TRUE)
+mydata.training <- mydata.training[,1:18], rm.na=TRUE
+mydata.training <- mydata.training[,1:18] rm.na=TRUE
+mydata.training <- mydata.training[,1:18]
+mydata.training <- mydata.training(rm(NA))
+summary(ct.train3)
+summary(ct.train1)
+ct.test1 <- rpartXse(Purchase ~ ., mydata.training, se=0)
+prp(ct.test1, type=0, extra=101)
+summary(ct.test1)
+mydata.testing <- (mydata[901:1070,])
+summary(mydata.testing)
+ct.test1 <- rpartXse(Purchase ~ ., mydata.testing, se=0)
+prp(ct.test1, type=0, extra=101)
+summary(ct.test1)
+ct.train1 <- rpartXse(Purchase ~ ., mydata.training, se=0)
+ct.train2 <- rpartXse(Purchase ~ ., mydata.training, se=.5)
+ct.train3 <- rpartXse(Purchase ~ ., mydata.training, se=1)
+summary(ct.train1)
+ps1 <- predict(ct, ts)
+ps1 <- predict(ct.train1, mydata.test, type="Class")
+ps1 <- predict(ct.train1, mydata.test, type="class")
+ps1
+ps1 <- predict(ct.train1, mydata.test)
+ps1
+ps2 <- predict(ct.train1, mydata.test, type="class")
+ps1 <- predict(ct.train1, mydata.test)
+ps1
+cm <- table(ps2, mydata.test$Purchase)
+cm
+100*(10sum(diag(cm))/sum(cm))
+100*(1-sum(diag(cm))/sum(cm))
+ct.train1 <- rpartXse(Purchase ~ ., mydata.training, se=.25)
+summary(ct.train1)
+ps1 <- predict(ct.train1, mydata.test)
+ps2 <- predict(ct.train1, mydata.test, type="class")
+cm <- table(ps2, mydata.test$Purchase)
+cm
+100*(1-sum(diag(cm))/sum(cm))
+ct.train1 <- rpartXse(Purchase ~ ., mydata.training, se=.1)
+summary(ct.train1)
+ps1 <- predict(ct.train1, mydata.test)
+ps2 <- predict(ct.train1, mydata.test, type="class")
+cm <- table(ps2, mydata.test$Purchase)
+cm
+100*(1-sum(diag(cm))/sum(cm))
+ct.train1 <- rpartXse(Purchase ~ ., mydata.training, se=.5)
+summary(ct.train1)
+ps1 <- predict(ct.train1, mydata.test)
+ps2 <- predict(ct.train1, mydata.test, type="class")
+cm <- table(ps2, mydata.test$Purchase)
+cm
+100*(1-sum(diag(cm))/sum(cm))
+ct.train1 <- rpartXse(Purchase ~ ., mydata.training, se=.5)
+cm <- table(ps2, mydata.testing$Purchase)
+ct.train1 <- rpartXse(Purchase ~ ., mydata.training, se=.5)
+summary(ct.train1)
+ps1 <- predict(ct.train1, mydata.testing)
+ps2 <- predict(ct.train1, mydata.testing, type="class")
+cm <- table(ps2, mydata.testing$Purchase)
+cm
+100*(1-sum(diag(cm))/sum(cm))
+ps31 <- predict(ct.train3, mydata.testing)
+ps32 <- predict(ct.train3, mydata.testing, type="class")
+ps32
+cm <- table(ps23, mydata.testing$Purchase)
+cm <- table(ps32, mydata.testing$Purchase)
+cm
+100*(1-sum(diag(cm))/sum(cm))
+?e1071
+install.packages(e1071)
+install.packages("e1071")
+library(e1071)
+?e1071
+??e1071
+install.packages("e1071")
+library(e1071)
+set.seed(1234)
+rndSample <- sample(1:nrow(mydata), 900)
+rndSample <- sample(1:nrow(mydata), 900)
+mydata.training <- mydata[rndSample,] #training data: randomly picked 100 points from iris data
+mydata.test <- mydata[-rndSample, ] # test data: 50 data points
+?svm # more information about svm
+rndSample <- sample(1:nrow(mydata), 900)
+mydata.training <- mydata[rndSample,]
+mydata.test <- mydata[-rndSample, ]
+s <- svm(Purchases ~ ., mydata.training)
+s <- svm(Purchase ~ ., mydata.training)
+ps <- predict(s, mydata.test)
+(cm <- table(ps, mydata.test$Purchase)) #confusion matrix for evaluation
+100*(1-sum(diag(cm))/sum(cm))  # the error rate is 4%
+s2 <- svm(Purchase ~ ., mydata.training, cost=10, kernel="polynomial", degree=3)
+ps2 <- predict(Purchase, mydata.test)
+(cm2 <- table(ps2, mydata.test$Purchase)) #confusion matrix for evaluation
+ps2 <- predict(s2, mydata.test)
+(cm2 <- table(ps2, mydata.test$Purchase)) #confusion matrix for evaluation
+100*(1-sum(diag(cm2))/sum(cm2))  # the error rate is 8%
+s2 <- svm(Purchase ~ ., mydata.training, cost=20, kernel="polynomial", degree=3)
+ps2 <- predict(s2, mydata.test)
+(cm2 <- table(ps2, mydata.test$Purchase)) #confusion matrix for evaluation
+100*(1-sum(diag(cm2))/sum(cm2))
+s2 <- svm(Purchase ~ ., mydata.training, cost=5, kernel="polynomial", degree=3)
+ps2 <- predict(s2, mydata.test)
+(cm2 <- table(ps2, mydata.test$Purchase)) #confusion matrix for evaluation
+100*(1-sum(diag(cm2))/sum(cm2))
+s2 <- svm(Purchase ~ ., mydata.training, cost=5, kernel="polynomial", degree=5)
+ps2 <- predict(s2, mydata.test)
+(cm2 <- table(ps2, mydata.test$Purchase)) #confusion matrix for evaluation
+100*(1-sum(diag(cm2))/sum(cm2))
+s2 <- svm(Purchase ~ ., mydata.training, cost=5, kernel="polynomial", degree=2)
+ps2 <- predict(s2, mydata.test)
+(cm2 <- table(ps2, mydata.test$Purchase)) #confusion matrix for evaluation
+100*(1-sum(diag(cm2))/sum(cm2))
+s2 <- svm(Purchase ~ ., mydata.training, cost=10, kernel="polynomial", degree=2)
+ps2 <- predict(s2, mydata.test)
+(cm2 <- table(ps2, mydata.test$Purchase)) #confusion matrix for evaluation
+100*(1-sum(diag(cm2))/sum(cm2))
+s2 <- svm(Purchase ~ ., mydata.training, cost=10, kernel="polynomial", degree=4)
+ps2 <- predict(s2, mydata.test)
+(cm2 <- table(ps2, mydata.test$Purchase)) #confusion matrix for evaluation
+100*(1-sum(diag(cm2))/sum(cm2))
+s <- svm(Purchase ~ ., mydata.training)
+ps <- predict(s, mydata.training)
+(cm <- table(ps, mydata.training$Purchase)) #confusion matrix for evaluation
+100*(1-sum(diag(cm))/sum(cm))  # the error rate is 18%
+s2 <- svm(Purchase ~ ., mydata.training, cost=10, kernel="polynomial", degree=3)
+ps2 <- predict(s2, mydata.training)
+(cm2 <- table(ps2, mydata.training$Purchase)) #confusion matrix for evaluation
+100*(1-sum(diag(cm2))/sum(cm2))
+s2test <- svm(Purchase ~ ., mydata.test, cost=10, kernel="polynomial", degree=3)
+s2test <- svm(Purchase ~ ., mydata.test, cost=10, kernel="polynomial", degree=3)
+ps2test <- predict(s2test, mydata.test)
+(cm2test <- table(ps2test, mydata.test$Purchase)) #confusion matrix for evaluation
+100*(1-sum(diag(cm2test))/sum(cm2test))
+install.packages("nnet")
+library(nnet)
+?nnet # more information about the function
+install.packages("nnet")
+install.packages("nnet")
+library(nnet)
+rndSample <- sample(1:nrow(mydata), 900)
+mydata.training <- mydata[rndSample, ] #training data: randomly picked 100 points from iris data
+mydata.test <- mydata[-rndSample, ] # test data: 50 data points
+set.seed(1234)
+rndSample <- sample(1:nrow(mydata), 900)
+mydata.training <- mydata[rndSample, ] #training data: randomly picked 100 points from iris data
+mydata.test <- mydata[-rndSample, ] # test data: 50 data points
+n1 <- nnet(Purchase ~ ., mydata.training, size=10 ,trace=FALSE, maxit=1000)
+install.packages("nnet")
+library(nnet)
+set.seed(1234)
+rndSample <- sample(1:nrow(mydata), 900)
+mydata.training <- mydata[rndSample, ] #training data: randomly picked 100 points from iris data
+mydata.test <- mydata[-rndSample, ] # test data: 50 data points
+n1 <- nnet(Purchase ~ ., mydata.training, size=10 ,trace=FALSE, maxit=1000)
+n2 <- nnet(Purchase ~ ., mydata.training, size=50 ,trace=FALSE, maxit=1000)
+n2
+n1
+ps1 <- predict(n1, mydata.test, type="class")
+ps1
+ps2 <- predict(n2, mydata.test, type="class")
+(cm1 <- table(ps1, mydata.test$Purchase)) # confusion matrix for evaluation
+100*(1-sum(diag(cm1))/sum(cm1))  # the error rate is 4%: 2 data points are misclassified, out of 50 points
+(cm2 <- table(ps1, mydata.test$Purchase))
+100*(1-sum(diag(cm2))/sum(cm2))
+s2test <- svm(Purchase ~ ., mydata.test, cost=10, kernel="polynomial", degree=3)
+library(e1071)
+set.seed(1234)
+s2test <- svm(Purchase ~ ., mydata.test, cost=10, kernel="polynomial", degree=3)
+ps2test <- predict(s2test, mydata.test)
+(cm2test <- table(ps2test, mydata.test$Purchase)) #confusion matrix for evaluation
+plotnet(nr1)
+install.packages("ggplot2")
+library(ggplot2)
+install.packages("NeuralNetTools")
+library(NeuralNetTools)
+garson(n1) + theme(axis.text.x = element_text(angle = 45, hjust = 1))
+plotnet(nr1)
+plotnet(n1)
+100*(1-sum(diag(cm1))/sum(cm1))  # the error rate is 4%: 2 data points are misclassified, out of 50 points
+100*(1-sum(diag(cm2))/sum(cm2))
+garson(n2) + theme(axis.text.x = element_text(angle = 45, hjust = 1))
+plotnet(n2)
+garson(n1) + theme(axis.text.x = element_text(angle = 45, hjust = 1))
+plotnet(n1)
+garson(n2) + theme(axis.text.x = element_text(angle = 45, hjust = 1))
+plotnet(n2)
+?h2o
+install.packages("h2o")
+library(h2o)
+?h2o
+h2oInstance <- h2o.init(ip="localhost")  # start H2O instance locally
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/HW2/2.3/sb6.r', echo=TRUE)
+install.packages("h2o")
+?h2o.deeplearning
+mdl <- h2o.deeplearning(x=2:18, y=1, training_frame=mydata.trainingH)
+mydata.trainingH  <- as.h2o(mydata[rndSample, ],"mydata.trainingH")
+rndSample <- sample(1:nrow(mydata), 900)
+mydata.trainingH  <- as.h2o(mydata[rndSample, ],"mydata.trainingH")
+mydata.testingH <- as.h2o(mydata[-rndSample, ],"mydata.testingH")
+mdl <- h2o.deeplearning(x=2:18, y=1, training_frame=mydata.trainingH)
+mdl
+summary(data)
+plot(ecdf(data))
+getwd()
+setwd("c:/Users/hickman/Desktop/Personal/IUMSDS/StatsS520/Module6")
+setwd("c:/Users/khickman/Desktop/Personal/IUMSDS/StatsS520/Module6")
+data <- read.table("ex7.csv")
+head(data)
+summary(data)
+plot(ecdf(data))
+data <- data.dropna
+data <- data[,1]
+summary(data)
+plot(ecdf(data))
+plot(data, type="l")
+plot(data, type="b")
+plot(ecdf(data))
+plot(data, type="l")
+plot(ecdf(data))
+plot(data, pnorm(data),type="l")
+plot(ecdf(data))
+qqnorm(data)
