@@ -1,3 +1,15 @@
 Datasets/
 Job Aides/
 Tableau workbooks/
+
+
+*.gz
+*.csv
+*_Rhistory
+*.ppt
+*.docx
+*.html
+*.dll
+*.exe
+*.pyd
+
