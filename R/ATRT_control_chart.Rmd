@@ -1,0 +1,66 @@
+---
+title: "ATRT_control_chart"
+author: "Keith Hickman"
+date: "October 16, 2018"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo=FALSE}
+library(qicharts2)
+library(qcc)
+```
+
+Create y = normal random varaible of 24 datapoints with a seed value of 7, then introduce an outlier of 5. 
+```{r}
+set.seed(7)
+y = rnorm(24)
+y[18] = 5
+```
+
+Plot the control chart: 
+```{r}
+qic(y, chart = 'i')
+```
+
+```{r}
+data = read.csv("H:\\Datasets\\Cerner\\KPI Downloads\\dailies\\2018\\October\\daily_core_metrics.csv")
+
+head(data)
+ATRT = data["Average.Transaction.Response.Time"]
+ATRT_1 = ATRT[1:30,]
+ATRT_2 = ATRT[31:60,]
+ATRT_3 = ATRT[61:90,]
+ATRT_baseline = ATRT[1:90,]
+head(ATRT)
+
+#length(ATRT_baseline)
+## ATRT_baseline = qcc.groups(ATRT_baseline)
+
+CCAll = qic(ATRT_baseline, chart = 'i')
+
+CC1 = qic(ATRT_1, chart = 'i') 
+CC2 = qic(ATRT_2, chart = 'i') 
+CC3 = qic(ATRT_3, chart = 'i')
+
+CC1
+CC2
+CC3
+CCAll
+
+```
+
+
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

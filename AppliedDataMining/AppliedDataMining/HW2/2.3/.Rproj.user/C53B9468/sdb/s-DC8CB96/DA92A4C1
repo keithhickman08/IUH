@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "---\ntitle: \"Practice Midterm\"\nauthor: \"Keith Hickman\"\ndate: \"September 26, 2017\"\noutput: pdf_document\n---\n\n```{r setup, include=FALSE}\nknitr::opts_chunk$set(echo = TRUE)\n```\n\n## R Markdown\n**Problem 1**\n\n1. I toss six fair coins. \n\nWhat is the probability I get exactly five heads? \n\nWe're looking for the probability of choosing five outcomes from 6 possibilities, or $\\binom{6}{5}$ because we are choosing exactly five outcomes from 6 possibilities divided by $2^6$ possible outcomes. \n\nWe can solve with a fraction, or with the ``dbinom`` function in R.\n\n$\\binom{6}{5} = 6$\n$2^6 = 64$\n$\\frac{6}{64} = .0938$ or slightly less than 10%\n\n  To solve/confirm in R:\n```{r prob_1a}\nA <- dbinom(5,6,.5)\nA\n```\n\n(b) If I get at least five heads(B), what is the conditional probability I get exactly five heads(A)??\n\nThe formula for conditional probability is $P(A|B) = P(A\\bigcap B)/P(B)$. \nWe know the probability of obtaining exactly five heads (.0938), which is $P(B)$\n  \nTo solve for the probability of obtaining at least 5 heads $P(A) = P(X=5)+P(X=6)$, we can use ``A`` from problem 1 and add to it $P(X = 6)$ or ``dbinom(6, 6, .5) = 0.015625.`` which evaluates to .109\n\nWe can then plug those values into the formula for conditional probability\n  ``pbinom`` in R. \n \n```{r}\nB <- a + dbinom(6, 6, .5)\nB\n```\n\nWe can then solve for the conditional probability by dividing $P(A) / P(B) = .858$\n```{r}\nA/B\n```\n\nThus there is an 85% chance that I get exactly five heads if I get at least five heads. \n\n**Problem 2:** \n48% percent of U.S. adults have visited a library in the past year. I select two U.S. adults\nat random. Let X be a discrete random variable representing the number of the adults I\nselected who have visited a library in the last year.\n\n1) Find P(X = 0), P(X = 1), and P(X = 2)\n\n2) Write down an expression for F(y), the cumulative distribution function\n(CDF) of X, for all y-values from $-\\infty$ to $\\infty$\n\n3) Find the expected value and variance of X.\n\n**Problem 3:**\nLet X be a random variable with the cumulative distribution function (CDF)\n\n$f(x) = \\begin{Bmatrix}$\n$0.3 & 0 < x < 1\\\\$\n$0.7 & 1 \\leq x < 2\\\\$\n$0 & otherwise$\n$\\end{Bmatrix}$",
+    "created" : 1506253975535.000,
+    "dirty" : true,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2884709518",
+    "id" : "DA92A4C1",
+    "lastKnownWriteTime" : 1506775164,
+    "last_content_update" : 1506775217148,
+    "path" : "C:/Users/khickman/Desktop/Personal/IUMSDS/StatsS520/Midterm/midterm.rmd",
+    "project_path" : null,
+    "properties" : {
+        "last_setup_crc32" : "1D831A15bb338d19",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

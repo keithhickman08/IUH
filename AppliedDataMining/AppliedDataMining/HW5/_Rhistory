@@ -1,0 +1,512 @@
+rndSample <- sample(1:nrow(mydata), 900)
+mydata.training <- mydata[rndSample,]
+mydata.test <- mydata[-rndSample, ]
+s <- svm(Purchases ~ ., mydata.training)
+s <- svm(Purchase ~ ., mydata.training)
+ps <- predict(s, mydata.test)
+(cm <- table(ps, mydata.test$Purchase)) #confusion matrix for evaluation
+100*(1-sum(diag(cm))/sum(cm))  # the error rate is 4%
+s2 <- svm(Purchase ~ ., mydata.training, cost=10, kernel="polynomial", degree=3)
+ps2 <- predict(Purchase, mydata.test)
+(cm2 <- table(ps2, mydata.test$Purchase)) #confusion matrix for evaluation
+ps2 <- predict(s2, mydata.test)
+(cm2 <- table(ps2, mydata.test$Purchase)) #confusion matrix for evaluation
+100*(1-sum(diag(cm2))/sum(cm2))  # the error rate is 8%
+s2 <- svm(Purchase ~ ., mydata.training, cost=20, kernel="polynomial", degree=3)
+ps2 <- predict(s2, mydata.test)
+(cm2 <- table(ps2, mydata.test$Purchase)) #confusion matrix for evaluation
+100*(1-sum(diag(cm2))/sum(cm2))
+s2 <- svm(Purchase ~ ., mydata.training, cost=5, kernel="polynomial", degree=3)
+ps2 <- predict(s2, mydata.test)
+(cm2 <- table(ps2, mydata.test$Purchase)) #confusion matrix for evaluation
+100*(1-sum(diag(cm2))/sum(cm2))
+s2 <- svm(Purchase ~ ., mydata.training, cost=5, kernel="polynomial", degree=5)
+ps2 <- predict(s2, mydata.test)
+(cm2 <- table(ps2, mydata.test$Purchase)) #confusion matrix for evaluation
+100*(1-sum(diag(cm2))/sum(cm2))
+s2 <- svm(Purchase ~ ., mydata.training, cost=5, kernel="polynomial", degree=2)
+ps2 <- predict(s2, mydata.test)
+(cm2 <- table(ps2, mydata.test$Purchase)) #confusion matrix for evaluation
+100*(1-sum(diag(cm2))/sum(cm2))
+s2 <- svm(Purchase ~ ., mydata.training, cost=10, kernel="polynomial", degree=2)
+ps2 <- predict(s2, mydata.test)
+(cm2 <- table(ps2, mydata.test$Purchase)) #confusion matrix for evaluation
+100*(1-sum(diag(cm2))/sum(cm2))
+s2 <- svm(Purchase ~ ., mydata.training, cost=10, kernel="polynomial", degree=4)
+ps2 <- predict(s2, mydata.test)
+(cm2 <- table(ps2, mydata.test$Purchase)) #confusion matrix for evaluation
+100*(1-sum(diag(cm2))/sum(cm2))
+s <- svm(Purchase ~ ., mydata.training)
+ps <- predict(s, mydata.training)
+(cm <- table(ps, mydata.training$Purchase)) #confusion matrix for evaluation
+100*(1-sum(diag(cm))/sum(cm))  # the error rate is 18%
+s2 <- svm(Purchase ~ ., mydata.training, cost=10, kernel="polynomial", degree=3)
+ps2 <- predict(s2, mydata.training)
+(cm2 <- table(ps2, mydata.training$Purchase)) #confusion matrix for evaluation
+100*(1-sum(diag(cm2))/sum(cm2))
+s2test <- svm(Purchase ~ ., mydata.test, cost=10, kernel="polynomial", degree=3)
+s2test <- svm(Purchase ~ ., mydata.test, cost=10, kernel="polynomial", degree=3)
+ps2test <- predict(s2test, mydata.test)
+(cm2test <- table(ps2test, mydata.test$Purchase)) #confusion matrix for evaluation
+100*(1-sum(diag(cm2test))/sum(cm2test))
+install.packages("nnet")
+library(nnet)
+?nnet # more information about the function
+install.packages("nnet")
+install.packages("nnet")
+library(nnet)
+rndSample <- sample(1:nrow(mydata), 900)
+mydata.training <- mydata[rndSample, ] #training data: randomly picked 100 points from iris data
+mydata.test <- mydata[-rndSample, ] # test data: 50 data points
+set.seed(1234)
+rndSample <- sample(1:nrow(mydata), 900)
+mydata.training <- mydata[rndSample, ] #training data: randomly picked 100 points from iris data
+mydata.test <- mydata[-rndSample, ] # test data: 50 data points
+n1 <- nnet(Purchase ~ ., mydata.training, size=10 ,trace=FALSE, maxit=1000)
+install.packages("nnet")
+library(nnet)
+set.seed(1234)
+rndSample <- sample(1:nrow(mydata), 900)
+mydata.training <- mydata[rndSample, ] #training data: randomly picked 100 points from iris data
+mydata.test <- mydata[-rndSample, ] # test data: 50 data points
+n1 <- nnet(Purchase ~ ., mydata.training, size=10 ,trace=FALSE, maxit=1000)
+n2 <- nnet(Purchase ~ ., mydata.training, size=50 ,trace=FALSE, maxit=1000)
+n2
+n1
+ps1 <- predict(n1, mydata.test, type="class")
+ps1
+ps2 <- predict(n2, mydata.test, type="class")
+(cm1 <- table(ps1, mydata.test$Purchase)) # confusion matrix for evaluation
+100*(1-sum(diag(cm1))/sum(cm1))  # the error rate is 4%: 2 data points are misclassified, out of 50 points
+(cm2 <- table(ps1, mydata.test$Purchase))
+100*(1-sum(diag(cm2))/sum(cm2))
+s2test <- svm(Purchase ~ ., mydata.test, cost=10, kernel="polynomial", degree=3)
+library(e1071)
+set.seed(1234)
+s2test <- svm(Purchase ~ ., mydata.test, cost=10, kernel="polynomial", degree=3)
+ps2test <- predict(s2test, mydata.test)
+(cm2test <- table(ps2test, mydata.test$Purchase)) #confusion matrix for evaluation
+plotnet(nr1)
+install.packages("ggplot2")
+library(ggplot2)
+install.packages("NeuralNetTools")
+library(NeuralNetTools)
+garson(n1) + theme(axis.text.x = element_text(angle = 45, hjust = 1))
+plotnet(nr1)
+plotnet(n1)
+100*(1-sum(diag(cm1))/sum(cm1))  # the error rate is 4%: 2 data points are misclassified, out of 50 points
+100*(1-sum(diag(cm2))/sum(cm2))
+garson(n2) + theme(axis.text.x = element_text(angle = 45, hjust = 1))
+plotnet(n2)
+garson(n1) + theme(axis.text.x = element_text(angle = 45, hjust = 1))
+plotnet(n1)
+garson(n2) + theme(axis.text.x = element_text(angle = 45, hjust = 1))
+plotnet(n2)
+?h2o
+install.packages("h2o")
+library(h2o)
+?h2o
+h2oInstance <- h2o.init(ip="localhost")  # start H2O instance locally
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/HW2/2.3/sb6.r', echo=TRUE)
+install.packages("h2o")
+?h2o.deeplearning
+mdl <- h2o.deeplearning(x=2:18, y=1, training_frame=mydata.trainingH)
+mydata.trainingH  <- as.h2o(mydata[rndSample, ],"mydata.trainingH")
+rndSample <- sample(1:nrow(mydata), 900)
+mydata.trainingH  <- as.h2o(mydata[rndSample, ],"mydata.trainingH")
+mydata.testingH <- as.h2o(mydata[-rndSample, ],"mydata.testingH")
+mdl <- h2o.deeplearning(x=2:18, y=1, training_frame=mydata.trainingH)
+mdl
+summary(data)
+data <- data[,1]
+library(readr)
+ex7 <- read_csv("C:/Users/khickman/Desktop/Personal/IUMSDS/StatsS520/Module6/ex7.csv")
+View(ex7)
+library(readr)
+ex7 <- read_csv("C:/Users/khickman/Desktop/Personal/IUMSDS/StatsS520/Module6/ex7.csv",
+col_names = FALSE)
+View(ex7)
+summary(ex7)
+data <- ex7
+summary(data)
+data <- data[,1]
+plot(ecdf(data))
+plot(ecdf(data))
+summary(data)
+plot(ecdf(data))
+data <- data[,1]
+plot(ecdf(data))
+ex7 <- read.table("c:\Users\khickman\Desktop\Personal\IUMSDS\StatsS520\Module6\ex7.csv")
+ex7 <- read.table("c:/Users/khickman/Desktop/Personal/IUMSDS/StatsS520/Module6/ex7.csv")
+data <- ex7
+summary(data)
+data <- data[,1]
+plot(ecdf(data))
+knitr::opts_chunk$set(echo = TRUE)
+ex7 <- read.table("c:/Users/khickman/Desktop/Personal/IUMSDS/StatsS520/Module6/ex7.csv")
+data <- ex7
+summary(data)
+data <- data[,1]
+plot(ecdf(data))
+length(data)
+mean(data)
+lendata <- length(data)
+meandata <- mean(data)
+lendata <- length(data)
+meandata <- mean(data)
+vardata <- (sum(data^2)/lendata) - meandata^2
+vardata
+vardata <- (sum(data^2)/lendata) - meandata^2
+vardata
+mean(data^2) - meandata^2
+vardata <- (sum(data^2)/lendata) - meandata^2
+vardata
+quantile(data,.75)
+quantile(data,.75)
+quantile(data,.25)
+median(data)
+quantile(data,.75)
+quantile(data,.25)
+quant75 <- quantile(data,.75)
+quant25 <- quantile(data,.25)
+quant75 - quant25
+quantile(data,probs =C(.75,.25))
+quantile(data,probs=C(75,25))
+quantile(data,probs=C(75,25))
+quant75 <- quantile(data,.75)
+quant25 <- quantile(data,.25)
+quant75 - quant25
+sqrt(vardata)
+IQR / (sqrt(vardata))
+quant75 <- quantile(data,.75)
+quant25 <- quantile(data,.25)
+IQR <- quant75 - quant25
+IQR
+sqrt(vardata)
+433 / (sqrt(vardata))
+quant75 <- quantile(data,.75)
+quant25 <- quantile(data,.25)
+IQR <- quant75 - quant25
+IQR
+iqr <- function(x)
+{q <- as.vector(quantile(x,probs=c(.25,.75)))
+return(q[2]-q[1])
+}
+iqr(data)
+sqrt(vardata)
+iqr(data) / (sqrt(vardata))
+plot(data)
+boxplot(data)
+pulse <- read.table("c:/Users/khickman/Desktop/Personal/IUMSDS/StatsS520/Module6/pulserates.csv")
+summary(pulse)
+pulse <- pulse[,1]
+plot(ecdf(pulse))
+mean(pulse)
+varpulse <- mean(pulse^2) - mpulse^2
+mpulse <- mean(pulse)
+mpulse
+varpulse <- mean(pulse^2) - mpulse^2
+varpulse
+median(pulse)
+iqr(pulse)
+iqrpulse <- iqr(pulse)
+iqrpulse <- iqr(pulse)
+iqrpulse <- iqr(pulse)
+iqrpulse
+iqrpulse / sqrt(varpulse)
+boxplot(pulse)
+qqnorm(pulse)
+plot(density(pulse))
+ex74 <- read.table("c:/Users/khickman/Desktop/Personal/IUMSDS/StatsS520/Module6/sample7_4.csv")
+summary(ex74)
+ex74 <- ex74[,1]
+plot(ecdf(ex74))
+mean74 <- mean(ex74)
+mean74
+median(ex74)
+var(x74)
+var(ex74)
+iqr(ex74)
+iqr74
+iqr74 <- iqr(ex74)
+iqr74
+iqr74/(sqrt(var74))
+iqr74/(sqrt(varex74))
+iqr74/(sqrt(var74))
+var74 <- var(ex74)
+var74
+iqr74/(sqrt(var74))
+qqplot(ex74)
+qqnorm(ex74)
+log74 <- log(ex74)
+qqnorm(log74)
+??qqnorm
+qqnorm(log74, main = "QQ Plot - Log of 7.7.4")
+qqnorm(ex74,main = "QQ Plot for ex 7.7.4")
+plot(ecdf(ex74), main = "Ecdf of 7.7.4")
+plot(density(pulse), main = "Density Plot")
+plot(density(pulse), main = "Density Plot of 7.7.2")
+qqnorm(pulse, main = "QQ Plot of 7.7.2")
+boxplot(pulse, main = "Boxplot 7.7.2")
+plot(ecdf(pulse), main = "Ecdf 7.7.2")
+boxplot(data, "Boxplot of 7.7.1")
+boxplot(data, main = "Boxplot of 7.7.1")
+plot(ecdf(data), main = "Ecdf 7.7.1")
+??var
+boxplot(ex74, main = "Boxplot 7.7.4")
+meandata
+x <- rchisq(5, 3)
+mean(x)
+x <- rchisq(5, 3)
+mean(x)
+x <- rchisq(5, 3)
+mean(x)
+??rchisq
+1 - pnorm(50, 50,.01*sqrt(400))
+1 - pnorm(50, 50.01,.01*sqrt(400))
+1 - pnorm(50, 50.01,(.25*sqrt(400))
+1 - pnorm(50,50.01,.25*sqrt(400))
+1 - pnorm(20000,50.01,.25*sqrt(400))
+1 - pnorm(4,50.01,.25*sqrt(400))
+1 - pnorm(4,50,.25*sqrt(400))
+1 - pnorm(4,50,.01*sqrt(400))
+1 - pnorm(4,50,.25*sqrt(400))
+??pnorm
+1 - pnorm(4,.5,.01*sqrt(400))
+1 - pnorm(4,50,.01*sqrt(400))
+1 - pnorm(50,4,.01*sqrt(400))
+1 - pnorm(50,50.01,.01*sqrt(400))
+1 - pnorm(50,50.01,.25*sqrt(400))
+1 - pnorm(70,50.01,.01*sqrt(400))
+1 - pnorm(70,50.01,.25*sqrt(400))
+1 - pnorm(70,50.01,.01*sqrt(400))
+1 - pnorm(70,50.01,.25*sqrt(400))
+1 - pnorm(70,50.01,.01/sqrt(400))
+1 - pnorm(70,50.01,.01*sqrt(400))
+1 - pnorm(.5, 0, 1.62)
+x = rep(c(1, 2, 3, 4, 5, 6, 7), times = c(27, 34, 16, 13, 6, 3, 1))
+x
+mean(x)
+StdDev(x)
+std(x)
+sd(x)
+y = sd(x)/sqrt(len(x))
+y = sd(x)/sqrt(count(x))
+y = sd(x)/sqrt(length(x))
+y = sd(x)/sqrt(length(x))
+y
+sd(x)
+y = sd(x)/sqrt(length(x))
+y
+stderror.x = y/sqrt(length(x))
+stderror.x = y/sqrt(length(x))
+stderror.x
+y = sd(x)
+y
+stderror.x = y/sqrt(length(x))
+stderror.x
+y = sd(x)/(sqrt(length(x))^2)
+y
+y = sd(x)/(sqrt(length(x))^2)
+y
+y = sd(x)/(sqrt(length(x))
+y
+y = sd(x)/sqrt(length(x))
+y
+y = sd(x)/sqrt(length(x))
+y
+stderror.x = y/sqrt(length(x))
+stderror.x
+pnorm(.5,0,.01)
+pnorm(.5,0,.01)
+knitr::opts_chunk$set(echo = TRUE)
+1 - pnorm(50,50.01,.25/sqrt(400))
+1 - pnorm(50,50.01,.01/sqrt(400))
+1 - pnorm(50,50.01,.01*sqrt(400))
+1 - pnorm(50,50.01,.25*sqrt(400))
+1 - pnorm(50,54,.01*sqrt(400))
+1 - pnorm(50,50.01,.1*sqrt(400))
+1 - pnorm(50,50.01,.01*sqrt(400))
+1 - pnorm(50,50.01,.01*sqrt(400))
+1 - pnorm(50,54,.01*sqrt(400))
+1 - pnorm(50,50,.01*sqrt(400))
+1 - pnorm(50,50.01,.01*sqrt(400))
+1 - pnorm(50,50.01,.1*sqrt(400))
+1 - pnorm(50,50.01,.5*sqrt(400))
+1 - pnorm(50,50.01,.5*sqrt(400))
+1 - pnorm(70,50.01,.1*sqrt(400))
+1 - pnorm(70,50.01,.5*sqrt(400))
+1-pnorm(0,0,10)
+1-pnorm(0,0,10.19)
+y = sd(x)/sqrt(length(x))
+y
+sd(x)
+y = sd(x)/sqrt(length(x))
+y
+stderror.x = y/sqrt(length(x))
+stderror.x
+mean(x)
+x = rep(c(1, 2, 3, 4, 5, 6, 7), times = c(27, 34, 16, 13, 6, 3, 1))
+x
+stderror.x = y/sqrt(length(x))
+stderror.x
+pnorm(.5,0,stderror.x)
+pnorm(.5,0,sd(x))
+pnorm(.5,0,stderror.x)
+pnorm(.5)
+pnorm(5) - pnorm(-5)
+pnorm(.5) - pnorm(-.5)
+pnorm(5) - pnorm(-5)
+pnorm(-.23)
+pnorm(-2.3)
+knitr::opts_chunk$set(echo = TRUE)
+pnorm(-2.3)
+2*pnorm(-abs(-.1763))
+cars <- fread("cars.csv", header=TRUE)
+cars <- cars[,c(0:7,9)]
+head(cars)
+summary(cars)
+carsknn <- knnImputation(cars, k=5, meth="median")
+library(data.table)
+library(car)
+library(ggplot2)
+summary(cars)
+carsknn <- knnImputation(cars, k=5, meth="median")
+summary(carsknn)
+library(DMwR)
+carsknn <- knnImputation(cars, k=5, meth="median")
+summary(carsknn)
+cars <- fread("cars.csv", header=TRUE)
+carsknn <- knnImputation(cars, k=5, meth="median")
+cars <- fread("cars.csv", header=TRUE)
+getwd()
+setwd("C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/HW5")
+cars <- cars[,c(0:7,9)]
+cars <- fread("cars.csv", header=TRUE)
+cars <- cars[,c(0:7,9)]
+carsknn <- knnImputation(cars, k=5, meth="median")
+summary(carsknn)
+scatterplot(carsknn)
+scatterplot(x = carsknn$mpg, y=carsknn$weight)
+cor(carsknn$mpg,carsknn$weight)
+lm.mpg <- lm(mpg ~ ., data=carsknn)
+summary(carsknn)
+summary(lm.mpg)
+lm.mpg.weight <- lm(mpg ~ weight, data = carsknn)
+summary(lm.mpg.weight)
+plot(lm.mpg)
+anova(lm.mpg)
+cars$cylinders <- as.factor(unlist(cars$cylinders))
+cars$modelyear <- as.factor(unlist(cars$modelyear))
+carsknn <- knnImputation(cars, k=5, meth="median")
+summary(carsknn)
+carsknn <- knnImputation(cars, k=5, meth="median")
+summary(carsknn)
+lm.mpg <- lm(mpg ~ ., data=carsknn)
+summary(lm.mpg)
+plot(lm.mpg)
+anova(carsknn)
+anova(lm.mpg
+anova(lm.mpg
+)
+anova(lm.mpg)
+carsclean <- carsknn[c(,0:4,6)]
+carsclean <- carsknn[,c(0:4,6)]
+View(carsclean)
+lm.mpg <- (mpg ~ ., data=carsclean)
+lm.mpg <- (mpg ~ . data=carsclean)
+lm.mpg <- (mpg ~ .,data=carsclean)
+lm.mpg <- lm(mpg ~ .,data=carsclean)
+summary(lm.mpg)
+cars <- fread("cars.csv", header=TRUE)
+cars <- cars[,c(0:7,9)]
+View(cars)
+carsknn <- knnImputation(cars, k=5, meth="median")
+summary(carsknn)
+lm.mpg <- lm(mpg ~ ., data=carsknn)
+summary(lm.mpg)
+carsclean <- carsknn[-"modelyear"]
+carsclean <-
+carsknn["modelyear"]
+carsknn["modelyear"]
+carsclean <- carsknn[!"modelyear"]
+View(carsknn)
+View(carsknn)
+carsclean <- carsknn[,c(1:6,8)]
+View(carsclean)
+lm.mpg <- lm(mpg ~ .,data=carsclean)
+summary(lm.mpg)
+require(rpart)
+require(rpart.plot)
+final.tree <- rt(mpg ~ .,data=carsclean)
+final.tree <- rpart(mpg ~ .,data=carsclean)
+summary(final.tree)
+plot(final.tree)
+treepredict <- predict(final.tree, carsclean)
+lmpredict <- predict(final.lm, carsclean)
+final.lm <- lm(mpg ~ .,data=carsclean)
+summary(final.lm)
+lmpredict <- predict(final.lm, carsclean)
+summary(treepredict)
+mae(treepredict)
+summary(lmpredict)
+mae.treepredict <- mean(abs(treepredict - carsclean["mpg"]))
+mae.treepredict <- mean(abs(treepredict - carsclean[["mpg"]]))
+mae.lmpredict <- mean(abs(lmpredict - carsclean[["mpg"]]))
+mae.treepredict <- mean(treepredict - carsclean[["mpg"]]^2)
+mae.lmpredict <- mean(lmpredict - carsclean[["mpg"]])^2
+mse.treepredict <- mean(treepredict - carsclean[["mpg"]]^2)
+mse.lmpredict <- mean(lmpredict - carsclean[["mpg"]])^2
+mse.lmpredict <- mean(lmpredict - carsclean[["mpg"]]^2)
+mse.treepredict <- mean(treepredict - carsclean[["mpg"]]^2)
+mse.treepredict <- mean(treepredict - carsclean[["mpg"]])?^2
+mse.treepredict <- mean(treepredict - carsclean[["mpg"]])^2
+mse.lmpredict <- mean(lmpredict - carsclean[["mpg"]])^2
+nmse.treepredict <- mean(treepredict - carsclean[["mpg"]])^2/mean((mean(carsclean[['mpg']])-carsclean[['mpg']])^2))
+nmse.treepredict <- mean(treepredict - carsclean[["mpg"]])^2/mean((mean(carsclean[['mpg']])-carsclean[['mpg']])^2)
+nmse.lmpredict <- mean(lmpredict - carsclean[["mpg"]])^2/mean((mean(carsclean[['mpg']])-carsclean[['mpg']])^2)
+scatterplot(treepredict)
+carframe <- data.frame(lm.mpg=treepredict,
+rt.mpg=lmpredict,
+true.mpg=carsclean[["mpg"]])
+ggplot(carframe,aes(x=lm.mpg,y=true.mpg)) +
+geom_point() + geom_abline(slope=1,intercept=0,color="red") +
+ggtitle("Linear Model")
+ggplot(carframe,aes(x=rt.mpg,y=true.mpg)) +
+geom_point() + geom_abline(slope=1,intercept=0,color="red") +
+ggtitle("Regression Tree")
+carframe <- data.frame(lm.mpg=lmpredict,
+rt.mpg=treepredict,
+true.mpg=carsclean[["mpg"]])
+ggplot(carframe,aes(x=lm.mpg,y=true.mpg)) +
+geom_point() + geom_abline(slope=1,intercept=0,color="red") +
+ggtitle("Linear Model")
+ggplot(carframe,aes(x=rt.mpg,y=true.mpg)) +
+geom_point() + geom_abline(slope=1,intercept=0,color="red") +
+ggtitle("Regression Tree")
+library(performanceEstimation)
+res <- performanceEstimation(
++ PredTask(mpg ~ ., carsclean, "mpg"),
++ c(Workflow(learner="lm",pre="knnImp",post="onlyPos"),
++ workflowVariants(learner="rpartXse",learner.pars=list(se=c(0,0.5,1)))),
++ EstimationTask(metrics="nmse",method=CV(nReps=5,nFolds=10))
++ )
++ PredTask(mpg ~ ., carsclean, "mpg"),
++ c(Workflow(learner="lm",pre="knnImp",post="onlyPos"),
++ workflowVariants(learner="rpartXse",learner.pars=list(se=c(0,0.5,1)))),
++ EstimationTask(metrics="nmse",method=CV(nReps=5,nFolds=10))
+res <- performanceEstimation(
++ PredTask(mpg ~ ., carsclean, "mpg"),
++ c(Workflow(learner="lm",pre="knnImp",post="onlyPos"),
++ workflowVariants(learner="rpartXse",learner.pars=list(se=c(0,0.5,1)))),
++ EstimationTask(metrics="nmse",method=CV(nReps=5,nFolds=10)))
+res <- performanceEstimation(PredTask(mpg ~ ., carsclean, "mpg"),
+c(Workflow(learner="lm",pre="knnImp",post="onlyPos"),
+workflowVariants(learner="rpartXse",learner.pars=list(se=c(0,0.5,1)))),
+EstimationTask(metrics="nmse",method=CV(nReps=5,nFolds=10)))
+res2 <- performanceEstimation(PredTask(mpg ~ ., carsclean, "mpg"),
+c(Workflow(learner="lm",pre="knnImp",post="onlyPos"),
+workflowVariants(learner="rpartXse",learner.pars=list(se=c(0,0.5,1)))),
+EstimationTask(metrics="mse",method=CV(nReps=3,nFolds=5)))
+summary(res)
+summary(res2)

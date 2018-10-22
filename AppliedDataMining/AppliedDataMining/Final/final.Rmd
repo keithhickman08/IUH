@@ -1,0 +1,322 @@
+---
+title: "Applied Data Mining Final Exam"
+author: "Keith Hickman"
+instructor: "Hasan  Kurban"
+due: "12/11/2017"
+output:
+  word_document: default
+  html_document:
+    df_print: paged
+  pdf_document: default
+due: December 11, 2017
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Problem 1 
+I was unable to find a solution to this problem. 
+
+#Problem 2
+Choose the best answer. A classification tree generally has
+(a) high variance.
+(b) low variance.
+(c) average variance.
+
+*Answer: 
+(a) a classification tree typically has high variance and low bias. 
+
+#Problem 3
+Suppose this is the given training set with features, A,B,C,D and label L:
+
+**Create the dataset: 
+```{r}
+a <- c(1, 2, 1, 3, 0, 4, 1)
+b <- c(2, 3, 2, 1, 0, 1, 1)
+c <- c("m", "m", "p", "p", "a", "m", "m")
+d <- c(1, 1, 0, 1, 0, 1, 0)
+
+p2data <- as.data.frame(cbind(a, b, c, d))
+p2data
+```
+##(a) 
+The entropy of the Label is:
+i. minimal
+ii. maximal
+iii. neither maximal nor minimal
+
+*Answer: (iii), neither minimal nor maximal.
+```{r}
+library(CORElearn)
+attrEval(d ~ ., p2data, estimator="GainRatio")
+attrEval(d ~ ., p2data, estimator="Gini")
+attrEval(d ~ ., p2data, estimator="InfGain")
+```
+
+The Label is binomial, so I'll use Information Gain, the Gini Index and Gain Ratio. If the variable were continuous, I could use other methods such as Mean Square Error.
+Here, it appears that the entropy of the label is neither minimal nor maximal, so the variables aren't doing a great job explaining variation as is. Values across all three metrics indicated are neither near zero nor close to 1. Variables a and b explain the most variation, but we could potentially engineer our features to get some more useful information, possibly through PCA.  
+ 
+
+##(b) 
+Using features A,B and treating them as dimension in 2D Euclidean space, the data is:
+i. linearly separable
+ii. not linearly separable
+
+```{r fig.height=4, fig.width=4}
+library(DMwR2)
+library(rpart.plot)
+library(e1071)
+library(ggplot2)
+
+
+set.seed(1234)
+
+p2ab <- p2data[,1:2,4]
+ggplot(p2ab,aes(x=b,y=a, color=d)) + geom_point() + guides(color=FALSE)
+
+svm_model <- svm(d ~ ., p2data, kernel='linear')
+
+ps <- predict(svm_model, p2data)
+(cm <- table(ps, p2data$d))
+```
+
+The data appears to be linearly separable. 
+
+##(b)
+Give a reasonable separating line for the data.
+*Answer:  
+The separating line would run from $(-.5, 3.5)$ to $(3.5, .5)$
+
+##(c)
+Give a decision tree for the data:
+
+We'll use ``rpartXse`` to create a tree, and ``prp`` to plot the tree.  
+```{r fig.height=4, fig.width=4}
+tree <- rpartXse(d ~ ., p2data)
+prp(tree, type=0, extra=101)
+```
+
+Looks like we could do some post-pruning to improve the purity and accuracy.  
+
+#Problem 4
+What is the error rate? 
+*Answer: 
+The error rate is 2/5 or 40%, as we misclassified 2 out 5 observations: 
+```{r}
+2/5
+```
+
+#Problem 5
+
+Fill-in the confusion matrix values $v1$; $v2$; $v3$; $v4$ using the data above:
+**I was unable to install the ``caret`` package previously but got it to work by installing the package mentioned in the namespace error (lubridate).**
+```{r}
+library(caret)
+
+TID <- c(1, 2, 3, 4, 5)
+Lhat <- (c(1, 1, 0, 1, 0))
+L <- (c(0, 1, 0, 1, 1))
+
+p5data <- as.data.frame(cbind(TID, Lhat, L))
+p5data$Lhat <- as.factor(p5data$Lhat)
+p5data$L <- as.factor(p5data$L)
+p5data
+
+cm <- confusionMatrix(p5data$L, p5data$Lhat)
+cm
+
+```
+(a) Give the Accuracy:
+*Answer: our accuracy here is .6 or 60%.  This aligns with the rough error rate calcuation. 
+(b) Misclassification Rate
+*Answer: 40% 
+(c) True Positive Rate
+*Answer: 50%
+(d) Specificity
+*Answer: 66%
+
+
+#Problem 6:
+(a) (True or False) The most important stage in the process of data mining is the problem statement.
+*Answer: True
+
+(b) (True or False) A histogram is kind of partition.
+*Answer: False. 
+
+(c) (True or False) A histogram is a kind of probability distribution function.
+*Answer: True. 
+
+(d) (True or False) Outliers are always noise objects.
+*Answer: False
+
+(e) (True or False) Noise objects can be outliers.
+*Answer: True
+
+(f) Define data mining.
+*Answer: The analysis of data in search of useful knowledge. The field is broad and diverse, encompassing many tactics, techniques, procedures, and disciplines, including statistics, machine learning, and artificial intelligence. 
+
+(g) What does over-fitting mean?
+*Answer: Over-fitting is creating model that only performs well on seen data, and does not handle unseen data well or nearly as well as training data. It means that we have a model whose parameters and algorithms are designed specifically for the data we already possess. 
+
+(h) What is the main difference between supervised and unsupervised learning?
+*Answer: Supervised methods are concerned with predictive tasks, whereas unsupervised tasks are concerned with descriptive data mining tasks. 
+
+#Problem 7
+
+Consider the following results from a five-fold cross validation:
+
+Fold Error%
+1 19.25
+2 19.76
+3 18.99
+4 19.37
+5 14.45
+
+```{r}
+error <- c(19.25, 19.76, 18.99, 19.37, 14.45)
+df <- as.data.frame(error)
+```
+
+## (a) 
+Find the average error ^E
+```{r}
+mean(df[,1])
+#or 
+mean <- mean(error)
+mean
+```
+
+##(b) 
+^E is a good indicator of the true error E. Explain why/why not?
+
+In this case, $\hat{E}$ is not a good predictor of the true error $E$. As evidenced in the plot below, we have one outlier in the last k-fold validation. The difference between Error 5 in the dataset and the mean is 10x greater than the IQR, meaning we have one outlier. This would indicate that one of our models greatly outperformed the others, and we should further examine that model. 
+```{r fig.height=4, fig.width=4}
+plot(error)
+IQR(error)
+mean - error[5]
+```
+
+We clearly have an outlier here, and therefore $\hat{E}$ is not an accurate predictor. 
+
+#Problem 8 
+
+Fill-in the table's cell with Y (yes), N (no), or U (unknown):
+
+
+Method        | Parametric
+------------- | -------------
+Linear Reg.   | Y
+knn           | N
+k-means       | N
+decision tree | U
+
+
+
+#Problem 9
+In this question, you are asked to use the data set below and K-nearest neighbors to predict $(X1;X2;X3) = (0,0,0)$. Note that X1;X2;X3 are the predictors and Y is the response variable.
+```{r}
+x1 <- c(0, 0, 0, 0, -1, 1)
+x2 <- c(3, 0, 1, 1, -1, 1)
+x3 <- c(0, 0, 3, 2, 1, 1)
+Y <- c("Red", "Red", "Red", "Green", "Green", "Red")
+
+p9data <- as.data.frame(cbind(x1, x2, x3, Y))
+p9data
+```
+
+##(a) 
+Calculate the Euclidean distance between each observation and the test point, X1 = X2 = X3 = 0.
+```{r}
+#install.packages("cluster")
+library(cluster)
+di <- diana(p9data[,-4], metric='euclidean', stand=FALSE)
+di3 <- cutree(di, 3)
+(cm <- table(di3, p9data$Y))
+100*(1-sum(diag(cm))/sum(cm))
+```
+The Euclidian distance is 83.3
+
+##(b) 
+What is the prediction for K = 1?
+```{r}
+library(class)
+k1 <- knn(p9data[1:3, -4], p9data[4:6,-4],p9data[1:3,4], k = 1)
+table(k1, p9data[1:3, 4])
+```
+
+We've got 100% accuracy with k=1.  
+
+##(c)
+What is the prediction for K = 3?
+```{r}
+library(class)
+k3 <- knn(p9data[4:6, -4], p9data[1:3,-4],p9data[4:6,4], k = 3)
+table(k3, p9data[4:6, 4])
+```
+Initially, we have fewer correct classifications with k=3, which is likely due to switching the test and train datasets. I re-ran the knn with k=1 with the sme dataset as I did with k=3.  
+
+```{r}
+k1b <- knn(p9data[4:6, -4], p9data[1:3,-4],p9data[4:6,4], k = 1)
+table(k1b, p9data[4:6, 4])
+```
+
+K = 1 performed at 33% accuracy, with a Type 2 error rate of 66%. 
+K = 3 outperformed k=1 by 33%.  
+
+#Problem 10: 
+Load the Carseats data as follows and answer the questions below and provide the R code for each question.
+
+```{r}
+library(ISLR)
+attach(Carseats)
+## View(Carseats)
+dim(Carseats)
+```
+
+##(a) 
+Create a training data set containing a random sample of 200 data points and a test set containing the remaining observations.
+
+```{r}
+rndSample <- sample(1:nrow(Carseats), 200)
+tr <- Carseats[rndSample, ]
+ts <- Carseats[-rndSample, ]
+```
+
+##(b) 
+Fit a regression tree to the training set. Plot the tree, and interpret the results. What test error rate do you obtain (MSE)?
+
+```{r}
+library(rpart)
+library(rpart.plot)
+```
+
+
+```{r}
+rt.a1 <- rpart(Sales ~ ., data = Carseats[2:11])
+rt.predictions.a1 <- predict(rt.a1, tr)
+prp(rt.a1,extra=101,box.col="orange",split.box.col="grey")
+printcp(rt.a1)
+mse.a1.rt <- mean(rt.predictions.a1 - Carseats["Sales"])^2
+```
+**When I use the training set (code above) get an error message that 'variable lengths differ (found for 'CompPrice')' but was unable to solve using StackOverflow. There aren't any incomplete cases...can't figure this one out. Moving forward with the complete Carseats set minus the response variable.** 
+
+The overall MSE of our regression tree is 2.614.
+
+We observe that we will probably get the best result with tree 14, which has the lowest estimated relative error at .55577.  Alternatively, we could use the 1 - SE rule, which would let us find the tree with the error below .55577 + .039828, or .59559.  No other trees have either a relative error or 1-SE error that would perform better than tree 14. We can accordingly obtain the information about the tree using the CP.
+
+(c) Train random forests over the training set (mtry = 5, ntree = 500). What test error rate do you obtain
+(MSE)? Use the importance() function to determine which variables are most important (Three most
+important variables).
+
+```{r}
+library(randomForest)
+(rf <- randomForest(Sales ~ .,data=Carseats, ntree = 500, mtry = 5, importance = TRUE))
+```
+
+```{r}
+imp <- importance(rf)
+imp
+```
+
+The three most important variables are ShelveLoc, Price, and Advertising based on the %IncMSE variable, which shows how much the MSE increases when those variables are removed from the tree. 

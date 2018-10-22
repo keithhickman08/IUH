@@ -1,0 +1,512 @@
+summary(rainfall)
+qqnorm(rainfall)
+qqnorm(rainfall[,0])
+qqnorm(rainfall[,1])
+rainfall <- rainfall[1]
+summary(rainfall)
+qqnorm(rainfall)
+qqnorm(rainfall[,1])
+plot(density(rainfall))
+plot(density(rainfall[,1]))
+knitr::opts_chunk$set(echo = TRUE)
+2 * (1 - dbinom(40, 80, .5))
+2 * (dbinom(40, 80, .5))
+mean.sno <- mean(rainfall)
+mean.sno <- mean(rainfall[,1])
+mean.sno
+mean.seattle
+mean.seattle <- 37.7
+mean.seattle - mean.sno
+sd.sno <- sd(rainfall[,1])
+sd.sno
+s3.sno <- sd(rainfall[,1]/sqrt(length(rainfall[,1])))
+sd.sno
+qqnorm(rainfall[,1])
+mean.sno
+mean.seattle
+p <- 2.074 / 4.247
+p
+p <- (2.074 / 4.247) * 100
+p
+1 - pbinom(2074000, 4247000, .5)
+pbinom(2074000, 4247000, .5)
+pbinom(2074000, 4247000, .48)
+pbinom(2074000, 4247000, .5)
+dbinom(2074000, 4247000, .5)
+dbinom(2074000, 4247000, .48)
+pbinom(2074000, 4247000, .48)
+pbinom(2074000, 4247000, .50)
+pbinom(2074000, 4247000, .47)
+pbinom(2074000, 4247000, .51)
+pbinom(2074000, 4247000, .5)
+sd.sno <- sd(rainfall[,1]/sqrt(length(rainfall[,1])))
+sd.sno
+1 - pbinom(40, 80, .5)
+p - qnorm(.975) * sqrt(p * (1 - p)) / sqrt(4247000)
+p <- .48883
+p - qnorm(.975) * sqrt(p * (1 - p)) / sqrt(4247000)
+p + qnorm(.975) * sqrt(p * (1 - p)) / sqrt(4247000)
+upper_bound <- p - qnorm(.975) * sqrt(p * (1 - p)) / sqrt(4247000)
+lower_bound <- p + qnorm(.975) * sqrt(p * (1 - p)) / sqrt(4247000)
+upper_bound
+lower_bound
+lower_bound <- p - qnorm(.975) * sqrt(p * (1 - p)) / sqrt(4247000)
+upper_bound <- p + qnorm(.975) * sqrt(p * (1 - p)) / sqrt(4247000)
+upper_bound
+lower_bound
+upper_bound
+rainfall <- read.csv("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\StatsS520\\Module12\\snoqualmie14.txt")
+## I used read.csv because everytime I knit to PDF, r markdown asks me to choose the file.
+rainfall <- rainfall[1]
+summary(rainfall)
+p5.p <- .894
+lower_bound <- p5.p - qnorm(.975) * sqrt(p5.p * (1 - p5.p)) / sqrt(4247000)
+upper_bound <- p5.p + qnorm(.975) * sqrt(p5.p * (1 - p5.p)) / sqrt(4247000)
+upper_bound
+lower_bound
+upper_bound
+lower_bound
+upper_bound
+p5.in <- .894
+lower_bound <- p5.in - qnorm(.975) * sqrt(p5.in * (1 - p5.in)) / sqrt(4247000)
+upper_bound <- p5.in + qnorm(.975) * sqrt(p5.in * (1 - p5.in)) / sqrt(4247000)
+upper_bound
+lower_bound
+p5.out <- .48883
+lower_bound <- p5.out - qnorm(.975) * sqrt(p5.out * (1 - p5.out)) / sqrt(4247000)
+upper_bound <- p5.out + qnorm(.975) * sqrt(p5.out * (1 - p5.out)) / sqrt(4247000)
+upper_bound
+lower_bound
+p5.out <- .925
+lower_bound <- p5.out - qnorm(.975) * sqrt(p5.out * (1 - p5.out)) / sqrt(4247000)
+upper_bound <- p5.out + qnorm(.975) * sqrt(p5.out * (1 - p5.out)) / sqrt(4247000)
+upper_bound
+lower_bound
+upper_bound
+train <- read.csv("C:Users\\khickman\\Desktop\\Personal\\IUMSDS\\AppliedDataMining\\HW6\\train.csv")
+train <- read.csv("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\AppliedDataMining\\HW6\\train.csv")
+test <- read.csv("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\AppliedDataMining\\HW6\\test.csv")
+summary(train)
+cat_var <- names(train)[which(sapply(train, is.character))]
+cat_car <- c(cat_var, 'BedroomAbvGr', 'HalfBath', ' KitchenAbvGr','BsmtFullBath', 'BsmtHalfBath', 'MSSubClass')
+numeric_var <- names(train)[which(sapply(train, is.numeric))]
+summary(cat_var)
+cat_var <- names(train)[which(sapply(train, is.character))]
+summary(cat_var)
+cat_car <- c(cat_var, 'BedroomAbvGr', 'HalfBath', ' KitchenAbvGr','BsmtFullBath', 'BsmtHalfBath', 'MSSubClass')
+summary(cat_car)
+summary(numeric_var)
+cat_var <- names(train)[which(sapply(train, is.character))]
+cat_car <- c(cat_var, 'BedroomAbvGr', 'HalfBath', ' KitchenAbvGr','BsmtFullBath', 'BsmtHalfBath', 'MSSubClass')
+numeric_var <- names(train)[which(sapply(train, is.numeric))]
+summary(cat_var)
+summary(cat_car)
+summary(numeric_var)
+head(cat_var)
+summary(train)
+str(train)
+summary(numeric_var)
+str(train)
+summary(train)
+cat_var <- names(train)[which(sapply(train, is.character))]
+summary(cat_car)
+train <- fread("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\AppliedDataMining\\HW6\\train.csv")
+library(data.table)
+train <- fread("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\AppliedDataMining\\HW6\\train.csv")
+summary(train)
+str(train)
+cat_var <- names(train)[which(sapply(train, is.character))]
+summary(cat_car)
+cat_var <- names(train)[which(sapply(train, is.character))]
+summary(cat_var)
+summary(numeric_var)
+numeric_var <- names(train)[which(sapply(train, is.numeric))]
+summary(numeric_var)
+cat_car <- c(cat_var, 'OverallQual','GarageCars','MoSold','YrSold','GarageYrBlt','Fireplaces','BsmtFullBath','BsmtHalfBath','FullBath','HalfBath','BedroomAbvGr','MSSubClass')
+summary(cat_car)
+head(cat_var)
+head(cat_car)
+test <- fread("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\AppliedDataMining\\HW6\\test.csv")
+View(test)
+View(train)
+summary(cat_car)
+summary(numeric_var)
+summary(train)
+summary(numeric_var)
+summary(numeric_var)
+??names
+library(DMwR2)
+train$OverallQual <- as.factor(train$OverallQual)
+summary(train$OverallQual)
+str(train$OverallQual)
+cat_var <- names(train)[which(sapply(train, is.character))]
+summary(cat_var)
+cat_car <- c(cat_var, 'OverallQual','GarageCars','MoSold','YrSold','GarageYrBlt','Fireplaces','BsmtFullBath','BsmtHalfBath','FullBath','HalfBath','BedroomAbvGr','MSSubClass')
+summary(cat_car)
+numeric_var <- names(train)[which(sapply(train, is.numeric))]
+summary(numeric_var)
+?princomp
+?prcomp
+library(ggplot2)
+train <- fread("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\AppliedDataMining\\HW6\\train.csv")
+test <- fread("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\AppliedDataMining\\HW6\\test.csv")
+summary(train)
+str(train)
+head(cat_car)
+str(cat_car)
+Missing_indices <- sapply(train,function(x)sum(is.na(x)))
+Missing_Summary <- data.frame(index = names(train),Missing_Values=Missing_indices)
+Missing_Summary[Missing_Summary$Missing_Values > 0,]
+View(test)
+View(train)
+train$Alley[which(is.na(train$Alley))] <- "None"
+table(train$Alley)
+train$OverallQual[which(is.na(train$OverallQual))] <- "None"
+train$GarageCars[which(is.na(train$GarageCars))] <- "None"
+train$MoSold[which(is.na(train$MoSold))] <- "None"
+train$YrSold[which(is.na(train$YrSold))] <- "None"
+train$GarageYrBlt[which(is.na(train$GarageYrBuilt))] <- "None"
+train$Fireplaces[which(is.na(train$Fireplaces))] <- "None"
+train$BsmtFullBath[which(is.na(train$BsmtFullBath))] <- "None"
+table(BsmtFullBath)
+table(train$BsmtFullBath)
+train$BsmtHalfBath[which(is.na(train$BsmtHalfBath))] <- "None"
+train$FullBath[which(is.na(train$FullBath))] <- "None"
+table(FullBath)
+table(train$FullBath)
+train$HalfBath[which(is.na(train$HalfBath))] <- "None"
+train$BedroomAbvGr[which(is.na(train$BedroomAbvGr))] <- "None"
+train$KitchenAbvGr[which(is.na(train$KitchenAbvGr))] <- "None"
+train$GarageCond[which(is.na(train$GarageCond))] <- "None"
+train$GarageCond[which(is.na(train$GarageCond))] <- "None"
+train$GarageYrBlt[which(is.na(train$GarageYrBuilt))] <- "None"
+train$GarageType[which(is.na(train$FullBath))] <- "None"
+train$GarageCars[which(is.na(train$GarageCars))] <- "None"
+train$GarageType[which(is.na(train$GarageType))] <- "None"
+train$GarageCars[which(is.na(train$GarageCars))] <- "None"
+train$GarageFinish[which(is.na(train$GarageFinish))] <- "None"
+train$GarageQual[which(is.na(train$GarageQual))] <- "None"
+Missing_indices <- sapply(train,function(x)sum(is.na(x)))
+Missing_Summary <- data.frame(index = names(train),Missing_Values=Missing_indices)
+Missing_Summary[Missing_Summary$Missing_Values > 0,]
+table(train$FullBath)
+train$FullBath <- train$FullBath
+table(train$FullBath)
+train$FullBath0 <- train[train$FullBath0=0,]
+library(dplyr)
+scatter.smooth(train$FullBath,train$GrLivArea)
+scatter(train$FullBath,train$GrLivArea)
+plot(scatter(train$FullBath,train$GrLivArea))
+ggplot(scatter(train$FullBath,train$GrLivArea))
+library(corrplot)
+cm <- cor(train[,train$FullBath,train$GrLivArea], use="complete.obs")
+cm <- cor(train[,train$FullBath,train$GrLivArea])
+cm <- cor(train[,train$FullBath,train$GrLivArea])
+cm <- cor(train[,1:2])
+cm
+cm <- cor(train[,1:81])
+cm <- cor(train[,1:80])
+cm <- cor(numeric_var)
+cm <- cor(train$numeric_var)
+as.data.frame(cat_var)
+cat_var <- [which(sapply(train, is.character))]
+cat_var <- train[which(sapply(train, is.character))]
+as.data.frame(cat_var)
+numeric_var <- train[which(sapply(train, is.numeric))]
+as.data.frame(numeric_var)
+summary(cat_car)
+summary(numeric_var)
+summary(cat_var)
+cat_car <- c(cat_var, 'OverallQual','GarageCars','MoSold','YrSold','GarageYrBlt','Fireplaces','BsmtFullBath','BsmtHalfBath','FullBath','HalfBath','BedroomAbvGr','MSSubClass')
+summary(cat_car)
+cat_var <- train[which(sapply(train, is.character))]
+summary(cat_var)
+cat_var <- c(cat_var, 'OverallQual','GarageCars','MoSold','YrSold','GarageYrBlt','Fireplaces','BsmtFullBath','BsmtHalfBath','FullBath','HalfBath','BedroomAbvGr','MSSubClass')
+numeric_var <- train[which(sapply(train, is.numeric))]
+summary(cat_var)
+summary(cat_var)
+cat_var <- train[which(sapply(train, is.character))]
+summary(cat_var)
+cat_var <- c(cat_var, 'OverallQual','GarageCars','MoSold','YrSold','GarageYrBlt','Fireplaces','BsmtFullBath','BsmtHalfBath','FullBath','HalfBath','BedroomAbvGr','MSSubClass')
+summary(cat_var)
+cat_var <- train[which(sapply(train, is.character))]
+summary(cat_var)
+numeric_var <- train[which(sapply(train, is.numeric))]
+summary(numeric_var)
+Missing_indices <- sapply(train,function(x)sum(is.na(x)))
+Missing_Summary <- data.frame(index = names(train),Missing_Values=Missing_indices)
+Missing_Summary[Missing_Summary$Missing_Values > 0,]
+cm <- cor(numeric_var)
+cm
+corrplot(cm)
+cm <- cor(cat_var)
+cm
+cm <- cor(numeric_var)
+ggplot(train, aes(x=FullBath)) + geom_histogram(binwidth=0.5) + facet_wrap(~ GrLvArea)
+library(ggplot)
+library(ggplot2)
+ggplot2(train, aes(x=FullBath)) + geom_histogram(binwidth=0.5) + facet_wrap(~ GrLvArea)
+library(forcats)
+ggplot(train, aes(x=FullBath)) + geom_histogram(binwidth=0.5) + facet_wrap(~ GrLvArea)
+ggplot(train, aes(x=FullBath)) + geom_histogram + facet_wrap(~ GrLvArea)
+ggplot(train, aes(x=FullBath)) + facet_wrap(~ GrLvArea)
+plot(cm)
+plot(x=FullBath,y=GrLiveArea,train)
+plot(x=train$FullBath,y=train$GrLiveArea)
+data.frame1 <- as.integer(c(train$FullBath, train$BedroomAbvGr,train$GrLivArea))
+corrplot(data.frame1())
+corrplot(data.frame1)
+data.frame1 <- data.frame(as.integer(c(train$FullBath, train$BedroomAbvGr,train$GrLivArea)))
+corrplot(data.frame1)
+data.frame1 <- data.frame(as.integer(c(train$FullBath[,1:1460], train$BedroomAbvGr[,1:1460],train$GrLivArea[,1:1460])))
+data.frame1 <- data.frame(as.integer(c(train$FullBath[1:1460,], train$BedroomAbvGr[1:1460,],train$GrLivArea[1:1460,])))
+data.frame1 <- data.frame(as.integer(c(train$FullBath, train$BedroomAbvGr,train$GrLivArea)))
+corrplot(data.frame1)
+corrplot(data.frame1[,1:2])
+corrplot(data.frame1[1:2])
+train$FullBath.int <- as.integer(train$FullBath)
+train$BedroomAbvGr.int <- as.integer(train$BedroomAbvGr)
+cor(train$FullBath.int, train$GrLivArea)
+cor(train$BedroomAbvGr.int, train$GrLivArea)
+lm(FullBath.int ~ GrLivArea, train)
+impute.lm <- lm(FullBath.int ~ GrLivArea, train)
+impute.lm
+impute.lm <- lm(BedroomAbvGr.int ~ GrLivArea, train)
+impute.lm
+cor(train$FullBath.int, train$GrLivArea)
+cor(train$BedroomAbvGr.int, train$GrLivArea)
+train[is.na(train$FullBath.int), "FullBath.int"] <- sapply(train[is.na(train$FullBath.ing), "GrLivArea"], fillPO4)
+fillbath <- function(bath) ifelse(is.na(bath),NA,1.64 + .0008092 * bath)
+train[is.na(train$FullBath.int), "FullBath.int"] <- sapply(train[is.na(train$FullBath.ing), "GrLivArea"], fillbath)
+train$FullBath.int[which(is.na(train$FullBath.int))] <- 0
+train[is.na(train$FullBath.int), "FullBath.int"] <- sapply(train[is.na(train$FullBath.ing), "GrLivArea"], fillbath)
+train[is.na(train$FullBath.int), "FullBath.int"] <- sapply(train[is.na(train$FullBath.int), "GrLivArea"], fillbath)
+pca <- prcomp(pca.train)
+pca.train <- train
+pca <- prcomp(pca.train)
+pca.train <- train
+pca <- princomp(pca.train)
+corrplot(numeric_var)
+summary(numeric_var)
+corrplot(numeric_var)
+corrplot(numeric_var)
+corrplot(cor(numeric_var))
+train <- fread("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\AppliedDataMining\\HW6\\train.csv")
+library(data.table)
+library(DMwR2)
+library(ggplot2)
+library(dplyr)
+library(forcats)
+train <- fread("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\AppliedDataMining\\HW6\\train.csv")
+test <- fread("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\AppliedDataMining\\HW6\\test.csv")
+summary(train)
+str(train)
+train$OverallQual <- as.factor(train$OverallQual)
+train$GarageCars <- as.factor(train$GarageCars)
+train$MoSold <- as.factor(train$MoSold)
+train$GarageYrBlt <- as.factor(train$GarageYrBlt)
+train$Fireplaces <- as.factor(train$Fireplaces)
+train$BsmtFullBath <- as.factor(train$BsmtFullBath)
+train$BsmtHalfBath <- as.factor(train$BsmtHalfBath)
+train$FullBath <- as.factor(train$FullBath)
+train$HalfBath <- as.factor(train$HalfBath)
+train$BedroomAbvGr <- as.factor(train$BedroomAbvGr)
+train$KitchenAbvGr <- as.factor(train$KitchenAbvGr)
+cat_var <- train[which(sapply(train, is.character))]
+summary(cat_var)
+str(cat_var)
+numeric_var <- train[which(sapply(train, is.numeric))]
+summary(numeric_var)
+str(numeric_var)
+train$Alley[which(is.na(train$Alley))] <- "None"
+table(train$Alley)
+train$Alley[which(is.na(train$Alley))] <- "None"
+train$OverallQual[which(is.na(train$OverallQual))] <- "None"
+train$MoSold[which(is.na(train$MoSold))] <- "None"
+train$Fireplaces[which(is.na(train$Fireplaces))] <- "None"
+train$GarageCond[which(is.na(train$GarageCond))] <- "None"
+train$GarageType[which(is.na(train$GarageType))] <- "None"
+train$GarageCars[which(is.na(train$GarageCars))] <- "None"
+train$GarageFinish[which(is.na(train$GarageFinish))] <- "None"
+table(train$BsmtFullBath)
+train$BsmtHalfBath[which(is.na(train$BsmtHalfBath))] <- "None"
+table(train$FullBath)
+train$HalfBath[which(is.na(train$HalfBath))] <- "None"
+train$BedroomAbvGr[which(is.na(train$BedroomAbvGr))] <- "None"
+corrplot(cor(numeric_var))
+cat_var <- train[which(sapply(train, is.character))]
+str(cat_var)
+numeric_var <- train[which(sapply(train, is.numeric))]
+cat_var <- train[which(sapply(train, is.factor))]
+str(cat_var)
+cat_var <- sapply(train, is.factor)
+cat_var
+categories.train <- train[,cat_var]
+categories.train <- data.frame(train[,cat_var])
+categories.train <- train[is.factor="TRUE"]
+categories.train <- train[is.factor]
+categories.train <- is.factor(train)
+categories.train
+train <- data.frame(train)
+train.df <- data.frame(train)
+train <- fread("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\AppliedDataMining\\HW6\\train.csv")
+train.df <- data.frame(train)
+cat_var <- sapply(train.df, is.factor)
+cat_var
+categories.train <- train.df[,cat_var]
+str(categories.train)
+categories.train <- train.df[,cat_var]
+categories.train
+numeric_var <- train[which(sapply(train, is.numeric))]
+str(numeric_var)
+cat_var <- names(train)[which(sapply(train, is.character))]
+cat_var
+numeric_var <- names(train)[which(sapply(train, is.numeric))]
+str(numeric_var)
+train <- fread("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\AppliedDataMining\\HW6\\train.csv")
+summary(train)
+str(train)
+train$OverallQual <- as.factor(train$OverallQual)
+train$GarageCars <- as.factor(train$GarageCars)
+train$MoSold <- as.factor(train$MoSold)
+train$YrSold <- as.factor(train$YrSold)
+train$GarageYrBlt <- as.factor(train$GarageYrBlt)
+train$Fireplaces <- as.factor(train$Fireplaces)
+train$BsmtFullBath <- as.factor(train$BsmtFullBath)
+train$BsmtHalfBath <- as.factor(train$BsmtHalfBath)
+train$FullBath <- as.factor(train$FullBath)
+train$HalfBath <- as.factor(train$HalfBath)
+train$BedroomAbvGr <- as.factor(train$BedroomAbvGr)
+train$KitchenAbvGr <- as.factor(train$KitchenAbvGr)
+cat_var <- names(train)[which(sapply(train, is.character))]
+cat_var
+numeric_var <- names(train)[which(sapply(train, is.numeric))]
+str(numeric_var)
+Missing_indices <- sapply(train,function(x)sum(is.na(x)))
+Missing_Summary <- data.frame(index = names(train),Missing_Values=Missing_indices)
+Missing_Summary[Missing_Summary$Missing_Values > 0,]
+train$Alley[which(is.na(train$Alley))] <- "None"
+table(train$Alley)
+train$Alley[which(is.na(train$Alley))] <- "None"
+train$OverallQual[which(is.na(train$OverallQual))] <- "None"
+train$MoSold[which(is.na(train$MoSold))] <- "None"
+train$YrSold[which(is.na(train$YrSold))] <- "None"
+train$BsmtFullBath[which(is.na(train$BsmtFullBath))] <- "None"
+train$GarageCond[which(is.na(train$GarageCond))] <- "None"
+train$GarageType[which(is.na(train$GarageType))] <- "None"
+table(train$BsmtFullBath)
+train$BsmtHalfBath[which(is.na(train$BsmtHalfBath))] <- "None"
+table(train$BsmtFullBath)
+train$BsmtHalfBath[which(is.na(train$BsmtHalfBath))] <- "None"
+train$FullBath[which(is.na(train$FullBath))] <- "None"
+table(train$FullBath)
+train$HalfBath[which(is.na(train$HalfBath))] <- "None"
+train$BedroomAbvGr[which(is.na(train$BedroomAbvGr))] <- "None"
+train$GarageCond[which(is.na(train$GarageCond))] <- "None"
+train$GarageYrBlt[which(is.na(train$GarageYrBuilt))] <- "None"
+train$GarageType[which(is.na(train$GarageType))] <- "None"
+train$GarageCars[which(is.na(train$GarageCars))] <- "None"
+train$GarageFinish[which(is.na(train$GarageFinish))] <- "None"
+train$GarageQual[which(is.na(train$GarageQual))] <- "None"
+table(train$BsmtFullBath)
+train$BsmtHalfBath[which(is.na(train$BsmtHalfBath))] <- "None"
+train$FullBath[which(is.na(train$FullBath))] <- "None"
+table(train$FullBath)
+train$HalfBath[which(is.na(train$HalfBath))] <- "None"
+train$BedroomAbvGr[which(is.na(train$BedroomAbvGr))] <- "None"
+train$KitchenAbvGr[which(is.na(train$KitchenAbvGr))] <- "None"
+View(train.df)
+corrplot(cor(numeric_var))
+corrplot(cor(train$GrLivArea,train$BedroomAbvGr))
+corrplot(cor(train$GrLivArea,train$BedroomAbvGr.int))
+cor(train$GrLivArea,train$BedroomAbvGr.int))
+cor(train$GrLivArea,train$BedroomAbvGr.int)
+train$BedroomAbvGr[which(is.na(train$BedroomAbvGr))] <- "None"
+train$GarageQual[which(is.na(train$GarageQual))] <- "None"
+table(train$GarageQual)
+pca.train <- train
+pca <- princomp(pca.train)
+pca <- prcomp(pca.train)
+pca.train <- numeric_var
+pca <- prcomp(pca.train)
+pca.train <- numeric_var
+train.numeric <- train[,.SD, .SDcols =numeric_var]
+pca.train <- prcomp(train.numeric)
+summary(train.numeric)
+summary(train.numeric, is.na(FALSE))
+train.numeric <- is.na(train[,.SD, .SDcols =numeric_var],FALSE)
+train.numeric <- rm.na(train[,.SD, .SDcols =numeric_var],FALSE)
+train.numeric <- rm.na(train[,.SD, .SDcols =numeric_var])
+summary(train.numeric)
+train$Alley[which(is.na(train$Alley))] <- "None"
+train$OverallQual[which(is.na(train$OverallQual))] <- "None"
+train$MoSold[which(is.na(train$MoSold))] <- "None"
+train$Fireplaces[which(is.na(train$Fireplaces))] <- "None"
+train$GarageCond[which(is.na(train$GarageCond))] <- "None"
+train$GarageYrBlt[which(is.na(train$GarageYrBuilt))] <- "None"
+train$GarageType[which(is.na(train$GarageType))] <- "None"
+train$GarageCars[which(is.na(train$GarageCars))] <- "None"
+train$GarageFinish[which(is.na(train$GarageFinish))] <- "None"
+train$GarageQual[which(is.na(train$GarageQual))] <- "None"
+table(train$GarageQual)
+train.numeric <- train.numeric[-manyNAs(train.numeric), ]
+summary(train.numeric)
+train.numeric <- train.numeric
+train.numeric <- train[,.SD, .SDcols =numeric_var]
+train.numeric <- train.numeric
+summary(train.numeric)
+train.numeric[is.na(train.numeric$LotFrontage), "LotFrontage"] <- mean(train.numeric$LotFrontage, na.rm = TRUE)
+summary(train.numeric)
+train.numeric[is.na(train.numeric$MasVnrArea), "MasVnrArea"] <- mean(train.numeric$MasVnrArea, na.rm = TRUE)
+train.numeric[is.na(train.numeric$BsmtFinSF1), "BsmtFinSF1"] <- mean(train.numeric$BsmtFinSF1, na.rm = TRUE)
+train.numeric[is.na(train.numeric$BsmtFinSF2), "BsmtFinSF2"] <- mean(train.numeric$BsmtFinSF2, na.rm = TRUE)
+train.numeric[is.na(train.numeric$TotalBsmtSF), "TotalBsmtSF"] <- mean(train.numeric$TotalBsmtSF, na.rm = TRUE)
+train.numeric[is.na(train.numeric$BsmtUnfSF), "BsmtUnfSF"] <- mean(train.numeric$BsmtUnfSF, na.rm = TRUE)
+train.numeric[is.na(train.numeric$GarageArea), "GarageArea"] <- mean(train.numeric$GarageArea, na.rm = TRUE)
+summary(train.numeric)
+pca.train <- prcomp(train.numeric)
+summary(pca.train)
+pca.train2 <- princomp(train.numeric)
+summary(pca.train)
+summary(pca.train2)
+loadings(pca.train)
+pca.train <- prcomp(train.numeric)
+loadings(pca.train)
+loadings(pca.train2)
+pca.train2 <- princomp(train.numeric)
+summary(pca.train2)
+loadings(pca.train2)
+train <- fread("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\AppliedDataMining\\HW6\\train.csv")
+test <- fread("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\AppliedDataMining\\HW6\\test.csv")
+summary(train)
+lm.sales <- lm(SalePrice ~ ., data = train.numeric)
+summary(train.numeric)
+train <- fread("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\AppliedDataMining\\HW6\\train.csv")
+summary(train)
+str(train)
+cat_var <- names(train)[which(sapply(train, is.character))]
+cat_var
+numeric_var <- names(train)[which(sapply(train, is.numeric))]
+str(numeric_var)
+cat_var
+numeric_var <- names(train)[which(sapply(train, is.numeric))]
+str(numeric_var)
+numeric_var
+train.numeric <- train[,.SD, .SDcols =numeric_var]
+train.numeric <- train.numeric
+summary(train.numeric)
+lm.sales <- lm(SalePrice ~ ., data = train.numeric)
+summary(lm.sales)
+plot(lm.sales)
+lm(SalePrice ~ ., data=train)
+train(summary)
+summary(train)
+rt.sales <- rpart(SalePrice ~ ., data=train)
+library(rpart)
+rt.sales <- rpart(SalePrice ~ ., data=train)
+plot(rt.sales)
+summary(rt.sales)
+getwd()
+setwd("C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/HW6")
+knitr::opts_chunk$set(echo = TRUE)
+summary(rt.sales)

@@ -1,0 +1,512 @@
+qqnorm(diabetic)
+plot(density(diabetic))
+plot(density(diabetic))
+plot(density(normal))
+log.normal <- log(normal)
+log.diabetic <- log(diabetic)
+log.normal <- log(normal)
+log.diabetic <- log(diabetic)
+plot(density(log.normal))
+plot(density(log.diabetic))
+sqrt.normal <- sqrt(normal)
+sqrt.diabetic <- sqrt(diabetic)
+plot(density(sqrt.normal))
+plot(density(sqrt.diabetic))
+plot(density(log.normal))
+plot(density(log.diabetic))
+plot(density(sqrt.normal))
+plot(density(sqrt.diabetic))
+qqnorm(log.normal)
+qqnorm(log.diabetic)
+qqnorm(sqrt.normal)
+qqnorm(sqrt.diabetic)
+p2delta.hat <- mean(log.diabetic) - mean(log.normal)
+p2delta.hat
+se <- sqrt(var(log.diabetic)/length(log.diabetic) + var(log.normal)/length(log.normal))
+se
+p2.nu <- (var(log.diabetic)/12 + var(log.normal)/12)^2/((var(log.diabetic)/12)^2/11 + (var(log.normal)/12)^2/11)
+p2.nu
+p2.se <- sqrt(var(log.diabetic)/length(log.diabetic) + var(log.normal)/length(log.normal))
+p2.se
+p2p.value <- 2 * (1 - pt(abs(p2t.Welch), 21.8992))
+p2p.value
+p2p.value <- 2 * (1 - pt(abs(p2t.Welch), 21.8992))
+p2t.Welch <- p2delta.hat/p2.se
+p2t.Welch
+p2p.value <- 2 * (1 - pt(abs(p2t.Welch), 21.8992))
+p2p.value
+t.test(log.normal, log.diabetic)
+p2t.Welch
+p2p.value
+exp.log.norm <- exp(log.normal)
+exp.log.diabetic <- exp(log.diabetic)
+exp.log.norm
+t.test(exp.log.normal, exp.log.diabetic)
+t.test(exp.log.norm, exp.log.diabetic)
+old_movies <- c(74, 114, 114, 87, 92, 55, 67, 118, 79, 79, 92, 99, 87)
+new_movies <- c(70, 98, 90, 95, 88, 108, 110, 96, 91, 88, 120, 96, 90, 90)
+plot(density(old_movies))
+plot(density(new_movies))
+qqnorm(old_movies)
+qqnorm(new_movies)
+log_old <- log(old_movies)
+log_new <- log(new_movies)
+plot(density(log_old)
+plot(density(log_old))
+plot(density(log_new))
+plot(density(log_old))
+plot(density(log_new))
+qqnorm(log_old)
+qqnorm(log_new)
+sqrt_old <- sqrt(old_movies)
+sqrt_new <- sqrt(new_movies)
+plot(density(sqrt_old))
+plot(density(sqrt_new))
+summary(log_old)
+summary(log_new)
+p3delta_hat <- mean(log_old) - mean(log_new)
+p3delta_hat
+```{r}
+p3.se <- sqrt(var(log_new)/length(log_new) + var(log_old)/length(log_old))
+p3.se
+p3.nu <- (var(log_old)/14 + var(log_old)/12)^2/((var(log.new)/14)^2/13 + (var(log.old)/14)^2/13)
+p3.nu <- (var(log_old)/14 + var(log_old)/12)^2/((var(log_new)/14)^2/13 + (var(log_old)/14)^2/13)
+p3.nu
+p3t.Welch <- p3delta.hat/p3.se
+p3t.Welch
+p3t.Welch <- p3delta_hat/p3.se
+p3t.Welch
+p3p.value
+p3p.value <- 2 * (1 - pt(abs(p3t.Welch), 21.8992))
+p3p.value
+p3t.Welch
+p3p.value
+summary(old_movies)
+summary(new_movies)
+p3p.value <- 2 * (1 - pt(abs(p3t.Welch), p3.nu))
+p3p.value
+t.test(log_old, log_new)
+p3.nu <- (var(log_old)/14 + var(log_old)/14)^2/((var(log_new)/14)^2/13 + (var(log_old)/14)^2/13)
+p3.nu
+p3t.Welch <- p3delta_hat/p3.se
+p3t.Welch
+p3p.value <- 2 * (1 - pt(abs(p3t.Welch), p3.nu))
+p3p.value
+t.test(log_old, log_new)
+p3.nu <- (var(log_old)/14 + var(log_new)/14)^2/((var(log_old)/14)^2/13 + (var(log_new)/14)^2/13)
+p3.nu
+p3t.Welch
+t.test(old_movies, new_movies)
+t.test(log_new, log_old)
+t.test(log_old, log_new)
+plot(density(log_old))
+plot(density(log_new))
+plot(density(log_old))
+q = qt(0.975, df = p3.nu)
+lower = p3delta_hat - q * se
+upper = p3delta_hat + q * se
+lower
+lower = exp(p3delta_hat) - q * se
+upper = exp(p3delta_hat) + q * se
+lower
+upper
+t.test(log_normal, log_diabetic)
+t.test(log.normal, log.diabetic)
+lower
+upper
+lower = p3delta_hat - q * p3.se
+upper = p3delta_hat + q * p3.se
+lower
+upper
+exp(c(-.22535, .06596344))
+ages <- c(18, 13, 18, 16, 12, 16, 17, 17, 20, 18)
+x_bar <- mean(ages)
+x_bar
+s <- sd(ages)
+p <- x_bar - 16/(s/sqrt(10))
+p
+p <- x_bar - 16/(s/sqrt(length(ages)))
+p
+x_bar
+pnorm(p,mean(ages),s)
+pnorm(p)
+s
+p <- (x_bar - 16)/(s/sqrt(length(ages)))
+p
+pnorm(p)
+delta.hat = 5.790 - 5.87
+std.error = sqrt(var(TypeA)/20 + var(TypeB)/20)
+std.error = sqrt(11.82893/18 + 12.54725/18)
+std.error
+Tw <- delta.hat/std.error
+Tw
+waves <- read.csv("c:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\StatsS520\\Module12\\waves.txt")
+method1 <- waves[1:18]
+method1 <- waves[,1:18]
+method1 <- waves[1:18,]
+method2 <- waves[19:48]
+method2 <- waves[19:48,]
+summary(method1)
+summary(method2)
+method2 <- waves[19:38,]
+summary(method2)
+method2 <- waves[19:36,]
+summary(method1)
+summary(method2)
+method2 <- waves[19:35,]
+summary(method2)
+delta.hat <- mean(method1) - mean(method2)
+delta.hat
+std.error <- sqrt(var(method1)/18 + var(method2)/18)
+std.error
+var(method1)
+summary(method1)
+method1
+method1 <- waves[0:18,]
+method2 <- waves[19:35,]
+method1
+waves <- read.csv("c:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\StatsS520\\Module12\\waves.txt", header=FALSE)
+method1 <- waves[0:18,]
+method1
+summary(method1)
+summary(method2)
+method2
+method1 <- waves[0:17,]
+method1
+length(method1)
+method1 <- waves[0:18,]
+method2 <- waves[19:35,]
+summary(method1)
+summary(method2)
+method2 <- waves[19:36,]
+method2
+summary(method2)
+delta.hat <- mean(method1) - mean(method2)
+delta.hat
+var(method1)
+df <- (var(method1)/18+var(method2)/18)^2 / ((var(method1)/18)^2/17 + (var(method2)/18)^2/17)
+df
+2 * pt(Tw, df)
+p.value <- 2 * pt(Tw, df)
+p.value
+conf_upper <- (mean(method2) - (method1)) + qr(.975, df)
+conf_upper <- (mean(method2) - (method1)) + qt(.975, df)*std.error
+conf_upper <- (mean(method2) - mean(method1)) + qt(.975, df)* std.error
+conf_lower <- (mean(method2) - mean(method1)) - qt(.975, df)* std.error
+conf_upper
+conf_lower
+conf_upper
+Tw
+delta.hat <- mean(method2) - mean(method1)
+delta.hat
+std.error <- sqrt(var(method1)/18 + var(method2)/18)
+std.error
+std.error
+t.test(method1, method2)
+t.test(method2, method1)
+t.test(method2, method1)
+t.test(method2, method1, alt="greater")
+knitr::opts_chunk$set(echo = TRUE)
+t <- mu.1 - mu.0 / (s/sqrt(n))
+t
+n = 16
+s = .2
+mu.0 = 8
+mu.1 = 8.1
+t <- mu.1 - mu.0 / (s/sqrt(n))
+t
+t <- (mu.1 - mu.0) / sqrt(s/sqrt(n))
+t
+1-pnorm(t)
+t <- (mu.1 - mu.0) / (s/sqrt(n))
+t
+1-pnorm(t)
+t <- 41/80
+1 - pbinom(t)
+1 - pbinom(t, 80)
+1 - pbinom(t, 40, 80)
+1 - pbinom(40, 80, t)
+1 - pbinom(41, 80, .5)
+1 - pbinom(40, 80, t)
+1 - pbinom(41,80,.5)
+1 - pbinom(50,80,.5)
+1 - pbinom(70,80,.5)
+1 - pbinom(41,80,.5)
+1 - pbinom(40, 80, .5)
+1 - pbinom(41, 80, .5)
+1 - dbinom(41, 80, .5)
+1 - dbinom(40, 80, .5)
+1 - pbinom(41, 80, .5)
+rainfall <- scan(file.choose("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\StatsS520\\Module12\\snoqualmie14.txt"))
+rainfall <- scan(file.choose("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\StatsS520\\Module12\\snoqualmie14.txt"))
+summary(rainfall)
+qqnorm(rainfall)
+rainfall <- scan(file.choose("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\StatsS520\\Module12\\snoqualmie14.txt"))
+summary(rainfall)
+qqnorm(rainfall)
+plot(density(rainfall))
+qqnorm(rainfall)
+plot(density(rainfall))
+2 * (1-dbinom(40, 80, .5))
+2 * (dbinom(40, 80, .5))
+rainfall <- read.csv("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\StatsS520\\Module12\\snoqualmie14.txt"))
+rainfall <- read.csv("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\StatsS520\\Module12\\snoqualmie14.txt")
+summary(rainfall)
+qqnorm(rainfall)
+qqnorm(rainfall[,0])
+qqnorm(rainfall[,1])
+rainfall <- rainfall[1]
+summary(rainfall)
+qqnorm(rainfall)
+qqnorm(rainfall[,1])
+plot(density(rainfall))
+plot(density(rainfall[,1]))
+knitr::opts_chunk$set(echo = TRUE)
+2 * (1 - dbinom(40, 80, .5))
+2 * (dbinom(40, 80, .5))
+mean.sno <- mean(rainfall)
+mean.sno <- mean(rainfall[,1])
+mean.sno
+mean.seattle
+mean.seattle <- 37.7
+mean.seattle - mean.sno
+sd.sno <- sd(rainfall[,1])
+sd.sno
+s3.sno <- sd(rainfall[,1]/sqrt(length(rainfall[,1])))
+sd.sno
+qqnorm(rainfall[,1])
+mean.sno
+mean.seattle
+p <- 2.074 / 4.247
+p
+p <- (2.074 / 4.247) * 100
+p
+1 - pbinom(2074000, 4247000, .5)
+pbinom(2074000, 4247000, .5)
+pbinom(2074000, 4247000, .48)
+pbinom(2074000, 4247000, .5)
+dbinom(2074000, 4247000, .5)
+dbinom(2074000, 4247000, .48)
+pbinom(2074000, 4247000, .48)
+pbinom(2074000, 4247000, .50)
+pbinom(2074000, 4247000, .47)
+pbinom(2074000, 4247000, .51)
+pbinom(2074000, 4247000, .5)
+sd.sno <- sd(rainfall[,1]/sqrt(length(rainfall[,1])))
+sd.sno
+1 - pbinom(40, 80, .5)
+p - qnorm(.975) * sqrt(p * (1 - p)) / sqrt(4247000)
+p <- .48883
+p - qnorm(.975) * sqrt(p * (1 - p)) / sqrt(4247000)
+p + qnorm(.975) * sqrt(p * (1 - p)) / sqrt(4247000)
+upper_bound <- p - qnorm(.975) * sqrt(p * (1 - p)) / sqrt(4247000)
+lower_bound <- p + qnorm(.975) * sqrt(p * (1 - p)) / sqrt(4247000)
+upper_bound
+lower_bound
+lower_bound <- p - qnorm(.975) * sqrt(p * (1 - p)) / sqrt(4247000)
+upper_bound <- p + qnorm(.975) * sqrt(p * (1 - p)) / sqrt(4247000)
+upper_bound
+lower_bound
+upper_bound
+rainfall <- read.csv("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\StatsS520\\Module12\\snoqualmie14.txt")
+## I used read.csv because everytime I knit to PDF, r markdown asks me to choose the file.
+rainfall <- rainfall[1]
+summary(rainfall)
+p5.p <- .894
+lower_bound <- p5.p - qnorm(.975) * sqrt(p5.p * (1 - p5.p)) / sqrt(4247000)
+upper_bound <- p5.p + qnorm(.975) * sqrt(p5.p * (1 - p5.p)) / sqrt(4247000)
+upper_bound
+lower_bound
+upper_bound
+lower_bound
+upper_bound
+p5.in <- .894
+lower_bound <- p5.in - qnorm(.975) * sqrt(p5.in * (1 - p5.in)) / sqrt(4247000)
+upper_bound <- p5.in + qnorm(.975) * sqrt(p5.in * (1 - p5.in)) / sqrt(4247000)
+upper_bound
+lower_bound
+p5.out <- .48883
+lower_bound <- p5.out - qnorm(.975) * sqrt(p5.out * (1 - p5.out)) / sqrt(4247000)
+upper_bound <- p5.out + qnorm(.975) * sqrt(p5.out * (1 - p5.out)) / sqrt(4247000)
+upper_bound
+lower_bound
+p5.out <- .925
+lower_bound <- p5.out - qnorm(.975) * sqrt(p5.out * (1 - p5.out)) / sqrt(4247000)
+upper_bound <- p5.out + qnorm(.975) * sqrt(p5.out * (1 - p5.out)) / sqrt(4247000)
+upper_bound
+lower_bound
+upper_bound
+train <- read.csv("C:Users\\khickman\\Desktop\\Personal\\IUMSDS\\AppliedDataMining\\HW6\\train.csv")
+train <- read.csv("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\AppliedDataMining\\HW6\\train.csv")
+test <- read.csv("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\AppliedDataMining\\HW6\\test.csv")
+summary(train)
+cat_var <- names(train)[which(sapply(train, is.character))]
+cat_car <- c(cat_var, 'BedroomAbvGr', 'HalfBath', ' KitchenAbvGr','BsmtFullBath', 'BsmtHalfBath', 'MSSubClass')
+numeric_var <- names(train)[which(sapply(train, is.numeric))]
+summary(cat_var)
+cat_var <- names(train)[which(sapply(train, is.character))]
+summary(cat_var)
+cat_car <- c(cat_var, 'BedroomAbvGr', 'HalfBath', ' KitchenAbvGr','BsmtFullBath', 'BsmtHalfBath', 'MSSubClass')
+summary(cat_car)
+summary(numeric_var)
+cat_var <- names(train)[which(sapply(train, is.character))]
+cat_car <- c(cat_var, 'BedroomAbvGr', 'HalfBath', ' KitchenAbvGr','BsmtFullBath', 'BsmtHalfBath', 'MSSubClass')
+numeric_var <- names(train)[which(sapply(train, is.numeric))]
+summary(cat_var)
+summary(cat_car)
+summary(numeric_var)
+head(cat_var)
+summary(train)
+str(train)
+summary(numeric_var)
+str(train)
+summary(train)
+cat_var <- names(train)[which(sapply(train, is.character))]
+summary(cat_car)
+train <- fread("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\AppliedDataMining\\HW6\\train.csv")
+library(data.table)
+train <- fread("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\AppliedDataMining\\HW6\\train.csv")
+summary(train)
+str(train)
+cat_var <- names(train)[which(sapply(train, is.character))]
+summary(cat_car)
+cat_var <- names(train)[which(sapply(train, is.character))]
+summary(cat_var)
+summary(numeric_var)
+numeric_var <- names(train)[which(sapply(train, is.numeric))]
+summary(numeric_var)
+cat_car <- c(cat_var, 'OverallQual','GarageCars','MoSold','YrSold','GarageYrBlt','Fireplaces','BsmtFullBath','BsmtHalfBath','FullBath','HalfBath','BedroomAbvGr','MSSubClass')
+summary(cat_car)
+head(cat_var)
+head(cat_car)
+test <- fread("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\AppliedDataMining\\HW6\\test.csv")
+View(test)
+View(train)
+summary(cat_car)
+summary(numeric_var)
+summary(train)
+summary(numeric_var)
+summary(numeric_var)
+??names
+library(DMwR2)
+train$OverallQual <- as.factor(train$OverallQual)
+summary(train$OverallQual)
+str(train$OverallQual)
+cat_var <- names(train)[which(sapply(train, is.character))]
+summary(cat_var)
+cat_car <- c(cat_var, 'OverallQual','GarageCars','MoSold','YrSold','GarageYrBlt','Fireplaces','BsmtFullBath','BsmtHalfBath','FullBath','HalfBath','BedroomAbvGr','MSSubClass')
+summary(cat_car)
+numeric_var <- names(train)[which(sapply(train, is.numeric))]
+summary(numeric_var)
+?princomp
+?prcomp
+library(ggplot2)
+train <- fread("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\AppliedDataMining\\HW6\\train.csv")
+test <- fread("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\AppliedDataMining\\HW6\\test.csv")
+summary(train)
+str(train)
+head(cat_car)
+str(cat_car)
+Missing_indices <- sapply(train,function(x)sum(is.na(x)))
+Missing_Summary <- data.frame(index = names(train),Missing_Values=Missing_indices)
+Missing_Summary[Missing_Summary$Missing_Values > 0,]
+View(test)
+View(train)
+train$Alley[which(is.na(train$Alley))] <- "None"
+table(train$Alley)
+train$OverallQual[which(is.na(train$OverallQual))] <- "None"
+train$GarageCars[which(is.na(train$GarageCars))] <- "None"
+train$MoSold[which(is.na(train$MoSold))] <- "None"
+train$YrSold[which(is.na(train$YrSold))] <- "None"
+train$GarageYrBlt[which(is.na(train$GarageYrBuilt))] <- "None"
+train$Fireplaces[which(is.na(train$Fireplaces))] <- "None"
+train$BsmtFullBath[which(is.na(train$BsmtFullBath))] <- "None"
+table(BsmtFullBath)
+table(train$BsmtFullBath)
+train$BsmtHalfBath[which(is.na(train$BsmtHalfBath))] <- "None"
+train$FullBath[which(is.na(train$FullBath))] <- "None"
+table(FullBath)
+table(train$FullBath)
+train$HalfBath[which(is.na(train$HalfBath))] <- "None"
+train$BedroomAbvGr[which(is.na(train$BedroomAbvGr))] <- "None"
+train$KitchenAbvGr[which(is.na(train$KitchenAbvGr))] <- "None"
+train$GarageCond[which(is.na(train$GarageCond))] <- "None"
+train$GarageCond[which(is.na(train$GarageCond))] <- "None"
+train$GarageYrBlt[which(is.na(train$GarageYrBuilt))] <- "None"
+train$GarageType[which(is.na(train$FullBath))] <- "None"
+train$GarageCars[which(is.na(train$GarageCars))] <- "None"
+train$GarageType[which(is.na(train$GarageType))] <- "None"
+train$GarageCars[which(is.na(train$GarageCars))] <- "None"
+train$GarageFinish[which(is.na(train$GarageFinish))] <- "None"
+train$GarageQual[which(is.na(train$GarageQual))] <- "None"
+getwd()
+setwd("C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/Midterm")
+knitr::opts_chunk$set(echo = TRUE)
+install.packages("data.table")
+install.packages("data.table")
+library(data.table)
+mydata <- read_csv("C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/Midterm/mydata.csv")
+library(data.table)
+install.packages("data.table")
+install.packages("data.table")
+library(data.table)
+mydata <- read_csv("C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/Midterm/mydata.csv")
+mydata <- read.csv("C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/Midterm/mydata.csv")
+filter(mydata, !complete.cases(mydata))
+head(mydata)
+describe(mydata)
+str(mydata)
+summary(mydata)
+mydata <- read.csv("C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/Midterm/mydata.csv", sep=",")
+summary(mydata)
+head(mydata)
+mydata[,100:110]
+mydata[100:110,]
+mydata[100:110,]
+str(mydata)
+mydata$V2 <- as.numeric(mydata$V2)
+str(mydata)
+mydata$V4 <- as.numeric(mydata$V4)
+str(mydata)
+plot(density(mydata$V2))
+plot(density(mydata$V3))
+plot(density(mydata$V4))
+mydata.clean <- mydata[!is.na(d)]
+mydata.clean <- mydata[!is.na(mydata)]
+str(mydata
+)
+str(mydata.clean)
+summary(mydata.clean)
+mydata$V3==""
+v3na <- mydata$V3==""
+v3na
+v3na <- mydata$V3=="NA"
+v3na
+v3na <- is.na(mydata$V3)
+v3na
+v3na <- names(is.na(mydata$V3))
+v3na
+v3na <- mydata[rowSums(is.na(mydata)) > 0,]
+v3na
+mydata[50, "V3"] <- mean(mydata$V3, na.rm = TRUE)
+mydata[50, "V3"] <- mean(mydata$V3, na.rm = TRUE)
+mydata[70, "V3"] <- mean(mydata$V3, na.rm = TRUE)
+mydata[104, "V3"] <- mean(mydata$V3, na.rm = TRUE)
+mydata[201, "V3"] <- mean(mydata$V3, na.rm = TRUE)
+mydata[301, "V3"] <- mean(mydata$V3, na.rm = TRUE)
+mydata[401, "V3"] <- mean(mydata$V3, na.rm = TRUE)
+mydata[800, "V3"] <- mean(mydata$V3, na.rm = TRUE)
+mydata[900, "V3"] <- mean(mydata$V3, na.rm = TRUE)
+v3na
+mydata[50, "V3"]
+mydata[70, "V3"]
+mydata$V3
+summary(mydata$V3)
+data(mydata)
+mean(mydata$V2)
+median(mydata$V2)
+var(mydata$V4)
+sd(mydata$V4)
+IQR(mydata$V4)
+barplot(mydata$v5)
+plot(mydata$v5)

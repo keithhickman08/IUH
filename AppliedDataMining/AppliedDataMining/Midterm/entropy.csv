@@ -1,0 +1,16 @@
+User,Location,Clicks
+1,UL,3
+1,LR,1
+1,M,2
+1,LL,0
+1,UR,0
+2,UL,1
+2,LR,1
+2,M,2
+2,LL,0
+2,UR,0
+3,UL,0
+3,LR,0
+3,M,2
+3,LL,1
+3,UR,1

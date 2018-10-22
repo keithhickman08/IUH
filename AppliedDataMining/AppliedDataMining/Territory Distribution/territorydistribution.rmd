@@ -1,0 +1,127 @@
+---
+title: "Territory Distributions"
+author: "Keith Hickman"
+date: "October 26, 2017"
+output:
+  word_document: default
+  pdf_document: default
+  html_document: default
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+#Intro:
+
+  This analysis presents several options for geographic distribution of territories using Revenue, Number of Accounts, and Types of Account by Industry.  The data is loaded via three csv files.$^1$ 
+  
+  See Domo cards for Geographic Distribution.
+
+#Revenue Analysis: 
+Begin with loading required packages and a summary of our first dataset, ``territorydist``:
+
+```{r, fig.width=7, include=FALSE}
+library(ggplot2)
+library(DMwR2)
+library(data.table)
+library(readr)
+library(dplyr)
+territorydist <- read_csv("C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/territorydist.csv")
+```
+
+```{r}
+summary(territorydist)
+```
+
+We have 24587 observations of three variables. The ``netivcamt`` variable is highly skewed (right-tailed) as shown by a mean and third quantile values much higher than the median, and the Max value several orders of magnitude higher than the 3rd quantile. Because the mean is sensitive to these higher values, we will use median and quantiles as the statistics of centrality.
+
+```{r}
+territorydist <- na.omit(territorydist)
+boxplot(netivcamt ~ territorycode, territorydist, main="Distribution of Invoiced Amounts")
+```
+
+  This box plot looks more like a bar chart, which reflects the skewed nature of the data, but there's still some very interesting information here.  The distribution of outliers (any values greater than 1.5x the Interquartile Range above $q3$ or below $q1$) clearly shows a much greater concentration of large invoiced amounts in the North and East Territories.  The South territory looks more like out-of-territory than East or North.
+
+**Dealing with outliers:**
+Since this is such a skewed distribution, filtering rows (invoices) above a certain threshold in order to analyze more data is preferable. Typically, we would define outliers as given above. In this case, where even normalizing numbers does not provide a suitable distribution, we can create two classes and analyze those separately.  Consider that most of our values (transactions) fall between 0 and 2000 dollars, which will represent the breakpoint for our classes. This still leaves us with 21,476 out of ~24,000 observations in the class under 2k.
+
+```{r}
+subset2k <- subset(territorydist, netivcamt<2000)
+subset2k
+hist(subset2k$netivcamt, main="Histogram of Net Invoiced Amounts < $2000")
+boxplot(subset2k$netivcamt ~ territorycode,subset2k, main="Boxplot by Territory")
+```
+  The in-territory divisions look to be similarly distributed with respect to the $q1$, median, and $q3$ values.  The higher invoice amounts in the North and East, and overall number of transactions will likely explain the difference in the sums.  The median of all in-territory values tends to be the same, which would indicate that most of the transactions that happen across all three territories is the same, around `$250`. Note: this could be caused by more opportunities, larger customers, and/or projects over `$2k` in the North/East, and more regular, MRO-type orders (under `$2k`) in the South - further investigation is needed.  How many "key accounts" are in each territory? 
+  
+  The out-of-territory invoices tend to be significantly smaller, with a $q3$ under 500 USD.
+  
+**Total transactions**
+
+Time series data is also informative.  Here, we'll examine monthly sales data from 1/1/2014 through 10/26/2017. 
+Read in the data:
+```{r}
+territorytime <- read_csv("C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/timeseries.csv")
+summary(territorytime)
+```
+
+  R treats Year and Month columns as integers, but they're categories vs. dates.  To modify the column data types:
+```{r}
+territorytime$Year <- as.factor(territorytime$Year)
+territorytime$Month <- as.factor(territorytime$Month)
+summary(territorytime)
+```
+  Examining each territory, we can see they are a bit closer to normal distributions, though the South is clearly on a smaller scale in terms of monthly invoiced amounts, and trails the other two territories by a wide margin. Note the highest invoiced month for the South territory was 298,000, compared to ~990,000 and ~1,050,000 for both the North and East respectively. 
+
+There are several ways to examine the data.  Let's look at each territory's distribution of sales months. The bins represent
+```{r}
+tt_east <- territorytime$East
+tt_north <- territorytime$North
+tt_south <- territorytime$South
+tt_oot <- territorytime$OOT
+
+hist(tt_east,breaks=8, main="8 Breaks East Territory",xlab="Monthly Invoiced Amounts in $")
+hist(tt_north, breaks=8, main = "8 Breaks North Territory",xlab="Monthly Invoiced Amounts in $")
+hist(tt_south, breaks=8,main="8 Breaks South Territory",xlab="Monthly Invoiced Amounts in $")
+hist(tt_oot,breaks=8, main="8 Break OOT",xlab="Monthly Invoiced Amounts in $")
+```
+
+
+```{r, eval=FALSE, include=FALSE}
+east_timebar <- territorytime[,1:3]
+north_timebar <- territorytime[,c(1,2,4)]
+south_timebar <- territorytime[,c(1,2,5)]
+oot_timebar <- territorytime[,c(1,2,6)]
+barplot(east_timebar$East, names.arg=east_timebar$Year,xlab="Year")
+barplot(north_timebar$North, names.arg=north_timebar$Year,xlab="Year")
+barplot(south_timebar$South, names.arg=south_timebar$Year,xlab="Year")
+barplot(oot_timebar$OOT, names.arg=oot_timebar$Year,xlab="Year")
+
+```
+
+
+**A history of monthly sales by territory.** 
+
+*Insert excel chart here* 
+
+There has been a steady decline in the South territory, as well as a recent dip in sales for the East territory.  No territory has had monthly sales of over $800,000 since late 2016.  Beginning in mid-2016, the South and East have declined markedly, while North has remained steady.  
+
+```{r}
+mean(tt_east)
+mean(tt_north)
+mean(tt_south)
+mean(tt_oot)
+```
+
+
+Endnote 1: 
+The data files are as follows: 
+1) ``territorydist``, which contains a list of individual invoiced amounts and the respective territory codes. This data was extracted from Domo using the Account Master Zips and Fips dataset, with a filter applied to aggregate by transaction, and a date filter of > 1/1/2016. Columns in this dataset include ``territorycode``, ``netivcamt``, and ``standardized``. territorycode represents the current tagged geographic territory based on county.  netivcamt is the amount of each transaction, with a row or observation representing one transaction (invoice).  ``standardized`` is the normalized value of the netivcamt column.  
+
+2) ``timeseries``, which contains month and year invoiced amounts, and industry, which contains invoiced amounts by industry.  
+  Additionally, . 
+
+```{r}
+territory_east = territorydist$territorycode == "East"
+summary(territory_east)
+```

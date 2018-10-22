@@ -1,0 +1,196 @@
+---
+title: 'Applied Data Mining: Homework #7'
+author: "Keith Hickman"
+date: "Due on December 6, 2017"
+output:
+  word_document: default
+  html_document:
+    df_print: paged
+  pdf_document: default
+Instructor: Hasan Kurban
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Problem 1
+In this problem, you are asked to use SVM to predict whether a given car gets high or low gas mileage based
+on the Auto data set. The data set can be obtained as follows:
+```{r}
+##install.packages("ISLR")
+library(ISLR)
+View(Auto)
+```
+
+#1.1 
+Create a binary variable that takes on a 1 for cars with gas mileage above the median, and a 0 for cars with gas mileage below the median. Add this variable to the data as a new variable and name it as ``"mpglevel"`` ( ``mpglevel`` is the response variable for questions 1.2 and 1.3).
+
+##R Code
+```{r}
+Auto$mpglevel <- as.factor(Auto$mpg >= median(Auto$mpg))
+print(Auto$mpglevel)
+summary(Auto)
+
+```
+
+##1.2 
+Fit a linear support vector classifier to the data with various values of cost (cost = c(0.01, 0.1, 1, 5,10, 100)), in order to predict whether a car gets high or low gas mileage. Report the cross-validation errors associated with different values of this parameter. Comment on your results, i.e., what is the cost value for the model that has the lowest cross-validation error?
+
+##R Code
+```{r}
+library(e1071)
+set.seed(123456)
+rndSample <- sample(1:nrow(Auto), 300)
+tr <- Auto[rndSample, ]
+ts <- Auto[-rndSample, ]
+
+# the default svm () uses radial kernel with constraints violations of cost of 1
+## ??svm
+
+#Beginning with a cost of .01
+s.01 <- svm(mpglevel ~ ., tr,C=.01)
+ps.01 <- predict(s.01, ts)
+cm.01 <- table(ps.01, ts$mpglevel) #confusion matrix
+cm.01
+100*(1-sum(diag(cm.01))/sum(cm.01)) 
+
+#Cost of .1
+s.1 <- svm(mpglevel ~ ., tr,C=.1)
+ps.1 <- predict(s.1, ts)
+cm.1 <- table(ps.1, ts$mpglevel) #confusion matrix
+100*(1-sum(diag(cm.1))/sum(cm.1)) 
+
+#Default cost of 1
+s1 <- svm(mpglevel ~ ., tr,C=1)
+ps1 <- predict(s1, ts)
+cm1 <- table(ps1, ts$mpglevel) #confusion matrix
+100*(1-sum(diag(cm1))/sum(cm1)) 
+
+##Cost of 5
+s5 <- svm(mpglevel ~ ., tr,C=5)
+ps5 <- predict(s5, ts)
+cm5 <- table(ps5, ts$mpglevel) #confusion matrix
+100*(1-sum(diag(cm5))/sum(cm5))
+
+## Cost of 10
+s10 <- svm(mpglevel ~ ., tr,C=10)
+ps10 <- predict(s10, ts)
+cm10 <- table(ps10, ts$mpglevel) #confusion matrix
+100*(1-sum(diag(cm10))/sum(cm10))
+
+## Cost of 100
+s100 <- svm(mpglevel ~ ., tr,C=100)
+ps100 <- predict(s100, ts)
+cm100 <- table(ps100, ts$mpglevel) #confusion matrix
+100*(1-sum(diag(cm100))/sum(cm100))
+```
+
+
+##Cross-validation Errors and Discussion of the Results
+
+All of my cross-validation errors are the same with the costs from .01 to 100 = 6.52137% error rate.  
+
+##1.3 
+Now repeat (1.2), this time using SVMs with radial and polynomial basis kernels, with different values of gamma (c(0.01, 0.1, 1, 5, 10, 100)) and degree (c(2, 3, 4)) and cost (c(0.1, 1, 5, 10)). Use the cost and degree parameters values for polynomial kernels. The cost and gamma parameters values are given for radial basis kernels. Comment on your results, i.e., what are the parameters values (cost, degree, gamma) for the model that has the lowest cross-validation error?
+
+##R Code
+```{r}
+#Low Cost, Gamma, and Degree
+svm1 <- svm(mpglevel ~ ., tr,C=1, degree=1, gamma=1)
+ps111 <- predict(svm1, ts)
+cm111 <- table(ps111, ts$mpglevel) #confusion matrix
+100*(1-sum(diag(cm111))/sum(cm111))
+
+#High Cost, Gamma, Degree
+s100 <- svm(mpglevel ~ ., tr,C=100, degree=3, gamma=10)
+ps100 <- predict(s100, ts)
+cm100 <- table(ps100, ts$mpglevel) #confusion matrix
+100*(1-sum(diag(cm100))/sum(cm100))
+```
+
+##Discussion of Results
+I find that modifying the cost doesn't change the overall CV error rate, but that lower gamma and degree parameters has a significant impact on the CV error rate.  
+
+
+
+#Problem 2
+```{r}
+
+##install.packages("dplyr")
+##library(dplyr)
+View(Caravan)
+```
+
+##2.1 
+Create a training set consisting of the first 1,000 observations, and a test set consisting of the remaining observations. The class variable is "Purchase" whose values are "No" and "Yes". Transform "No" to
+0 "Yes" to 1. Place the R code below.
+
+##R Code
+```{r}
+Caravan$Purchase <- as.character(ifelse(Caravan$Purchase=="Yes", 1, 0))
+train <- Caravan[1:1000,]
+test <- Caravan[1001:5822,]
+## View(Caravan)
+typeof(Caravan$Purchase)
+```
+
+I kept getting "Nan" values when evaluating my gbm model summary. I tried converting the ``Purchase`` variable to a factor, character, and integer. After looking through the text and lecture notes, I went to stack overflow, but the suggestions there didn't help either. 
+
+##2.2
+Fit a boosting model to the training set with Purchase as the response and the other variables as predictors. Use 1,000 trees, and a shrinkage value of 0.01. Which predictors appear to be the most important?
+
+##R Code
+```{r}
+##install.packages("gbm")
+library(gbm)
+
+model <- gbm(Purchase ~ ., data=test,n.trees = 1000,shrinkage = .01)
+summary(model, plotit = FALSE)
+```
+
+
+#Problem 3
+```{r}
+library(data.table)
+library("curl")
+mydata <- fread("https://archive.ics.uci.edu/ml/machine-learning-databases/ionosphere/ionosphere.data")
+mydata <- as.data.frame(mydata)
+mydata <- mydata[,-2] #remove the second variable
+```
+
+##3.1
+Create a training data set containing a random sample of 300 data points and a test set containing the remaining observations. Name the training data and test data as mydata.training and mydata.testing, respectively. Place the R code below. You will use mydata.training and mydata.testing to answer rest of the questions. Thus, create them once and use mydata.training to train the models (classifiers) and mydata.testing to test the models. The last variable variable (35th variable in the data) is the response and the other variables are predictors. 
+
+##R Code
+```{r}
+set.seed(1234)
+rndSample <- sample(1:nrow(mydata), 300)
+mydata.training <- mydata[rndSample,]
+mydata.testing <- mydata[-rndSample,]
+```
+
+##3.2
+Train a naive bayes classifier using 10-fold cross-validation over mydata.training. Use this model to predict the observations in mydata.testing. Form a confusion matrix and report the error rate of the classifier over mydata.testing.
+
+```{r}
+##install.packages("lme4", dependencies = TRUE)
+##library(lme4)
+##methods(sigma)
+##install.packages("pbkrtest", dependencies = TRUE)
+##install.packages("DEoptimR")
+##install.packages("caret", dependencies = TRUE)
+## library(caret)
+##library(e1071)
+head(mydata)
+##model = train(mydata.training,'nb',trControl=trainControl(method='cv',number=10))
+##model <- NaiveBayes(mydata.training$ ~ ., data = tr)
+##predict(model,mydata.testing)
+##table(predict(model,mydata.testing)
+##plot(model)
+```
+
+Unfortunately, I could not load the library caret. I tried several fixes, including uninstalling and reinstalling the source files, updating R (current version is 3.3.3), installing several other packages ahead of the caret, and it continually gives a namespace error and will not install. Therefore I can't use the train() function. 
+
+I am going to re-attempt fixes tomorrow. 
+
+

@@ -1,0 +1,178 @@
+---
+title: "Hickman Homework 6"
+output: html_notebook
+---
+
+I found a kernel from Kaggle User AiO at:  https://www.kaggle.com/notaapple/detailed-exploratory-data-analysis-using-r
+that has some interesting exploratory techniques that I will reproduce here. 
+
+```{r}
+##Load Libraries, Data, and perform Initial Analysis
+library(data.table)
+library(DMwR2)
+library(ggplot2)
+library(dplyr)
+library(corrplot)
+library(forcats)
+```
+
+
+```{r}
+#Read in the data
+
+train <- fread("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\AppliedDataMining\\HW6\\train.csv")
+test <- fread("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\AppliedDataMining\\HW6\\test.csv")
+summary(train)
+str(train)
+```
+
+The train dataset has 1460 observations of 81 variables, with the 81st variable being the target (not included in test dataset); Sale Price. There are several apparently discrete variables that are categorized as continuous, as noted below. Roughly half of the 81 variables are continuous, so we have a dataset that will lend itself well to regression analysis. With the relatively high number of variables, we may want to reduce dimensionality with PCA as well. First, I need to understand and correctly name the variables. 
+
+```{r}
+#OverallQual
+#GarageCars
+#MoSold
+#YrSold
+#GarageYrBlt
+#Fireplaces
+#BsmtFullBath
+#BsmtHalfBath
+#FullBath
+#HalfBath
+#BedroomAbvGr
+#KitchenAbvGr
+
+train$OverallQual <- as.factor(train$OverallQual)
+train$GarageCars <- as.factor(train$GarageCars)
+train$MoSold <- as.factor(train$MoSold)
+train$YrSold <- as.factor(train$YrSold)
+train$GarageYrBlt <- as.factor(train$GarageYrBlt)
+train$Fireplaces <- as.factor(train$Fireplaces)
+train$BsmtFullBath <- as.factor(train$BsmtFullBath)
+train$BsmtHalfBath <- as.factor(train$BsmtHalfBath)
+train$FullBath <- as.factor(train$FullBath)
+train$HalfBath <- as.factor(train$HalfBath)
+train$BedroomAbvGr <- as.factor(train$BedroomAbvGr)
+train$KitchenAbvGr <- as.factor(train$KitchenAbvGr)
+summary(train)
+```
+
+*I'm 100% sure there is an easier way to do this - possibly with an sapply or c() function.*
+
+Now that the datatypes are set, we can move on with our analysis. I found an interesting method to separate continuous and discrete variables on Kaggle: 
+
+```{r}
+cat_var <- names(train)[which(sapply(train, is.character))]
+cat_var
+
+numeric_var <- names(train)[which(sapply(train, is.numeric))]
+numeric_var
+str(numeric_var)
+```
+
+# Missing features in the Data
+At first impression, there appear to be several variables with many missing values. However, several of them are not necessarily missing, only listed as "NA" when the true value should be "none".  For instance, "Alley"; "NA"" might mean that we don't have an alley, not that the values are missing.  I'll refactor this and other variables so that "NA" becomes None. 
+
+Found a good Analysis/transformation of variables from a Kaggle user here: 
+https://www.kaggle.com/sidraina89/regularized-regression-housing-pricing
+
+```{r}
+Missing_indices <- sapply(train,function(x)sum(is.na(x)))
+Missing_Summary <- data.frame(index = names(train),Missing_Values=Missing_indices)
+Missing_Summary[Missing_Summary$Missing_Values > 0,]
+```
+
+Immediately, several variables stand out that strongly suggest "NA" does not always mean "missing". Additionally, the dataset description points to this conclusion.  Alley, PoolQC, Fence, and MiscFeature all have a high number of NAs, but it's also very probable that a high number of homes in our dataset don't have those features at all. Let's refactor those variables from "NA" to none:
+
+```{r}
+train$Alley[which(is.na(train$Alley))] <- "None"
+table(train$Alley)
+```
+
+It worked! I understand I'll have to do this same method on the test dataset as well. There were a few Kagglers who combined the two datasets to do the transform, but I don't want to do that for quality reasons - I'll do it the longer way. 
+
+```{r}
+train$Alley[which(is.na(train$Alley))] <- "None"
+train$MoSold[which(is.na(train$MoSold))] <- "None"
+train$Fireplaces[which(is.na(train$Fireplaces))] <- "None"
+
+#Transform Garage Characteristics on homes that have no garages:
+train$GarageCond[which(is.na(train$GarageCond))] <- "None"
+train$GarageYrBlt[which(is.na(train$GarageYrBuilt))] <- "None"
+train$GarageType[which(is.na(train$GarageType))] <- "None"
+train$GarageCars[which(is.na(train$GarageCars))] <- "None"
+train$GarageFinish[which(is.na(train$GarageFinish))] <- "None"
+train$GarageQual[which(is.na(train$GarageQual))] <- "None"
+
+
+## Check to make sure it's still working as intended:
+table(train$GarageQual)
+```
+
+Surprisingly, there are 9 homes listed with 0 full baths. Based on the other characteristics of the rows, these look like they might be missing rather than 0.
+
+With a large number of variables, let's do a PCA to reduce the dimensionality. Using prcomp() and princomp()
+
+Many of the variables are right or left-skewed anyway. 
+
+```{r}
+train.numeric <- train[,.SD, .SDcols =numeric_var]
+train.numeric <- train.numeric
+
+summary(train.numeric)
+## There aren't any variables with 20% or more NAs, so we can't use manyNAs. 
+## Let's use most frequent values for the missing numbers. 
+##LotFrontage, MasVnrArea, BsmtFinSF1, BsmtFinSF2,  BsmtUnfSF, TotalBsmtSF, and GarageArea all exhibit NAs. 
+
+## Before we do this, we need to know whether to use the mean or median for LotFrontage. Here, we appear to have a normally distributed variable, so it probably won't matter much, and we'll use mean. 
+
+train.numeric[is.na(train.numeric$LotFrontage), "LotFrontage"] <- mean(train.numeric$LotFrontage, na.rm = TRUE)
+summary(train.numeric)
+## That worked, so we'll continue with the remaining variables.
+
+train.numeric[is.na(train.numeric$MasVnrArea), "MasVnrArea"] <- mean(train.numeric$MasVnrArea, na.rm = TRUE)
+
+train.numeric[is.na(train.numeric$BsmtFinSF2), "BsmtFinSF2"] <- mean(train.numeric$BsmtFinSF2, na.rm = TRUE)
+
+train.numeric[is.na(train.numeric$BsmtUnfSF), "BsmtUnfSF"] <- mean(train.numeric$BsmtUnfSF, na.rm = TRUE)
+
+train.numeric[is.na(train.numeric$TotalBsmtSF), "TotalBsmtSF"] <- mean(train.numeric$TotalBsmtSF, na.rm = TRUE)
+
+train.numeric[is.na(train.numeric$BsmtUnfSF), "BsmtUnfSF"] <- mean(train.numeric$BsmtUnfSF, na.rm = TRUE)
+
+train.numeric[is.na(train.numeric$GarageArea), "GarageArea"] <- mean(train.numeric$GarageArea, na.rm = TRUE)
+
+##Let's check whether our transform worked:
+summary(train.numeric)
+
+## Now that we don't have any NAs and all numeric variables, 
+pca.train <- prcomp(train.numeric)
+pca.train2 <- princomp(train.numeric)
+summary(pca.train2)
+loadings(pca.train2)
+```
+
+There's not much to be gained from using PCA apparently. Each variable explains an equal 4% of the variance. 
+
+We'll likely have to log transform the sale price variable to fit it to a linear regression model. The variable is right-skewed.
+
+Running an initial linear model:
+
+```{r}
+lm.sales <- lm(SalePrice ~ ., data = train.numeric)
+summary(lm.sales)
+```
+Analysis of the Model: 
+```{r}
+plot(lm.sales)
+```
+
+It appears that the QQnorm follows a t-distribution. The curve appears normal, except at the tails. It looks like we have some outliers at both ends. Thus a linear model may not be the best predictor. Additionally, the variable LotFrontage had the highest significance code. This is likely due to frontage space correlating with the size of the homes, which in turn, correlate with sales price.
+
+Given that we have so many variables that are skewed, I'd like to try a decision tree against the performance of our linear model. Additionally, given the presence of so many categorical variables, we might see better performance. 
+
+```{r}
+library(rpart)
+rt.sales <- rpart(SalePrice ~ ., data=train)
+summary(rt.sales)
+```

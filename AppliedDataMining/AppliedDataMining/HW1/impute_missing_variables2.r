@@ -1,0 +1,1 @@
+algae <- knnImputation(algae, k=10)

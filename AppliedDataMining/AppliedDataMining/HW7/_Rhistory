@@ -1,0 +1,512 @@
+newdata <- as.matrix(c(x1, x2, x3, x4))
+newdata
+df <- data.frame(x1, x2, x3, x4)
+df
+df.scale <- scale(df)
+df.scale
+dist(df.scale)
+dist(df)
+dist(df.scale)
+x <- c(15,2,44,21,40,20,19,18)
+mean(x)
+var(X)
+var(x)
+mean(x)
+var(x)
+install.packages("alr3")
+library("alr3")
+head(banknote)
+head(banknote)
+str(banknote)
+banknote$Y
+banknote$Y <- as.factor(banknote$Y)
+str(bankote)
+str(banknote)
+qplot(Left, Right, data=banknote, color=Y)
+qplot(Top, Bottom, data=banknote, color=Y)
+qplot(Diagonal, data=banknote, color=Y)
+qplot(Diagonal, Length, data=banknote, color=Y)
+mydata=matrix(rnorm(100*2), ncol=2)
+mydata[1:50,1]=mydata[1:50,1]+3
+mydata[1:50,2]=mydata[1:50,2]-4
+plot(mydata[,1],mydata[,2])
+View(mydata)
+View(mydata)
+bn3 <- kmeans(iris[,c(1,6)], centers=3, iter.max=200)
+bn3 <- kmeans(banknote[,c(1,6)], centers=3, iter.max=200)
+bn3 <- kmeans(banknote[,c(1,6)]), centers=3, iter.max=200)
+bn3 <- kmeans(banknote[,c(1,6)], k=3, iter.max=200)
+bn3 <- kmeans(banknote[,c(1,6)], centers=3, iter.max=200)
+bn3
+plot(bn3)
+bn3
+bn3$tot.withinss
+bn3$withinss
+plot(bn3)
+table(bn3$cluster, banknote$Y)
+bn2 <- kmeans(banknote[,c(1,6)], centers=2, iter.max=200)
+bn2$tot.withinss
+table(bn2$cluster, banknote$Y)
+table(bn4$cluster, banknote$Y)
+bn4 <- kmeans(banknote[,c(1,6)], centers=4, iter.max = 200)
+table(bn4$cluster, banknote$Y)
+bn3$tot.withinss
+location <- read.csv("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\AppliedDataMining\\Midterm\\entropy.csv", header = TRUE)
+location
+library(CORElearn)
+install.packages("CORElearn")
+library(CORElearn)
+location <- read.csv("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\AppliedDataMining\\Midterm\\entropy.csv", header = TRUE)
+location
+LocData <- read.csv("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\AppliedDataMining\\Midterm\\entropy.csv", header = TRUE)
+LocData
+attrEval(location ~., LocData, estimator = "GainRatio")
+attrEval(location ~., LocData, estimator = "Gini")
+attrEval(location ~., LocData, estimator = "InfGain")
+attrEval(location ~., LocData, estimator = "MDL")
+LocData <- read.csv("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\AppliedDataMining\\Midterm\\entropy.csv", header = TRUE)
+LocData
+LocData$user <- as.factor(LocData$user)
+LocData
+LocData <- read.csv("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\AppliedDataMining\\Midterm\\entropy.csv", header = TRUE)
+LocData$user <- as.factor(LocData$user)
+LocData$User <- as.factor(LocData$User)
+LocData
+attrEval(Location ~., LocData, estimator = "GainRatio")
+attrEval(Location ~., LocData, estimator = "Gini")
+attrEval(Location ~., LocData, estimator = "InfGain")
+attrEval(Location ~., LocData, estimator = "MDL")
+attrEval(Clicks ~., LocData, estimator = "GainRatio")
+attrEval(Clicks ~., LocData, estimator = "Gini")
+attrEval(Clicks ~., LocData, estimator = "InfGain")
+attrEval(Clicks ~., LocData, estimator = "MDL")
+attrEval(Clicks ~., LocData, estimator = "GainR
+attrEval(Clicks ~., LocData, estimator = "GainRatio")
+attrEval(Clicks ~., LocData, estimator = "GainRatio")
+attrEval(Clicks ~., LocData, estimator = "Gini")
+attrEval(Clicks ~., LocData, estimator = "InfGain")
+attrEval(Clicks ~., LocData, estimator = "MDL")
+screeplot(prca)
+plot(prca,type="l")
+pairs(prca$x[,1:2])
+pairs(prca$x[,1:2])
+pairs(pca$x[,1:3])
+#Creating the vector
+??kmeans
+kmeans.mydata <- mydata[,c(1,2)]
+## V1 appears to be an id variable - it just iterates as n+1 for every observation. Should this be included in the k-means?
+kmeans.mydata <- mydata[,c(1,2)]
+kmeans.mydata
+summary(kmeans.mydata)
+#Creating the sample
+mysample <- sample(nrow(kmeans.mydata),300,replace = FALSE)
+mysample <- sample(nrow(kmeans.mydata),300,replace = FALSE)
+summary(mysample)
+mysample <- sample(nrow(kmeans.mydata),300,replace = FALSE)
+kmeans.mydata <- mydata[,c(1,2)]
+kmeans.mydata
+summary(kmeans.mydata)
+kmeans.mydata <- mydata[,c(1,2)]
+kmeans.mydata
+mydata <- read.csv("C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/Midterm/mydata.csv", sep=",")
+kmeans.mydata <- mydata[,c(1,2)]
+kmeans.mydata <- mydata[,c(1,2)]
+kmeans.mydata
+summary(kmeans.mydata)
+mysample <- sample(nrow(kmeans.mydata),300,replace = FALSE)
+summary(mysample)
+km.outHW <- kmeans(mysample,centers=2,nstart=20, algorithm = "Hartigan-Wong")
+#Creating the vector
+kmeans.mydata <- mydata[,c(1,2)]
+## V1 appears to be an id variable - it just iterates as n+1 for every observation. Should this be included in the k-means?
+kmeans.mydata <- mydata[,c(1,2)]
+kmeans.mydata
+summary(kmeans.mydata)
+#Creating the sample
+mysample <- sample(nrow(kmeans.mydata),300,replace = FALSE)
+summary(mysample)
+km.outHW <- kmeans(mysample,centers=2,nstart=20, algorithm = "Hartigan-Wong")
+km.outLl <- kmeans(mysample,centers=2,nstart=20, algorithm = "Lloyd")
+set.seed(1234)
+km.out2 <- kmeans(mysample,centers=2,nstart=35)
+km.out$cluster
+#Total within-cluster sum of squares
+km.out2$tot.withinss
+# within-cluster sum of squares for each cluster
+km.out2$withinss
+km.out2
+## km.out3
+plot(mysample, col=(km.out2$cluster+1), main="K-Means Clustering Results with K=2",
+xlab="", ylab="", pch=20, cex=2)
+km.out4 <- kmeans(mysample,centers=4,nstart=35)
+km.out4
+km.out4$tot.withinss
+km.out4$withinss
+plot(mysample, col=(km.out4$cluster+1), main="K-Means Clustering Results K=4",
+xlab="", ylab="", pch=20, cex=2)
+library(cluster)
+set.seed(1234)
+d <- dist(mydata[,-5])
+avgS <- c()
+for(k in 2:6) {
+cl <- kmeans(mydata[,-5],centers=k,iter.max=200)
+s <- silhouette(cl$cluster,d)
+avgS <- c(avgS,mean(s[,3]))
+}
+set.seed(1234)
+km.out2 <- kmeans(mysample,centers=2,nstart=35)
+km.out$cluster
+#Total within-cluster sum of squares
+km.out2$tot.withinss
+# within-cluster sum of squares for each cluster
+km.out2$withinss
+km.out2
+## km.out3
+plot(mysample, col=(km.out2$cluster+1), main="K-Means Clustering Results with K=2",
+xlab="", ylab="", pch=20, cex=2)
+km.out4 <- kmeans(mysample,centers=4,nstart=35)
+km.out4
+km.out4$tot.withinss
+km.out4$withinss
+plot(mysample, col=(km.out4$cluster+1), main="K-Means Clustering Results K=4",
+xlab="", ylab="", pch=20, cex=2)
+library(cluster)
+set.seed(1234)
+d <- dist(mydata[,-5])
+avgS <- c()
+for(k in 2:6) {
+cl <- kmeans(mydata[,-5],centers=k,iter.max=200)
+s <- silhouette(cl$cluster,d)
+avgS <- c(avgS,mean(s[,3]))
+}
+km.out2$cluster
+install.packages("alr3")
+install.packages("alr3")
+knitr::opts_chunk$set(echo = TRUE)
+bn3 <- kmeans(banknote[,c(1,6)], centers=3, iter.max=200)
+bn3
+plot(bn3)
+bn3$tot.withinss
+knitr::opts_chunk$set(echo = TRUE)
+length((brother))
+brother <- sibs$Brother
+sibs <- read.csv("sisbro.csv", header=TRUE)
+sibs <- read.csv("sisbro.csv", header=TRUE)
+## sibs
+sister <- sibs$Sister
+brother <- sibs$Brother
+# qqnorm(sister)
+# qqnorm(brother)
+# mean(sister)
+# mean(brother)
+# sd(sister)
+# sd(brother)
+# cor(sister, brother)
+# lm(sister ~ brother)
+summary(lm(sister ~ brother))
+(70 - mean(brother)) / sd(brother)
+1 - pnorm(.36)
+r <- cor(brother, sister)
+slope <- r * (sd(brother)/sd(sister))
+pop <- mean(sister) + (slope * (61 - mean(sister)))
+pop
+var.set <- (1 - r^2) * sd(brother)
+var.set
+pnorm(70, 62.22, 1.87)
+predict.61
+# Prediction for Carol's brother's height:
+slope = cor(sister, brother) * sd(brother) / sd(sister)
+intercept = mean(brother) - slope * mean(sister)
+predict.61 = intercept + 61 * slope
+print(predict.61)
+r <- cor(brother, sister)
+slope <- r * (sd(brother)/sd(sister))
+pop <- mean(sister) + (slope * (61 - mean(sister)))
+pop
+var.set <- (1 - r^2) * sd(brother)
+var.set
+predict.61
+r
+pred.error = sd(brother) * sqrt(1 - r^2)
+pred.error
+pnorm(70, mean=predict.61, sd=pred.error)
+mean61 = 31.1818 + 0.5909 * 61
+rse = 2.379
+pnorm(70, mean61, rse)
+summary(lm(brother ~ sister))
+length((brother))
+qt(.05, df=9)
+qt(.95, df=9)
+b <- ((1 - slope) / 9) * (sd(brother) / sd(sister))
+upper.bound <- slope + qt(.95, df=9) * sqrt(b)
+lower.bound <- slope - qt(.95, df=9) * sqrt(b)
+print(c(upper.bound, lower.bound))
+q <- qnorm(1 - .05/2)
+L <- 2 * q * sd(brother)/sqrt(length(brother))
+L
+q
+L10 <- 2 * q * sd(brother)/sqrt(length(110))
+L
+L10
+source("http://bioconductor.org/biocLite.R")
+biocLite()
+bioclit()
+bioclite()
+biocLite()
+biocLite("ALL")
+biocLite("ALL")
+library(Biobase)
+library(ALL)
+data(ALL)
+ALL
+summary(ALL)
+pD <0 phenoData(ALL)
+pD <- phenoData(ALL)
+varMetadata(pD)
+table(ALL$BT)
+table(ALL$mol.biol)
+table(ALL$BT, ALL$mol.bio)
+featureNames(ALL)[1:10]
+sampleNames(ALL[1:5])
+tgt.cases <- which(ALL$BT %in% levels(ALL$BT)[1:5]) & ALL$mol.bio %in% levels(ALL$mol.bio[1:4])
+ALLb <- ALL[,tgt.cases]
+ALLb
+setwd("C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/HW7")
+getwd()
+ALLb$BT <- factor(ALLb$BT)
+ALLb$mol.bio <- factor(ALLb$mol.bio)
+save(ALLb, file="myALL.Rdata")
+library(ggplot2)
+library(grid)
+library(Biobase)
+library(ALL)
+data(ALL)
+load("myALL.Rdata")
+es <- exprs(ALLb)
+dim(es)
+summary(es)
+summary(as.vector(es))
+biocLite("genefilter")
+library(genefilter)
+exprVs <- data.frame(exprVal-as.vector(es))
+exprVs <- data.frame(exprVal=as.vector(es))
+ds <- data.frame(Stat=c("1stQ, "Median", "3rdQ, "Shorth"), Value=c(quantile(exprVs$exprVal, probs-c(.25, .5. 75)), shorth(exprVs$exprVal)), Color=c("red", "green", "red", "yellow"))
+ds <- data.frame(Stat=c("1stQ","Median","3rdQ","Shorth"), Value=c(quantile(exprVs$exprVal, probs=c(0.25, 0.5, 0.75)), shorth(exprVs$exprVal)), Color=c("red","green","red","yellow"))
+ggplot(exprVs,ass(x=exprVal)) + geom_histogram(fill="lightgrey") + geom_vline(data=ds, aes(xintercept=Value,color=Color)) m+ geom_text(data=ds, aes(x=Value-0.2my=0,label=Stat,colour=Color),angle=90,hjust="left") + xlab("Expression Levels") + guides(colour="none", fill="none")
+ggplot(exprVs,ass(x=exprVal)) + geom_histogram(fill="lightgrey") + geom_vline(data=ds, aes(xintercept=Value,color=Color)) + geom_text(data=ds, aes(x=Value-0.2my=0,label=Stat,colour=Color),angle=90,hjust="left") + xlab("Expression Levels") + guides(colour="none", fill="none")
+ggplot(exprVs,ass(x=exprVal)) + geom_histogram(fill="lightgrey") + geom_vline(data=ds, aes(xintercept=Value,color=Color)) + geom_text(data=ds, aes(x=Value-0.2,y=0,label=Stat,colour=Color),angle=90,hjust="left") + xlab("Expression Levels") + guides(colour="none", fill="none")
+ggplot(exprVs,aes(x=exprVal)) + geom_histogram(fill="lightgrey") + geom_vline(data=ds, aes(xintercept=Value,color=Color)) + geom_text(data=ds, aes(x=Value-0.2,y=0,label=Stat,colour=Color),angle=90,hjust="left") + xlab("Expression Levels") + guides(colour="none", fill="none")
+biocLite("hgu95av2.db")
+knitr::opts_chunk$set(echo = TRUE)
+install.packages("ISLR")
+library(ISLR)
+View(Auto)
+Auto$mpglevel <- as.factor(Auto$mpg >= median(Auto$mpg))
+> print(Auto$mpglevel)
+print(Auto$mpglevel)
+Auto$mpglevel <- as.numeric(Auto$mpg >= median(Auto$mpg))
+print(Auto$mpglevel)
+summary(Auto)
+tr <- Auto[rndSample, ] #training data: randomly picked 250 points from iris data
+rndSample <- sample(1:nrow(Auto), 250)
+set.seed(1234)
+rndSample <- sample(1:nrow(Auto), 250)
+tr <- Auto[rndSample, ] #training data: randomly picked 250 points from iris data
+ts <- Auto[-rndSample, ] # test data: 50 data points
+?svm
+??svm
+s <- svm(mpg ~ ., tr,C=.01) # train a SVM over iris data set
+library(e1071)
+s <- svm(mpg ~ ., tr,C=.01) # train a SVM over iris data set
+s <- svm(mpg ~ ., tr,C=.01)
+ps <- predict(s, ts)
+summary(ps)
+ps
+(cm <- table(ps, ts$mpg)) #confusion matrix
+100*(1-sum(diag(cm))/sum(cm))
+ps(cross)
+ps$cross
+funct.svm <- function(cost,target,dataset)
+{s <- svm(target~., datset,cost)
+ps <- predict(s, ts)
+cm <- table(ps, ts$mpg)
+100*(1-sum(diag(cm))/sum(cm))
+}
+funct.svm(.01, mpg, tr)
+funct.svm <- function(cost,target,dataset)
+{s <- svm(target~., dataset,cost)
+ps <- predict(s, ts)
+cm <- table(ps, ts$mpg)
+100*(1-sum(diag(cm))/sum(cm))
+}
+funct.svm(.01, mpg, tr)
+funct.svm <- function(cost)
+{s <- svm(mpg ~ ., ts,cost)
+ps <- predict(s, ts)
+cm <- table(ps, ts$mpg)
+100*(1-sum(diag(cm))/sum(cm))
+}
+funct.svm(.01, mpg, tr)
+funct.svm(.01)
+funct.svm(cost=.01)
+s.01 <- svm(mpg ~ ., tr,C=.01)
+ps.01 <- predict(s.01, ts)
+cm.01 <- table(ps, ts$mpg) #confusion matrix
+100*(1-sum(diag(cm.01))/sum(cm.01))
+100*(1-sum(diag(cm.1))/sum(cm.1))
+s.1 <- svm(mpg ~ ., tr,C=.1)
+ps.1 <- predict(s.1, ts)
+cm.1 <- table(ps, ts$mpg) #confusion matrix
+100*(1-sum(diag(cm.1))/sum(cm.1))
+cm.1 <- table(ps.1, ts$mpg) #confusion matrix
+100*(1-sum(diag(cm.1))/sum(cm.1))
+s1 <- svm(mpg ~ ., tr,C=1)
+ps1 <- predict(s1, ts)
+cm1 <- table(ps1, ts$mpg) #confusion matrix
+100*(1-sum(diag(cm1))/sum(cm1))
+summary(cm1)
+cm1
+?e1071
+install.packages(e1071)
+library(e1071)
+data(iris)
+names(iris) # name of the variables, species is the class variable
+set.seed(1234)
+rndSample <- sample(1:nrow(iris), 100)
+tr <- iris[rndSample, ] #training data: randomly picked 100 points from iris data
+ts <- iris[-rndSample, ] # test data: 50 data points
+?svm # more information about svm
+s <- svm(Species ~ ., tr) # train a SVM over iris data set
+ps <- predict(s, ts) # classify the test data using the trained SVM
+(cm <- table(ps, ts$Species)) #confusion matrix for evaluation
+100*(1-sum(diag(cm))/sum(cm))  # the error rate is 4%
+100*(1-sum(diag(cm.1))/sum(cm.1))
+100*(1-sum(diag(cm1))/sum(cm1))
+s1 <- svm(mpg ~ ., tr,C=1)
+s.1 <- svm(mpg ~ ., tr,C=.1)
+ps.1 <- predict(s.1, ts)
+cm.1 <- table(ps.1, ts$mpg) #confusion matrix
+tr <- Auto[rndSample, ]
+ts <- Auto[-rndSample, ]
+??svm
+cm.1 <- table(ps.1, ts$mpg) #confusion matrix
+s.1 <- svm(mpg ~ ., tr,C=.1)
+ps.1 <- predict(s.1, ts)
+cm.1 <- table(ps.1, ts$mpg) #confusion matrix
+cm.1
+ps.01
+100*(1-sum(diag(cm.01))/sum(cm.01))
+cm.01 <- table(ps.01, ts$mpg) #confusion matrix
+s.01 <- svm(mpg ~ ., tr,C=.01)
+ps.01 <- predict(s.01, ts)
+cm.01 <- table(ps.01, ts$mpg) #confusion matrix
+100*(1-sum(diag(cm.01))/sum(cm.01))
+s.1 <- svm(mpg ~ ., tr,C=.1)
+ps.1 <- predict(s.1, ts)
+cm.1 <- table(ps.1, ts$mpg) #confusion matrix
+cm.1
+100*(1-sum(diag(cm.1))/sum(cm.1))
+s5 <- svm(mpg ~ ., tr,C=5)
+ps5 <- predict(s5, ts)
+cm5 <- table(ps5, ts$mpg) #confusion matrix
+100*(1-sum(diag(cm5))/sum(cm5))
+s10 <- svm(mpg ~ ., tr,C=10)
+ps10 <- predict(s10, ts)
+cm10 <- table(ps10, ts$mpg) #confusion matrix
+100*(1-sum(diag(cm10))/sum(cm10))
+s100 <- svm(mpg ~ ., tr,C=100)
+ps100 <- predict(s100, ts)
+cm100 <- table(ps100, ts$mpg) #confusion matrix
+100*(1-sum(diag(cm100))/sum(cm100))
+load("svm.Rdata")
+100*(1-sum(diag(cm100))/sum(cm100))
+rndSample <- sample(1:nrow(Auto), 300)
+tr <- Auto[rndSample, ]
+ts <- Auto[-rndSample, ]
+s.01 <- svm(mpg ~ ., tr,C=.01)
+ps.01 <- predict(s.01, ts)
+cm.01 <- table(ps.01, ts$mpg) #confusion matrix
+100*(1-sum(diag(cm.01))/sum(cm.01))
+set.seed(123456)
+rndSample <- sample(1:nrow(Auto), 300)
+tr <- Auto[rndSample, ]
+ts <- Auto[-rndSample, ]
+s.01 <- svm(mpg ~ ., tr,C=.01)
+ps.01 <- predict(s.01, ts)
+cm.01 <- table(ps.01, ts$mpg) #confusion matrix
+100*(1-sum(diag(cm.01))/sum(cm.01))
+s.01 <- svm(mpglevel ~ ., tr,C=.01)
+ps.01 <- predict(s.01, ts)
+cm.01 <- table(ps.01, ts$mpglevel) #confusion matrix
+100*(1-sum(diag(cm.01))/sum(cm.01))
+tr <- Auto[rndSample, ]
+ts <- Auto[-rndSample, ]
+s.01 <- svm(mpglevel ~ ., tr,C=.01)
+ps.01 <- predict(s.01, ts)
+cm.01 <- table(ps.01, ts$mpglevel) #confusion matrix
+100*(1-sum(diag(cm.01))/sum(cm.01))
+cm.01
+table(s.01)
+summary(s.01)
+summary(s.01)
+ps.01 <- predict(s.01, ts)
+Auto$mpglevel <- as.factor(Auto$mpg >= median(Auto$mpg))
+print(Auto$mpglevel)
+summary(Auto)
+rndSample <- sample(1:nrow(Auto), 300)
+tr <- Auto[rndSample, ]
+ts <- Auto[-rndSample, ]
+s.01 <- svm(mpglevel ~ ., tr,C=.01)
+ps.01 <- predict(s.01, ts)
+cm.01 <- table(ps.01, ts$mpglevel) #confusion matrix
+cm.01
+100*(1-sum(diag(cm.01))/sum(cm.01))
+s.1 <- svm(mpglevel ~ ., tr,C=.1)
+ps.1 <- predict(s.1, ts)
+cm.1 <- table(ps.1, ts$mpglevel) #confusion matrix
+100*(1-sum(diag(cm.1))/sum(cm.1))
+s1 <- svm(mpglevel ~ ., tr,C=1)
+ps1 <- predict(s1, ts)
+cm1 <- table(ps1, ts$mpglevel) #confusion matrix
+100*(1-sum(diag(cm1))/sum(cm1))
+s5 <- svm(mpglevel ~ ., tr,C=5)
+cm5 <- table(ps5, ts$mpglevel) #confusion matrix
+s5 <- svm(mpglevel ~ ., tr,C=5)
+ps5 <- predict(s5, ts)
+cm5 <- table(ps5, ts$mpglevel) #confusion matrix
+100*(1-sum(diag(cm5))/sum(cm5))
+s10 <- svm(mpglevel ~ ., tr,C=10)
+ps10 <- predict(s10, ts)
+cm10 <- table(ps10, ts$mpglevel) #confusion matrix
+100*(1-sum(diag(cm10))/sum(cm10))
+s100 <- svm(mpglevel ~ ., tr,C=100)
+ps100 <- predict(s100, ts)
+cm100 <- table(ps100, ts$mpglevel) #confusion matrix
+100*(1-sum(diag(cm100))/sum(cm100))
+s100 <- svm(mpglevel ~ ., tr,C=100, degree=2, gamma=.01)
+ps100 <- predict(s100, ts)
+cm100 <- table(ps100, ts$mpglevel) #confusion matrix
+100*(1-sum(diag(cm100))/sum(cm100))
+s100 <- svm(mpglevel ~ ., tr,C=100, degree=3, gamma=10)
+ps100 <- predict(s100, ts)
+cm100 <- table(ps100, ts$mpglevel) #confusion matrix
+100*(1-sum(diag(cm100))/sum(cm100))
+s100 <- svm(mpglevel ~ ., tr,C=100, degree=3, gamma=1)
+ps100 <- predict(s100, ts)
+cm100 <- table(ps100, ts$mpglevel) #confusion matrix
+100*(1-sum(diag(cm100))/sum(cm100))
+s100 <- svm(mpglevel ~ ., tr,C=100, degree=1, gamma=1)
+ps100 <- predict(s100, ts)
+cm100 <- table(ps100, ts$mpglevel) #confusion matrix
+100*(1-sum(diag(cm100))/sum(cm100))
+s100 <- svm(mpglevel ~ ., tr,C=1, degree=1, gamma=1)
+ps100 <- predict(s100, ts)
+cm100 <- table(ps100, ts$mpglevel) #confusion matrix
+100*(1-sum(diag(cm100))/sum(cm100))
+s100 <- svm(mpglevel ~ ., tr,C=100, degree=3, gamma=10)
+ps100 <- predict(s100, ts)
+cm100 <- table(ps100, ts$mpglevel) #confusion matrix
+100*(1-sum(diag(cm100))/sum(cm100))
+libarary(ISLR)
+library(ISLR)
+View(Caravan)

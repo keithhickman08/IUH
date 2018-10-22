@@ -1,0 +1,512 @@
+help(findFreqTerms)
+findFreqTerms(sms_dtm, 5)
+findFreqTerms(sms_dtm_train,5)
+sms_freq_words <- findFreqTerms(sms_dtm_train, 5)
+is.recursive(sms_dtm_train)
+findFreqTerms[[sms_dtm_train,5]]
+findFreqTerms(sms_dtm,5)
+sms_dtm_train <- sms_dtm[1:4169,]
+sms_dtm_train <- sms_dtm[4170:5559, ]
+findFreqTerms(sms_dtm_train, 5)
+sms_freq_words <- findFreqTerms(sms_dtm_train, 5)
+str(sms_freq_words)
+findFreqTerms(sms_dtm_train, 5)
+sms_dtm_test <- sms_dtm[4170:5559, ]
+sms_dtm_train <- sms_dtm[1:4169, ]
+findFreqTerms(sms_dtm_train, 5)
+sms_freq_words <- findFreqTerms(sms_dtm_train, 5)
+str(sms_freq_words
+)
+sms_dtm_freq_train <- sms_dtm_train[ ,sms_freq_words]
+sms_dtm_freq_test <- sms_dtm_test[ ,sms_freq_words]
+convert_counts <- function(x) {
+x <- ifelse(x >0, "Yes", "No")
+}
+sms_train <- apply(sms_dtm_freq_train, MARGIN = 2, convert_counts)
+sms_test <- apply(sms_dtm_freq_test, MARGIN = 2, convert_counts)
+sms_test
+sms_train
+install.packages("e1071")
+library(e1071)
+sms_classifier <- naiveBayes(sms_train, sms_type)
+sms_classifier <- naiveBayes(sms_train, sms_train_labels)
+sms_test_pred <- predict(sms_classifier, sms_test)
+library(gmodels)
+CrossTable(sms_test_pred, sms_test_labels,
+prop.chisq = FALSE, prop.t = FALSE,
+dnn = c('predicted', 'actual')
+)
+credit <- read.csv("C:/Users/khickman/Documents/ml-actual/MLwR/05/credit.csv")
+str(credit)
+table(credit$checking_balance)
+table(credit$savings_balance)
+credit_train <- credit[train_sample,]
+credit_test <- credit[-train_sample,]
+prop.table(credit_train)
+prop.table(table(credit_train$default))
+prop.table(table(credit_test$default))
+set.seed(123)
+prop.table(table(credit_train$default))
+credit_train <- credit[train_sample,]
+credit_test <- credit[-train_sample,]
+prop.table(table(credit_train$default))
+prop.table(table(credit_test$default))
+install.packages("C50")
+library(C50)
+?C5.0Control
+credit_model <- C5.0(credit_train[-17], credit_train$default)
+credit_model
+summary(credit_model)
+CrossTable(credit_test$default, credit_pred,
+prop_chisq = FALSE, prop.c = FALSE, prop.r = FALSE,
+dnn = c('actual default', 'predicted default'))
+credit_pred <- predict(credit_model, credit_test)
+CrossTable(credit_test$default, credit_pred,
+prop_chisq = FALSE, prop.c = FALSE, prop.r = FALSE,
+dnn = c('actual default', 'predicted default'))
+q()
+q()
+mushrooms <- read.csv"(C:/Users/khickman/Documents/ml-actual/MLwR/05/mushrooms.csv")
+mushrooms <- read.csv("C:/Users/khickman/Documents/ml-actual/MLwR/05/mushrooms.csv")
+mushrooms <- read.csv("C:/Users/khickman/Documents/ml-actual/MLwR/05/mushrooms.csv", stringsAsFactors = TRU)
+mushrooms <- read.csv("C:/Users/khickman/Documents/ml-actual/MLwR/05/mushrooms.csv", stringsAsFactors = TRUE)
+str(mushrooms)
+mushrooms$veiltype <- NULL
+str(mushrooms)
+library(RWeka)
+?formula
+mushroom_1R <- OneR(type ~ ., data = mushrooms)
+mushroom_1R
+summary(mushroom_1R
+)
+mushroom_JRip <- JRip(type ` ., data = mushrooms
+)
+mushroom_JRip <- JRip(type ~ ., data = mushrooms)
+q
+mushroom_JRip <- JRip(type ~ ., data = mushrooms)
+mushroom_JRip)
+mushroom_JRip
+summary(mushroom_JRip)
+save.image("C:\\Users\\khickman\\Documents\\ml-actual\\MLwR\\05\\mushrooms.RData")
+q()
+reg <- function(y, x) {
+x<- as.matrix(x)
+x <- cbind(Intercept = 1, x)
+b <- solve(t(x) %*% x) %*% t(x) %*% y
+colnames(b) <- "estimate"
+print(b)
+}
+reg(y = launch$distress, x = launch [2:4])
+lauch <- read.csv("challenger.csv")
+lauch <- read.csv("C:\\Users\\khickman\\Documents\\ml-actual\\MLwR\\06\\challenger.csv")
+lauch <- launch
+launch <- read.csv("C:\\Users\\khickman\\Documents\\ml-actual\\MLwR\\06\\challenger.csv")
+str(launch)
+reg <- function(x,y) {
+x <- as.matrix(x)
+x <- cbind(Intercept = 1, x)
+b <- solve(t(x) %*% x) %*% t(x) %*% y
+colnames(b) <- "estimate"
+print(b)
+}
+reg(y = launch$distress_ct, x = launch[2:4])
+insurance <- read.csv("insurance.csv")
+insurance <- read.csv("C:\\Users\\khickman\\Documents\\ml-actual\\MLwR\\06\\insurance.csv")
+str(insurance)
+summary(insurance$bmi)
+summary(insurance$smoker)
+table(insurance)
+table(insurance$smoker)
+table(insurance$bmi)
+ins_model <- lm(expenses ~ age + children + bmi + sex + smoker + region, data = insurance)
+ins_model
+ins_model <- lm(expenses ~ age + children + bmi + sexfemale + smoker + region, data = insurance)
+ins_model <- lm(expenses ~ ., data = insurance)
+ins_model
+summary(ins_model)
+summary(ins_model)
+insurance$bmi30 <- ielse(insurance$bmi >= 30, 1, 0)
+insurance$bmi30 <- ifelse(insurance$bmi >= 30, 1, 0)
+expenses ~ bmi30*smoker
+insurance$age2 <- insurance$age^2
+summary(ins_model)
+summary(insurance)
+ins_model2 <- lm(expenses ~ age + age2 + children + bmi + sex + bmi30*smoker + region, data = insurance)
+summary(ins_model2)
+tee <- (c(1,1,1,2,2,3,4,5,5,6,6,7,7,7,7)
+)
+at1 <- c(1,1,1,2,2,,3,4,5,5)
+at1 <- (c(1,1,1,2,2,,3,4,5,5))
+at1 <- (c(1,1,1,2,2,3,4,5,5))
+at2 <- c(6,6,7,7,7,7)
+bt1 <- c(1,1,1,2,2,3,4)
+bt2 <- c(5,5,6,6,7,7,7,7)
+sdr_a <- sd(tee) - (length(at1) / length(tee) * sd(at1) + length(at2) / length(tee) * sd(at2))
+sdr_b <- sd(tee) - (length(bt1) / length(tee) * sd(bt1) + length(bt2) / length(tee) * sd(bt2))
+sdr_a
+sdr_b
+wine <- read.csv("whitewines.csv")
+wine <- read.csv("c:\\Users\\khickman\\Documents\\ml-actual\\MLwR\\06\\whitewines.csv")
+str(wine)
+summary(wine)
+table(wine)
+head(wine)
+hist(wine)
+hist(wine$quality)
+hist(wine$fixed.acidity)
+hist(wine$volatile.acidity)
+hist(wine$citric.acid)
+hist(wine$residual.sugar)
+hist(wine$chlorides)
+hist(wine$free.sulfur.dioxide)
+hist(wine$alcohol)
+wine_train[wine[1:3750,]
+wine_train(wine[1:3750,]
+)
+wine_train <- (wine[1:3750,])
+wine_test <- (wine[3751:4898,])
+summary(wine_test)
+install.packages("rpart")
+install.packages("rpart")
+library(rpart)
+model.rpart <- rpart(quality ~ ., data = wine_train)
+m.rpart
+model.rpart
+summary(m.rpart)
+summary(model.rpart)
+install.packages("rpart.plot")
+library(rpart.plot)
+rpart.plot(m.rpart, digits = 3)
+rpart.plot(model.rpart, digits = 3)
+p.rpart <- predict(m.rpart, wine_test)
+p.rpart <- predict(model.rpart, wine_test)
+summary(p.rpart)
+str(p.rpart)
+library(RWeka)
+m.m5p <- M5P(quality ~ ., data = wine_train)
+Sys.getenv("WEKA_HOME")
+WPM("list-packages", "installed")
+test
+WPM("refresh-cache")
+m.m5p <- M5P(quality ~ ., data = wine_train)
+m.m5p
+save.image("C:\\Users\\khickman\\Documents\\ml-actual\\MLwR\\06\\wines.RData")
+q()
+str(concrete)
+concrete <- read.csv("C:\\Users\\khickman\\Documents\\ml-actual\\MLwR\\07\\concrete.csv")
+str(concrete)
+summary(concrete$slag)
+summary(concrete$coarseagg)
+normalize <- function(x) { return ((x - min(x)) / (max(x) - min(x)))}
+concrete_norm <- as.data.frame(lapply(concrete(normalize))
+)
+concrete_norm <- as.data.frame(lapply(concrete,normalize))
+summary(concrete)
+summary(concrete_norm)
+concrete_train <- concrete_norm[1:773,]
+concrete_test <- concrete_norm[774:1030,]
+library(neuralnet)
+save.image("C:\\Users\\khickman\\Documents\\ml-actual\\MLwR\\07\\concrete.RData")
+concrete_model M- neuralnet(strength ~ cement + slag + ash + water + superplastic + coarseagg + fineagg + age, data = concrete_train)
+concrete_model <- neuralnet(strength ~ cement + slag + ash + water + superplastic + coarseagg + fineagg + age, data = concrete_train)
+plot(concrete_model)
+model_results <- compute(concrete_model, concrete_test[1:8])
+predicted_strength <- model_results$net.result
+cor(predicted_strength, concrete_test$strength)
+concrete_model2 <- neuralnet(strength ~ cement + slag + ash + water + superplastic + coarseagg + fineagg + age, data = concrete_train, hidden = 5)
+plot(concrete_model2)
+model_results <- compute(concrete_model2, concrete_test[1:8])
+predicted_strength <- model_results$net.result
+cor(predicted_strength, concrete_test$strength)
+save.image("C:\\Users\\khickman\\Documents\\ml-actual\\MLwR\\07\\concrete.RData")
+q()
+food_ratings <- read.csv("C:\\Users\\khickman\\Documents\\ml-actual\\MLwR\\capstone\\foods_cleanpartial.csv")
+summary(food_ratings)
+str(food_ratings)
+food_ratings <- read.csv("C:\\Users\\khickman\\Documents\\ml-actual\\MLwR\\capstone\\foods_cleanpartial.csv", stringsAsFactors = FALSE)
+str(food_ratings)
+food_ratings <- food_ratings["productId", "userId", "helpfulness_ratio", "score", "time", "summary", "text"]
+plot(food_ratings)
+save.image("C:\\Users\\khickman\\Documents\\ml-actual\\MLwR\\capstone\\capstone.RData")
+q()
+x
+x <- 10
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/Stats S520/Module2/exercises.r')
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/Stats S520/Module2/exercises.r')
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/Stats S520/Module2/exercises.r')
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/Stats S520/Module2/exercises.r')
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/Stats S520/Module2/exercises.r')
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/Stats S520/Module2/exercises.r')
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/Stats S520/Module2/exercises.r')
+library(readr)
+phonecalls <- read_csv("C:/Users/khickman/Desktop/SalesModelMetrics/phonecalls.csv")
+View(phonecalls)
+shiny::runApp('ml-actual/Test_App/testRapp')
+algae <- table.read("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\AppliedDataMining\\HW1\\analysis.txt"
+header = F,
+dec = '.',
+col.names=c('season','size','speed','mxPH','mnO2','Cl',
+'NO3','NH4','oPO4','PO4','Chla','a1','a2','a3','a4',
+'a5','a6','a7'),
+na.strings=c('XXXXXXX'))
+algae <- table.read("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\AppliedDataMining\\HW1\\analysis.txt",
+header = F,
+dec = '.',
+col.names=c('season','size','speed','mxPH','mnO2','Cl',
+'NO3','NH4','oPO4','PO4','Chla','a1','a2','a3','a4',
+'a5','a6','a7'),
+na.strings=c('XXXXXXX'))
+algae <- read.table("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\AppliedDataMining\\HW1\\analysis.txt",
+header = F,
+dec = '.',
+col.names=c('season','size','speed','mxPH','mnO2','Cl',
+'NO3','NH4','oPO4','PO4','Chla','a1','a2','a3','a4',
+'a5','a6','a7'),
+na.strings=c('XXXXXXX'))
+library(DMwR)
+algae(head)
+head(algae)
+summary(algae)
+!clear
+clear!
+hist(algae$mxPH,prob=T)
+algae
+head(algae)
+head(algae)
+library(car)
+install.packages(car)
+install.packages("car")
+library(car)
+par(mfrow=c(1,1))
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/HW1/algae.R')
+par(mfrow=c(1,1))
+hist(algae$mxPH)
+library(DMwR)
+head(algae)
+library(car)
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/HW1/algae.R')
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/HW1/algae.R')
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/HW1/algae.R')
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/HW1/algae.R')
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/HW1/algae.R')
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/HW1/algae.R')
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/HW1/algae.R')
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/HW1/algae.R')
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/HW1/algae.R')
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/HW1/algae.R')
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/HW1/algae.R')
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/HW1/DMwR2_2.R')
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/HW1/DMwR2_2.R')
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/HW1/DMwR2_2.R')
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/HW1/DMwR2_2.R')
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/HW1/DMwR2_2.R')
+View(credit_test)
+plot(cars)
+install.packages("data.table")
+library(data.table)
+install.packages("curl")
+install.packages("library")
+install.packages("data.table")
+install.packages("data.table")
+install.packages("curl")
+mydata <- ("https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/breast-cancer-wisconsin.data")
+head("mydata")
+summary(mydata)
+head(mydata)
+mydata <- fread("https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/breast-cancer-wisconsin.data")
+head(mydata)
+library(data.table)
+mydata <- fread("https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/breast-cancer-wisconsin.data")
+head(mydata)
+mydata <- fread("https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/breast-cancer-wisconsin.data")
+head(mydata)
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/HW2/2.1/2_1.R')
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/HW2/2.1/2_1.R')
+head(mydata)
+clear
+clear()
+I
+!
+;
+mydata <- fread("https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/breast-cancer-wisconsin.data")
+head(mydata)
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/HW2/2.1/2_1.R')
+mydata <- fread("https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/breast-cancer-wisconsin.data")
+library(data.table)
+mydata <- fread("https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/breast-cancer-wisconsin.data")
+head(mydata)
+hist(mydata$V1)
+sum(is.na(mydata))
+hist(mydata$V2)
+hist(mydata$V3)
+hist(mydata$V4)
+hist(mydata$V5)
+hist(mydata$V6)
+hist(mydata$V7)
+hist(mydata$V8)
+hist(mydata$V9)
+hist(mydata$V10)
+hist(mydata$V11)
+1 - pbinom(7, 12, .4)
+install.packages("data.table")
+library(data.table)
+install.packages("curl")
+mydata <- fread("https://archive.ics.uci.edu/ml/machine-learning-databases/
+ionosphere/ionosphere.data")
+mydata <- fread("https://archive.ics.uci.edu/ml/machine-learning-databases/
+ionosphere/ionosphere.data")
+mydata <- fread("https://archive.ics.uci.edu/ml/machine-learning-databases/
+ionosphere/ionosphere.data")
+mydata <- fread(https://archive.ics.uci.edu/ml/machine-learning-databases/
+ionosphere/ionosphere.data)
+mydata <- fread("https://archive.ics.uci.edu/ml/machine-learning-databases/
+ionosphere/ionosphere.data")
+mydata <- fread("https://archive.ics.uci.edu/ml/machine-learning-databases/
+ionosphere/ionosphere.data")
+library(curl)
+mydata <- fread("https://archive.ics.uci.edu/ml/machine-learning-databases/
+ionosphere/ionosphere.data")
+mydata <- curl_download("https://archive.ics.uci.edu/ml/machine-learning-databases/
+ionosphere/ionosphere.data")
+mydata <- curl_download("https://archive.ics.uci.edu/ml/machine-learning-databases/
+ionosphere/ionosphere.data", tmp)
+getwd()
+setwd("C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining")
+getwd()
+mydata <- curl_download("https://archive.ics.uci.edu/ml/machine-learning-databases/
+ionosphere/ionosphere.data", tmp)
+mydata <- curl_download("https://archive.ics.uci.edu/ml/machine-learning-databases/
+ionosphere/ionosphere.data", c:Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/tmp)
+mydata <- curl_download("https://archive.ics.uci.edu/ml/machine-learning-databases/
+ionosphere/ionosphere.data", c:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/tmp)
+mydata <- curl_download("https://archive.ics.uci.edu/ml/machine-learning-databases/
+ionosphere/ionosphere.data", tmp)
+mydata <- curl_fetch_memory("https://archive.ics.uci.edu/ml/machine-learning-databases/
+ionosphere/ionosphere.data", tmp)
+mydata <- curl_fetch_memory("https://archive.ics.uci.edu/ml/machine-learning-databases/
+ionosphere/ionosphere.data")
+mydata <- curl_fetch_memory("https:\\archive.ics.uci.edu/ml\machine-learning-databases\
+ionosphere\ionosphere.data")
+mydata <- fread('https:\\archive.ics.uci.edu/ml\machine-learning-databases\
+ionosphere\ionosphere.data')
+mydata <- fread('https://archive.ics.uci.edu/ml/machine-learning-databases/
+ionosphere/ionosphere.data')
+mydata <- fread('https://archive.ics.uci.edu/ml/machine-learning-databases/ionosphere/ionosphere.data')
+head(mydata)
+summary(mydata)
+!clear
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/HW2/2.2/sb.R')
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/HW2/2.2/sb.R')
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/HW2/2.2/sb.R')
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/HW2/2.2/sb.R')
+summary(mydata)
+describe(mydata)
+describe.mydata
+library(hmisc)
+install.packages("Hmisc")
+install.packages("Hmisc")
+describe(mydata)
+library(Hmisc)
+describe(mydata)
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/HW2/2.2/sb.R')
+install.packages("Hmisc")
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/HW2/2.2/sb1.R')
+install.packages("Hmisc")
+plot(mydata[35],type="bar")
+plot(mydata35)
+plot(mydata[:35,])
+plot(mydata[,:35])
+plot35 <- table(mydata$V35)
+barplot(plot35, main="Ionosphere 35", xlab = "Something")
+head(plot35)
+summary(plot35)
+summary(mydata$V35)
+summary(mydata$v1)
+summary(mydata$v2)
+head(mydata)
+plot1 <- table(mydata$V1)
+plot2 <- table(mydata$V2)
+barplot(plot1, main=V1)
+barplot(plot1, main="V1")
+barplot(plot2,main="v2")
+barplot(plot35, main="Ionosphere V35", xlab = "Class Good / Bad")
+describe(mydata)
+barplot(plot1, plot2, plot35)
+plot(mydata$V22, mydata$v20)
+plot(mydata$V22, mydata$v20, pch=19)
+plot(mydata$V22, mydata$v20, pch=9)
+ggplot(mydata, aes(x=V22,y=V20,color=V35)))
+ggplot(mydata, aes(x=V22,y=V20,color=V35))
+ggplot(mydata, aes(x=V20,y=V22,color=V35))
+ggplot(mydata, aes(x=mydata$V20,y=mydata$V22,color=V35))
+plot(mydata$V22, mydata$v20, col=mydata$V35)
+plot(mydata$V22, mydata$v20, pch=as.integer(mydata$V35))
+plot(mydata$V22, mydata$v20)
+plot(mydata$V22, mydata$v20, pch=1)
+plot(mydata$V22, mydata$v20, pch=2)
+plot(mydata$V22, mydata$v20, pch=3)
+plot(mydata$V22, mydata$v20, col=as.integer(mydata$v35))
+plot(mydata$V22, mydata$v20, col=as.integer(mydata$v35))
+plot(mydata$V22, mydata$v20, col=mydata$v35)
+plot(mydata$V22, mydata$v20, col=mydata$v35)
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/HW2/2.2/sb1.R')
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/HW2/2.2/sb1.R')
+length(mydata$V20)
+length(mydata$V22)
+length(mydata$V35)
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/HW2/2.2/sb2.R')
+plot(mydata$v1, mydata$v2)
+head(mydatt)
+head(mydata)
+mydata <- mydata[,-35]
+head(mydata)
+kmeans(mydata,2,nstart=50)
+kmeans1 <- kmeans(mydata,2,nstart=50)
+plot(kmeans1)
+kmeans1$cluster
+kmeans1$withinss
+kmeans1$tot.withinss
+kmeans2 <- kmeans(mydata,3,nstart=50)
+kmeans2$withinss
+kmeans2$centers
+plot(kmeans2$totss)
+plot(kmeans2$withinss)
+plot(kmeans2$tot.withinss)
+kmeans2$tot.withinss)
+kmeans2$tot.withinss
+kmeans1$tot.withinss
+k_max <- 10
+tsse <- sapply(1:k_max, function(k){kmeans(mydata, k, nstart=30,iter.max = 12 )$tot.withinss})
+tsse
+plot(1:k_max, tsse, type="b", pch = 20, frame = FALSE, xlab="Number of clusters k",
+ylab="Total within-clusters sum of squares")
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/HW2/2.2/sb2.R')
+mydata <- mydata[,-35]
+mydata <- mydata[,-2]
+head(mydata)
+mydata.pca <- princomp(mydata, scale=TRUE)
+mydata.pca <- prcomp(mydata, scale=TRUE)
+summary(mydata.pca)
+mydata.pca$PC1
+mydata.pca$x
+loadings.pca
+loadings.mydata.pca
+loadings(mydata.pca)
+pca$rotation
+mydata.pca$rotation
+plot(mydata.pca$[PC1], mydata.pca[PC2])
+plot(mydata.pca$PC1, mydata.pca$PC2)
+biplot(mydata.pca, scale=0)
+biplot(mydata.pca, scale=1)
+biplot(mydata.pca, scale=.25)
+mydata.pca$[,1:2]
+mydata.pca$x[,1:2]
+mydatapca1.2 <- mydata.pca$x[,1:2]
+pairs(mydatapca1.2)
+pairs(z)
+z <- mydata.pca$x[,1:2]
+pairs(z)
+plot(mydata.pca, type='l')
+screeplot(mydata.pca)
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/HW2/2.2/sb2.R')
+source('C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/HW2/2.2/sb2.R')

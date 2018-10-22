@@ -1,0 +1,99 @@
+---
+title: "DMwR Chapter 2"
+author: "Keith Hickman"
+date: "December 17, 2017"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(quantmod)
+GSPC_web <- getSymbols("^GSPC", auto.assign = FALSE, src="yahoo")
+first(GSPC_web)
+last(GSPC_web)
+```
+
+
+
+
+```{r}
+library(xts)
+data(GSPC, package="DMwR2")
+first(GSPC)
+last(GSPC)
+```
+
+Daily average price = close + high + low / 3, we have n = 3 parameters. 
+
+Let Vi be the set of k percentage variations (often called arithmetic returns) of today's
+close to the following k days average prices
+
+V_i = k-percentage variations:
+
+$$
+V_i=
+\begin{Bmatrix}
+\frac{\overline{P}_i + _j - C_i}{C_i}
+\end{Bmatrix}^k _j
+$$
+
+
+Our indicator variable is the total sum of the variations in this set whose absolute value is above our target margin p%:
+
+$$
+T_i = \Sigma
+\begin{Bmatrix} 
+v \epsilon Vi : v > p% _ v < ???p%}
+\end{Bmatrix}
+$$
+My code: 
+```{r}
+t.ind <- function(quotes, tgt.margin = .025, n.days = 10) {
+  v <- apply(HLC(quotes), 1, mean)
+  v[1] <- Cl(quotes)[1]
+  
+  r <- matrix(NA, ncol = n.days, nrow = NROW(quotes))
+  for (x in 1:n.days) r[, x] <- Next(Delt(v,k = x), x)
+  
+  x <- apply(r, 1, function(x) sum(x[x > tgt.margin | x < -tgt.margin])) 
+  
+  if (is.xts(quotes)) xts(x, time(quotes)) else x
+}
+
+candleChart(last(GSPC, '3 months'), theme='white', TA=NULL)
+avgPrice <- function(p) apply(HLC(p), 1, mean)
+addAvgPrice <- newTA(FUN=avgPrice, col=1, legend='AvgPrice')
+addt.ind <- newTA(FUN=t.ind, col='red', legend='tgtRet')
+addAvgPrice(on=1)
+addt.ind()
+
+```
+
+Book Code: 
+
+```{r}
+T.ind <- function(quotes, tgt.margin = 0.025, n.days = 10) {
+  v <- apply(HLC(quotes), 1, mean)
+  v[1] <- Cl(quotes)[1]
+  r <- matrix(NA, ncol = n.days, nrow = NROW(quotes))
+  for (x in 1:n.days) r[, x] <- Next(Delt(v, k = x), x)
+  x <- apply(r, 1, function(x) sum(x[x > tgt.margin | x < -tgt.margin]))
+  if (is.xts(quotes)) xts(x, time(quotes)) else x
+  }
+
+candleChart(last(GSPC,'3 months'),theme='white', TA=NULL)
+avgPrice <- function(p) apply(HLC(p),1,mean)
+addAvgPrice <- newTA(FUN=avgPrice,col=1,legend='AvgPrice')
+addT.ind <- newTA(FUN=T.ind,col='red', legend='tgtRet')
+addAvgPrice(on=1)
+addT.ind()
+```
+  
+  
+  
+  
+}
+```

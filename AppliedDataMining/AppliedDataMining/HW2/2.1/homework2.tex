@@ -1,0 +1,295 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Programming/Coding Assignment
+% LaTeX Template
+%
+% This template has been downloaded from:
+% http://www.latextemplates.com
+%
+% Original author:
+% Ted Pavlic (http://www.tedpavlic.com)
+%
+% Note:
+% The \lipsum[#] commands throughout this template generate dummy text
+% to fill the template out. These commands should all be removed when 
+% writing assignment content.
+%
+% This template uses a Perl script as an example snippet of code, most other
+% languages are also usable. Configure them in the "CODE INCLUSION 
+% CONFIGURATION" section.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass{article}
+
+\usepackage{fancyhdr} % Required for custom headers
+\usepackage{lastpage} % Required to determine the last page for the footer
+\usepackage{extramarks} % Required for headers and footers
+\usepackage[usenames,dvipsnames]{color} % Required for custom colors
+\usepackage{graphicx} % Required to insert images
+\usepackage{listings} % Required for insertion of code
+\usepackage{courier} % Required for the courier font
+\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+\usepackage{url}
+% Margins
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1} % Line spacing
+
+% Set up the header and footer
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName} % Top left header
+\chead{\hmwkClass\ (\hmwkClassInstructor\ \hmwkClassTime): \hmwkTitle} % Top center head
+\rhead{\firstxmark} % Top right header
+\lfoot{\lastxmark} % Bottom left footer
+\cfoot{} % Bottom center footer
+\rfoot{Page\ \thepage\ of\ \protect\pageref{LastPage}} % Bottom right footer
+\renewcommand\headrulewidth{0.4pt} % Size of the header rule
+\renewcommand\footrulewidth{0.4pt} % Size of the footer rule
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs
+
+%----------------------------------------------------------------------------------------
+%	CODE INCLUSION CONFIGURATION
+%----------------------------------------------------------------------------------------
+
+\definecolor{MyDarkGreen}{rgb}{0.0,0.4,0.0} % This is the color used for comments
+\lstloadlanguages{R} % Load Perl syntax for listings, for a list of other languages supported see: ftp://ftp.tex.ac.uk/tex-archive/macros/latex/contrib/listings/listings.pdf
+\lstset{language=R, % Use Perl in this example
+        frame=single, % Single frame around code
+        basicstyle=\small\ttfamily, % Use small true type font
+        keywordstyle=[1]\color{Blue}\bf, % Perl functions bold and blue
+        keywordstyle=[2]\color{Purple}, % Perl function arguments purple
+        keywordstyle=[3]\color{Blue}\underbar, % Custom functions underlined and blue
+        identifierstyle=, % Nothing special about identifiers                                         
+        commentstyle=\usefont{T1}{pcr}{m}{sl}\color{MyDarkGreen}\small, % Comments small dark green courier font
+        stringstyle=\color{Purple}, % Strings are purple
+        showstringspaces=false, % Don't put marks in string spaces
+        tabsize=5, % 5 spaces per tab
+        %
+        % Put standard Perl functions not included in the default language here
+        morekeywords={},
+        %
+        % Put Perl function parameters here
+        morekeywords=[2]{on, off, interp},
+        %
+        % Put user defined functions here
+        morekeywords=[3]{test},
+       	%
+        morecomment=[l][\color{Blue}]{...}, % Line continuation (...) like blue comment
+        numbers=left, % Line numbers on left
+        firstnumber=1, % Line numbers start with line 1
+        numberstyle=\tiny\color{Blue}, % Line numbers are blue and small
+        stepnumber=5 % Line numbers go in steps of 5
+}
+
+% Creates a new command to include a perl script, the first parameter is the filename of the script (without .pl), the second parameter is the caption
+\newcommand{\rscript}[2]{
+\begin{itemize}
+\item[]\lstinputlisting[caption=#2,label=#1]{#1.R}
+\end{itemize}
+}
+
+%----------------------------------------------------------------------------------------
+%	DOCUMENT STRUCTURE COMMANDS
+%	Skip this unless you know what you're doing
+%----------------------------------------------------------------------------------------
+
+% Header and footer for when a page split occurs within a problem environment
+\newcommand{\enterProblemHeader}[1]{
+\nobreak\extramarks{#1}{#1 continued on next page\ldots}\nobreak
+\nobreak\extramarks{#1 (continued)}{#1 continued on next page\ldots}\nobreak
+}
+
+% Header and footer for when a page split occurs between problem environments
+\newcommand{\exitProblemHeader}[1]{
+\nobreak\extramarks{#1 (continued)}{#1 continued on next page\ldots}\nobreak
+\nobreak\extramarks{#1}{}\nobreak
+}
+
+\setcounter{secnumdepth}{0} % Removes default section numbers
+\newcounter{homeworkProblemCounter} % Creates a counter to keep track of the number of problems
+
+\newcommand{\homeworkProblemName}{}
+\newenvironment{homeworkProblem}[1][Problem \arabic{homeworkProblemCounter}]{ % Makes a new environment called homeworkProblem which takes 1 argument (custom name) but the default is "Problem #"
+\stepcounter{homeworkProblemCounter} % Increase counter for number of problems
+\renewcommand{\homeworkProblemName}{#1} % Assign \homeworkProblemName the name of the problem
+\section{\homeworkProblemName} % Make a section in the document with the custom problem count
+\enterProblemHeader{\homeworkProblemName} % Header and footer within the environment
+}{
+\exitProblemHeader{\homeworkProblemName} % Header and footer after the environment
+}
+
+\newcommand{\problemAnswer}[1]{ % Defines the problem answer command with the content as the only argument
+\noindent\framebox[\columnwidth][c]{\begin{minipage}{0.98\columnwidth}#1\end{minipage}} % Makes the box around the problem answer and puts the content inside
+}
+
+\newcommand{\homeworkSectionName}{}
+\newenvironment{homeworkSection}[1]{ % New environment for sections within homework problems, takes 1 argument - the name of the section
+\renewcommand{\homeworkSectionName}{#1} % Assign \homeworkSectionName to the name of the section from the environment argument
+\subsection{\homeworkSectionName} % Make a subsection with the custom name of the subsection
+\enterProblemHeader{\homeworkProblemName\ [\homeworkSectionName]} % Header and footer within the environment
+}{
+\enterProblemHeader{\homeworkProblemName} % Header and footer after the environment
+}
+
+%----------------------------------------------------------------------------------------
+%	NAME AND CLASS SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\hmwkTitle}{Homework\ \#2} % Assignment title
+\newcommand{\hmwkDueDate}{9/6/2017} % Due date
+\newcommand{\hmwkClass}{Applied Datamining} % Course/class
+\newcommand{\hmwkClassTime}{Online} % Class/lecture time
+\newcommand{\hmwkClassInstructor}{Instructor: Hasan Kurban} % Teacher/lecturer
+\newcommand{\hmwkAuthorName}{Keith Hickman} % Your name
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title{
+\vspace{2in}
+\textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+\normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate}\\
+\vspace{0.1in}\large{\textit{\hmwkClassInstructor\ }}
+\vspace{3in}
+}
+
+\author{\textbf{\hmwkAuthorName}}
+\date{\today} % Insert date here if you want it to appear below your name
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\maketitle
+
+%----------------------------------------------------------------------------------------
+%	TABLE OF CONTENTS
+%----------------------------------------------------------------------------------------
+
+%\setcounter{tocdepth}{1} % Uncomment this line if you don't want subsections listed in the ToC
+
+\newpage
+\tableofcontents
+\newpage
+
+%----------------------------------------------------------------------------------------
+%	PROBLEM 1
+%----------------------------------------------------------------------------------------
+
+% To have just one problem per page, simply put a \clearpage after each problem
+
+\begin{homeworkProblem}
+For the following data, give the best taxonomic type (interval, ratio, nominal, ordinal):
+\begin{enumerate}
+\item A section of highway on a map.
+	- Interval
+\item The value of a stock.
+	- Ratio
+\item The weight of a person.
+	- Ratio, as we can be infinitely precise about a person's weight. 
+\item Marital status.
+	- Ordinal.  (One would have to be single before married, married before divorced. Thus there is some implicit ordering among the variable.
+\item Visiting United Airlines (\url{https://www.united.com}) the seating is: Economony, Economy plus, and United Business.
+	- Ordinal.
+\end{enumerate}
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+You are datamining with a column that has physical addresses in some city with the same zipcode.  For example,
+\begin{verbatim}
+
+55 WEST CIR
+2131 South Creek Road
+Apt. #1 Fountain Park
+1114 Rosewood Cir
+1114 Rosewood Ct.
+1114 Rosewood Drive
+
+\end{verbatim}
+
+What structure would you create to mine these?  What questions do you think you should be able to answer?
+A:  It depends on the problem set.  There are several types of problems that might use address data, including crime statistics, general mapping applications 
+real estate sales, or school districting.  I would create different structures for each problem (crime -  time and geolocation; school - assigned schools, ratings; real estate sales - home characteristics and other homes sold information).
+
+\end{homeworkProblem}
+
+
+\begin{homeworkProblem}
+The Wisconsin Breast Cancer data set is very famous. Here is the URL \url{https://archive.ics.uci.edu/ml/datasets/breast+cancer+wisconsin+(original)}.  In the Data Folder are multiple files.  Here is the beginning of an R session that allows us to read this data from the web into our local R session:
+\begin{verbatim}
+> install.packages("data.table")
+> library(data.table)
+> install.packages("curl")
+> mydata <- fread("https://archive.ics.uci.edu/ml/machine-learning-databases/
+                   breast-cancer-wisconsin/breast-cancer-wisconsin.data")
+> head(mydata)
+        V1 V2 V3 V4 V5 V6 V7 V8 V9 V10 V11
+1: 1000025  5  1  1  1  2  1  3  1   1   2
+2: 1002945  5  4  4  5  7 10  3  2   1   2
+3: 1015425  3  1  1  1  2  2  3  1   1   2
+4: 1016277  6  8  8  1  3  4  3  7   1   2
+5: 1017023  4  1  1  3  2  1  3  1   1   2
+6: 1017122  8 10 10  8  7 10  9  7   1   4
+> 
+\end{verbatim}
+\subsection{Discussion of Data}
+Briefly describe this data set--what is its purpose?  How should it be used? What are the kinds of data it's using?
+A: The data is used in various applications, including better prediction and diagnostic models for certain types of breast cancer.  
+The data observations are individual patient visits/dianostic tests, and the dimensions are the values held for different types of diagnostic tests. 
+This data has been used in various supervised/unsupervised machine learning tasks.  
+Data are mostly continuous variables, likely ordinal as the higher or lower values could better explain variance or outcomes. 
+
+\subsection{R Code}
+ Using R, show code that answers the following questions:
+\begin{enumerate} 
+\item How many entries are in the data set? Answer here $\ldots$
+\rscript{sb}{Sample R Script With Highlighting}
+
+\begin{verbatim}
+699 observations
+\end{verbatim}
+
+
+\item How many unknown or missing data are in the data set? Answer here $\ldots$
+\rscript{sb2}{Sample R Script With Highlighting}
+\begin{verbatim}
+There are no missing data.
+\end{verbatim}
+\item How many malignant and benign identifiers are there? Answere here $\ldots$
+\rscript{sb3}{Sample R Script With Highlighting}
+\begin{verbatim}
+There are two identifiers of malignancy in the feature labelled V11.  
+4 = Malignant and 2 = Benign. 
+There are 241 Malignant cases and 458 benign cases. 
+\end{verbatim}
+\item Make a histogram of each attribute and discuss the distribution of values \textit{e.g.}, are uniform, skewed, normal.  Place images of these histograms into the document.   Show the R code that you used below and discussion below that. 
+\rscript{sb4}{Sample R Script With Highlighting}
+
+\subsection{Discussion of Attributes}
+\item Almost all of the data are right-skewed toward lower values of each variable.  I would begin standardizing the features, to control for outliers and attempt to normalize the distribution, and then try square root, log, or reciprocal transformations.  
+
+\subsection{Histograms}
+
+\end{enumerate} 
+\subsection{Discussion of simply removing tuples}
+Quantify the effect of simply removing the tuples with unknown or missing values.  What is the cost in human capital?
+
+In cancer research, removing values with unknown or missing data can be detrimental to the overall outcomes.  When creating a model that is designed to diagnose a potentially fatal disease, 
+the models must be extremely accurate.  The difference between a 99.5 and 99.99 percent accuracy could cost thousands of dollars in unncessary tests, or worse, a missed positive diagnosis. 
+
+\end{homeworkProblem}
+
+%----------------------------------------------------------------------------------------
+
+\end{document}

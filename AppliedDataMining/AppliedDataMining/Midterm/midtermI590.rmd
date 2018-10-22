@@ -1,0 +1,539 @@
+---
+title: "Midterm 1 Applied Data Mining"
+author: "Keith Hickman"
+date: "November 14, 2017"
+output:
+  word_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Problem 1
+```{r}
+## install.packages("data.table")
+library(data.table)
+library(ggplot2)
+mydata <- read.csv("C:/Users/khickman/Desktop/Personal/IUMSDS/AppliedDataMining/Midterm/mydata.csv", sep=",")
+
+summary(mydata)
+str(mydata)
+mydata[100:110,]
+```
+## 1. 
+*How many entries are in the data set?*
+There are 2000 observations of 6 variables. 
+
+##2. 
+*How many unknown or missing data are in the data set?*
+I noticed 8 missing values here, as well as some values as ``?`` which is the same here as NA. Additionally, I've got two of the variables that should be continuous listed as factors. 
+
+Starting with setting the datatypes factors: 
+```{r}
+mydata$V2 <- as.numeric(mydata$V2)
+mydata$V4 <- as.numeric(mydata$V4)
+str(mydata)
+```
+
+Now that the data columns are of the correct type, we can deal with missing or incorrect values. To impute missing or incorrect values, I'll start with examining the distribution of each variable with missing values. Interestingly, this step also looks like it took care of reverting the ``"?"`` to actual values. Not sure why this happened, or whether the values are correct. 
+
+```{r, fig.height=3, fig.width=3}
+plot(density(mydata$V2))
+## plot(density(mydata$V3))
+plot(density(mydata$V4))
+```
+
+I learned that only ``V3`` is non-normal, and that ``V2`` and ``V4`` are almost uniformly distributed and symmetric. I'll use median for replacing missing values of V3.
+
+
+```{r}
+## v3na <- is.na(mydata$V3)
+v3na <- mydata[rowSums(is.na(mydata)) > 0,]
+v3na
+```
+Great - 8 rows of the V3 variable have NA values. I'll also check again for question marks a bit later on. For now, let's impute the missing values. We'll use the mean because the shape of the variable indicates that thus will be a good representation of the values. 
+
+```{r}
+mydata[50, "V3"] <- median(mydata$V3, na.rm = TRUE)
+mydata[70, "V3"] <- median(mydata$V3, na.rm = TRUE)
+mydata[104, "V3"] <- median(mydata$V3, na.rm = TRUE)
+mydata[201, "V3"] <- median(mydata$V3, na.rm = TRUE)
+mydata[301, "V3"] <- median(mydata$V3, na.rm = TRUE)
+mydata[401, "V3"] <- median(mydata$V3, na.rm = TRUE)
+mydata[800, "V3"] <- median(mydata$V3, na.rm = TRUE)
+mydata[900, "V3"] <- median(mydata$V3, na.rm = TRUE)
+
+summary(mydata$V3)
+```
+
+Great - looks like that did the trick. It imputed all values to the same number, however, so that's something that we may have to come back to later on. 
+
+Let's continue with problem 1. 
+
+##3. 
+*Calculate mean and median of variable V2.*
+
+```{r}
+mean(mydata$V2)
+median(mydata$V2)
+```
+
+The values are very close together, especially considering the scale. This looks good for a normally distributed variable. 
+
+## 4. 
+*Find variance, standard deviation and interquartile range of variable V4.*
+```{r}
+var(mydata$V4)
+sd(mydata$V4)
+IQR(mydata$V4)
+
+```
+
+Moving on to the barplot.
+
+```{r, fig.height=3, fig.width=3}
+qplot(mydata$X, bins=3, xlab="X variable", main = "Barplot of X in mydata")
+```
+
+Looks like we have an uneven class distribution between class 1 and 2 in the ``X`` variable. This will likely be a factor in fitting models later on. 
+
+## 5. 
+*Create a bar plot that shows count of data points for classes \1" and \2" (variable 5). Is the data skewed?*
+```{r, fig.height=3, fig.width=6}
+qplot(V1, V2, data=mydata, colour=X)
+qplot(V1, V3, data=mydata, colour=X)
+```
+#Problem 2. 
+
+## 1. 
+*How many principal components explain 90% of the variance?*
+PC1 and PC2 will explain 90% of the variance.  In plot 1 (``V1`` and ``V2``), I get the sense that V1 is going to be a good predictor of class.  There is a clear pattern in both of these plots. From observation alone, some initial rules emerge for assigning target variables based on V1 that will handle a large majority of our cases.  Where the observations have V1 <500, assign to class X=1. Where V1 > 500, assign to class 2. 
+
+In the second plot (``V1`` and ``V3``) it's apparent that both V1 and V3 are well correlated with the class variable. Let's see whether this bears out in the PCA analysis. We'll use the ``prcomp`` function. 
+```{r}
+mydata.pca <- mydata[,1:4]
+summary(mydata.pca)
+princa <- princomp(mydata.pca)
+prca <- prcomp(mydata.pca)
+summary(princa)
+summary(prca)
+print(princa)
+print(prca)
+## loadings(princa)
+## loadings(prca)
+```
+
+##2. Loadings in PCA. 
+*What are loadings in PCA? Observe loadings and express the principal components using the original variables.* 
+Loadings are the breakdown of how the pricinpal component variables were arrived at (e.g. what linear function was used), and what percentage of the variance each one explains. It appears that the first two components explain a 90% of the variance. PC1 was created by the function ``V1 * .673 + V2 * -.516 + V3 * .001 + V4 * -.530.`` Interestingly, the 4th PC in the PCA did not explain any of the variance. I initially didn't understand the difference betweeen ``princomp`` and ``prcomp`` but it appears that the use of ``eigen`` is the main difference, as well as the output. I can't call the ``loadings`` function on the variable transformed with ``prcomp``, as it returns null. 
+
+##3. Scree Plot.
+*Make a scree plot. Discuss the plot, i.e., what is a scree plot? What is the optimal number of dimensions based on the plot?*
+
+Let's look at the scree and line plots: 
+```{r, fig.height=3, fig.width=6}
+screeplot(prca)
+plot(prca,type="l")
+```
+
+If we were concerned with computer performance, we would likely select only the first two variables. Since it doesn't cost of anything, we can select the first three, as the 4th doesn't offer any added benefit. 
+
+
+##4. Scatter plot of PCs
+*Make a scatter plot of PC2 and PC3. Do you observe any relationship? i.e., Calculate the correlation between PC2 and PC3? What does it show?*
+
+The transformed variables are normally distributed, but since the underlying variables are closer to uniform distributions, I will try other correlation methods Spearman and Kendall. 
+
+Examining a scatter plot and correlation coefficient of PC2 and PC3:
+
+```{r, fig.height=5, fig.width=6}
+## hist(prca$x)
+pairs(prca$x[,2:3])
+cor(prca$x, prca$x)
+cor(prca$x, prca$x, method= "kendall")
+cor(prca$x, prca$x, method= "spearman")
+??cor
+
+```
+
+Interesting. There aren't any strong linear correlations in the data, but there are definite clusters present. The correlation matrix shows very small Pearson correlation coefficients. As for the scatter plots, there are two prongs on the left side of the scale, a cluster in the middle, and less dense values of PC2 above 250.  I was also curious about the correlation between PC1 and PC2, which is plotted here:
+
+```{r, fig.height=6, fig.width=5}
+pairs(prca$x[,1:2])
+```
+I found this correlation to be very compelling, and likely better suited to a clustering algorithm we might perform, because the clusters would probably be much clearer, and individual instance values would be easier to classify. However, I don't know whether k-means will perform exceptionally well, as the apparent clusters tend to be oblong and irregularly shaped vs. circular, where k-means performs best. Additionally, we can capture more variance of the original dataset by using PC1 and PC2 as well. What about PC1 and PC3? 
+
+```{r}
+pairs(prca$x[,1:3])
+```
+
+Looks like all three pairs of variables have interesting correlations! PC1 and PC3 align into three or possibly four neat clusters. 
+
+#Problem 3. 
+##1.
+*Randomly sample without replacement 300 data points from kmeans.mydata. (call the sampled data mysample). Cluster mysample with K-means. Include the R code and answer the questions below:*
+
+Code:
+```{r}
+#Creating the vector
+kmeans.mydata <- mydata[,c(1,2)]
+## V1 appears to be an id variable - it just iterates as n+1 for every observation. Should this be included in the k-means? 
+
+kmeans.mydata <- mydata[,c(1,2)]
+kmeans.mydata
+summary(kmeans.mydata)
+
+
+#Creating the sample
+mysample <- sample(nrow(kmeans.mydata),300,replace = FALSE)
+summary(mysample)
+
+km.outHW <- kmeans(mysample,centers=2,nstart=20, algorithm = "Hartigan-Wong")
+km.outLl <- kmeans(mysample,centers=2,nstart=20, algorithm = "Lloyd")
+```
+
+Hartigan-Wong and Lloyd appear to give the same results, paying attention to Within Sum and Between/Total ratio, as well as the areas in the center of the graph where observations might slip from one class to another between algorithms. I'll use the default Hartigan Wong.
+
+##2. 
+*Explain iter:max and algorithm parameters of kmeans function in R and run k-means on mysample data set where nstart = 35 and k = 2. Report total within squares error and within squares error for each cluster.*
+
+```{r}
+set.seed(1234)
+km.out2 <- kmeans(mysample,centers=2,nstart=35)
+km.out2$cluster 
+
+#Total within-cluster sum of squares
+km.out2$tot.withinss
+# within-cluster sum of squares for each cluster
+km.out2$withinss
+km.out2
+## km.out3
+```
+
+The itermax parameter sets the number of iterations the algorithm will perform. The algorithm selects one of at least four different algorithms to use. H The total within squares error and total squares errors are included for both clusters. Within sum of squares error indicates the total distance between each point in a variable and the center point of that variable. The between sum of squares indicates how far the two variables are from each other. 
+
+Total Within SS = 25,101,542
+
+Within SS for each cluster = 13454956 11646587
+
+##3. 
+*Make a plot of data points and color the observation according to the cluster labels obtained.*
+```{r}
+plot(mysample, col=(km.out2$cluster+1), main="K-Means Clustering Results with K=2",
+     xlab="", ylab="", pch=20, cex=2)
+```
+
+##4. 
+Run k-means on mysample data set where nstart = 35 and k = 4. Report total within squares error and within squares error for each cluster.
+
+```{r}
+km.out4 <- kmeans(mysample,centers=4,nstart=35)
+km.out4
+km.out4$tot.withinss
+km.out4$withinss
+```
+
+The Within sum of squares by cluster is as follows: 
+- C1: 1245029
+- C2: 1343345
+- C3: 980807
+- C4: 2702241
+
+Total within squares error is 6,271,425
+
+##5. 
+Make a plot of data points and color the observation according to the cluster labels obtained.
+
+```{r}
+plot(mysample, col=(km.out4$cluster+1), main="K-Means Clustering Results K=4",
+     xlab="", ylab="", pch=20, cex=2)
+```
+##6. 
+Compare (2) and (4).
+With a higher number of clusters, we obviously have a lower total within sum of square error, as there are more centroids, thus a shorter distance and less overall error. There is an interesting function in the text that describes how to determine the optimum number of clusters between two and six: 
+
+```{r}
+library(cluster)
+
+set.seed(1234)
+d <- dist(mydata[,-5])
+avgS <- c()
+
+for(k in 2:6) {
+  cl <- kmeans(mydata[,-5],centers=k,iter.max=200)
+  s <- silhouette(cl$cluster,d)
+  avgS <- c(avgS,mean(s[,3]))
+}
+data.frame(nClus=2:6,Silh=avgS)
+
+```
+
+This appears to indicate that the optimum number of clusters is 3, and it appears that four clusters is slightly better than two clusters in this case. 
+
+#4
+##1. 
+In the listing below, which line number eectively reads the data into an R data.frame?
+
+This is the correct method for reading this data into R: 
+``teach <???? read.table( f i l e ="c:/R/rainfalldataraw.txt", header=TRUE, sep=",")``
+
+```{r}
+teach <- read.table("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\AppliedDataMining\\Midterm\\rainfalldataraw.txt", header = TRUE, sep=",")
+teach
+str(teach)
+```
+
+## 2. 
+Give a select operation on the data.frame that gives the rows whose E variable values are greater than 4, but less than 5.
+
+```{r}
+??subset
+teach.sub <- teach[which(teach$E > 4 & teach$E < 5),]
+teach.sub
+```
+
+##3. 
+Give the code that produces the histogram of variable D.
+```{r}
+hist(teach$D)
+```
+
+##4. 
+How many tuples (or records) are in the data?
+```{r}
+summary(teach)
+```
+
+There are 109 observations of 7 variables. 
+
+##5. 
+*Identify the data that is either missing or likely corrupted: *
+Most of the variables here have at least one missing or corrupted value. ``Seeded, Season, B, C, and D`` all have missing or NA values. 
+
+##6.  
+*Preprocess the data, addressing the problems above and save the file as rainfixed.txt as a .csv file.
+Explain explicitly what you have done in preprocessing this file. *
+
+Since the number of missing values are relatively small, we can either remove the cases with NA, or we can impute the values using a statistic of centrality like mean. We're dealing with two types of variables here as well so we might use two different methods. Examining the distribution of each variable: 
+
+```{r, fig.height=3, fig.width=3}
+hist(teach$D)
+hist(teach$B)
+hist(teach$C)
+```
+
+Since none of the three variables is normally distributed, the median is the preferred imputation statistic. 
+
+```{r}
+na.var <- teach[rowSums(is.na(teach)) > 0,]
+na.var
+
+teach[86, "B"] <- median(teach$B, na.rm = TRUE)
+na.var
+
+teach[92,"D"] <- median(teach$D, na.rm = TRUE)
+na.var
+
+teach[101,"C"] <- median(teach$C, na.rm = TRUE)
+
+na.var
+
+summary(teach)
+```
+
+It appears that all of our unknown numeric variables have been replaced. Now on to the categorical variables. 
+```{r}
+teach$SEEDED
+teach$SEASON
+teach.clean <- teach[-c(31, 107), ]
+summary(teach.clean)
+```
+
+We only eliminated two rows of data where the ``SEEDED`` and ``SEASON`` variables were missing, while imputing values to three other rows using median. 
+
+Now, we can write the resulting matrix to a .csv file. 
+```{r}
+write.csv(teach.clean, file = "rainfixed.txt")
+```
+##7. 
+
+*Using any techniques you've learned, answer this question to a policy maker*...
+I think we can dive in and explore the average rainfall for Seeded and Unseeded areas both as a group and individually. I want to examine this alternative hypothesis first - "there is a difference in rainfall bewteen seeded and unseeded areas" (null is that that there is no difference). 
+
+First, Let's create a new variable that averages the area rainfall for each row Then I can set up my variables Seeded and Unseeded, which is our variable of interest. 
+
+```{r}
+
+teach$avg <- rowMeans(teach[,3:7], na.rm = FALSE, dims = 1)
+teach$avg
+
+seeded <- subset(teach, SEEDED=="S")
+seeded
+unseeded <- subset(teach, SEEDED=="U")
+unseeded
+```
+
+Seeded has 52 observations and Unseeded has 53. This is good, as we have a fair class balance between the two. Let's compare the averages for Seeded A and Unseeded A using a boxplot. 
+
+
+```{r, fig.height=3, fig.width=3}
+boxplot(seeded$avg, unseeded$avg, names=c("Seeded","Unseeded"))
+```
+
+Looks like there's one outlier in the seeded that could be raising the average of all the data for that category. Let's filter it out and continue on. Since all but one of the values in our variables are below 10, we'll set the filter at less than 10. 
+
+```{r}
+seededleq10 <- subset(seeded, avg<10)
+unseededleq10 <- subset(unseeded, avg<10)
+boxplot(seededleq10$avg, unseededleq10$avg, range=0, names=c("Seeded", "Unseeded"))
+```
+
+There appears to be no significant difference in the median rainfall, especially when controlling for outliers, which can greatly skew a statistic of centrality like the mean. Thus, we could not reject the null hypothesis here. I would advise the policy maker that cloud-seeding does not appear to work based on the available data. In fact, unseeded areas seem to have slightly higher rainfall on average. 
+
+We could further explore statistical measures such as Welch's t-test, compare the differences in mean, and create p-values, and actually test the null vs. alternative. We would probably get the same result. 
+
+We could additionally explore and compare average rainfall between areas, between seasons, etc. to find any interesting trends or correlations. I would use k-means, or random forest. 
+
+#Problem 5
+##1. 
+Assume four pieces of data x1 = (.5; 2000;????100); x2 = (:2; 3000;????200); x3 = (4; 4000;????100); x4 = (:14; 4400;????140). You've been hired to datamine this data using Euclidean distance. How would you preprocess this before datamining and explain why. What are the two closest data points?
+
+Let's create the variables:
+
+```{r}
+x1 <- c(.5, 2000, 100)
+x2 <- c(.2, 300, 200)
+x3 <- c(4, 4000, 100)
+x4 <- c(.14, 4400, 140)
+```
+
+If we are comparing our variables, we need them to be on the same scale. Variable ``x3`` is not, with a value or 4 that will make comparison difficult.  The variables need to be combined into a dataframe and normalized first. 
+
+```{r}
+df <- data.frame(x1, x2, x3, x4)
+df
+df.scale <- scale(df)
+df.scale
+```
+
+
+We can now measure the Euclidian Distance between the points. 
+
+``` {r}
+dist(df.scale)
+```
+
+Thus, x1 and x3 are the closest points. We could compare the unscaled matrix as well. 
+
+#Problem 6
+You're given a sample of data: 15,2,44,21,40,20,19,18. Calculate the sample mean and sample variance.
+```{r}
+x <- c(15,2,44,21,40,20,19,18)
+mean(x)
+var(x)
+```
+
+The sample mean is 22.375 and the sample variance is 183.7. 
+
+
+#Problem 7
+Choose all that apply. Which of the following statistical measures can be observed on a box plot?
+
+(c) Median
+(d) Outliers
+(f) Maximum element
+(g) Minimum element
+(h) Variance or covariance (No actual number, but the var or cov is depicted by the distance between the upper and lower whiskers and box edges.)
+
+#Problem 8
+
+Choose all that apply. The most common methods of removing outliers are:
+(a) Removing tuples with missing values.
+(c) Observing the probability of existing values in (?). 
+
+I have used the following techniques in this paper (from the text): 
+
+Remove the cases with unknowns.
+Fill in the unknown values with the most frequent values.
+Fill in the unknown values by exploring the correlations between variables.
+Fill in the unknown values by exploring the similarity between cases.
+
+
+#Problem 9
+Swiss bank data contains various lengths measurements on 200 Swiss bank notes. Load the Swiss bank data
+as follows:
+```{r}
+## install.packages("alr3")
+library("alr3")
+head(banknote)
+```
+
+First, summary exploration. 
+```{r}
+str(banknote)
+```
+We have 200 observations of 7 variables. 6 of the variables are numbers, but Y is listed as an integer. Let's explore Y more thoroughly. 
+
+```{r}
+banknote$Y
+```
+
+It's listed as an integer, but appears to be a factor, and possibly a class indicator. Let's recode the datatype as a factor. My initial hunch is that the Y variable is denoting whether the note is counterfeit or not, as the remaining variables are all measurements of a physical note. 
+
+```{r}
+banknote$Y <- as.factor(banknote$Y)
+str(banknote)
+```
+```{r, fig.height=5, fig.width=5}
+qplot(Left, Right, data=banknote, color=Y)
+qplot(Top, Bottom, data=banknote, color=Y)
+qplot(Diagonal, Length, data=banknote, color=Y)
+```
+
+There's a pretty clear pattern here in the relationship between Length, Diagonal, and Y variables. This pattern looks suitable for k-means clustering.  We could further explore the relationships between the variables, but the plot above shows strong evidence that the Length and Diagonal variables conditioned by ``Y`` will make a decent plot. 
+
+```{r}
+bn3 <- kmeans(banknote[,c(1,6)], centers=3, iter.max=200)
+bn3
+bn3$tot.withinss
+bn3$withinss
+
+table(bn3$cluster, banknote$Y)
+```
+
+We have pretty good performance with three clusters. Only two notes were mis-classified. A Type 1 error is the more egregious error, as we wouldn't want any counterfeit notes to be passed as legitimate notes. Let's experiment with two and four clusters and compare. 
+
+```{r}
+bn2 <- kmeans(banknote[,c(1,6)], centers=2, iter.max=200)
+bn2$tot.withinss
+table(bn2$cluster, banknote$Y)
+
+```
+
+Again, we get decent performance and misclassify only two instances, but our total sum of square errors is higher. Let's look at our 4 clusters and move on after that. 
+
+```{r}
+bn4 <- kmeans(banknote[,c(1,6)], centers=4, iter.max = 200)
+table(bn4$cluster, banknote$Y)
+bn3$tot.withinss
+```
+The lowest Total SS we've seen so far, but we're not getting any increased performance on classifying our two instances. Other methods we could use would involve splitting the data into train and test sets, possibly scaling the data, etc. Neural nets, random forests, etc... might give better results. 
+
+#10. Bonus question
+
+```{r}
+## install.packages("CORElearn")
+library(CORElearn)
+
+LocData <- read.csv("C:\\Users\\khickman\\Desktop\\Personal\\IUMSDS\\AppliedDataMining\\Midterm\\entropy.csv", header = TRUE)
+LocData$User <- as.factor(LocData$User)
+LocData
+
+attrEval(Clicks ~., LocData, estimator = "GainRatio")
+attrEval(Clicks ~., LocData, estimator = "Gini")
+attrEval(Clicks ~., LocData, estimator = "InfGain")
+attrEval(Clicks ~., LocData, estimator = "MDL")
+```
+
+The Information Gain estimator indicates that 91% of the click variable can be explained by the location variable. All four metrics agreed that the location is relatively important. 
