@@ -12,6 +12,9 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r, echo=FALSE}
 library(qicharts2)
 library(qcc)
+library(anytime)
+library(lubridate)
+library(ggplot2)
 ```
 
 Create y = normal random varaible of 24 datapoints with a seed value of 7, then introduce an outlier of 5. 
@@ -27,30 +30,35 @@ qic(y, chart = 'i')
 ```
 
 ```{r}
-data = read.csv("H:\\Datasets\\Cerner\\KPI Downloads\\dailies\\2018\\October\\daily_core_metrics.csv")
+data = read.csv("H:\\Datasets\\Cerner\\KPI Downloads\\hist_data\\CHP_IN-P1558-Metric-Trend-By-Environment_27-Jul-2018%20to%2024-Oct-2018.csv")
 
 head(data)
-ATRT = data["Average.Transaction.Response.Time"]
-ATRT_1 = ATRT[1:30,]
-ATRT_2 = ATRT[31:60,]
-ATRT_3 = ATRT[61:90,]
-ATRT_baseline = ATRT[1:90,]
-head(ATRT)
+#ATRT = data["Time.Period","Average.Transaction.Response.Time"]
+ATRT = data[c(1,9)]
+ATRT = ATRT[1:90,]
+ATRT
 
+ATRT$Time.Period <- (as.Date(ATRT$Time.Period, "%d/%M/%Y"))
+#ATRT$Time.Period <- seq((Sys.Date-90), length.out = 90, by = 'day'))
+
+ATRT$Time.Period
+ATRT
+
+#ATRT_1 = ATRT[1:30,]
+#ATRT_2 = ATRT[31:60,]
+#ATRT_3 = ATRT[61:90,]
+#ATRT_baseline = ATRT
 #length(ATRT_baseline)
-## ATRT_baseline = qcc.groups(ATRT_baseline)
+# ATRT_baseline = qcc.groups(ATRT_baseline)
+#qic(ATRT_baseline, x=ATRT$Time.Period, chart = 'c')
 
-CCAll = qic(ATRT_baseline, chart = 'i')
+dates = ATRT$Time.Period
+y = ATRT$Average.Transaction.Response.Time
 
-CC1 = qic(ATRT_1, chart = 'i') 
-CC2 = qic(ATRT_2, chart = 'i') 
-CC3 = qic(ATRT_3, chart = 'i')
+plot(ATRT$Average.Transaction.Response.Time, type="l")
 
-CC1
-CC2
-CC3
-CCAll
-
+#ggplot2::aes(ATRT$Time.Period,y=ATRT$Average.Transaction.Response.Time)
+ggplot(data=ATRT, aes(y=ATRT$Average.Transaction.Response.Time))
 ```
 
 
@@ -60,7 +68,61 @@ CCAll
 You can also embed plots, for example:
 
 ```{r pressure, echo=FALSE}
-plot(pressure)
+m.beds       <- 300
+m.stay       <- 4
+m.days       <- m.beds * 7
+m.discharges <- m.days / m.stay
+p.pu         <- 0.08
+
+# Simulate data
+discharges  <- rpois(24, lambda = m.discharges)
+patientdays <- round(rnorm(24, mean = m.days, sd = 100))
+n.pu        <- rpois(24, lambda = m.discharges * p.pu * 1.5)
+n.pat.pu    <- rbinom(24, size = discharges, prob = p.pu)
+week        <- seq(as.Date('2014-1-1'),
+                    length.out = 24, 
+                    by         = 'week') 
+
+# Combine data into a data frame
+d <- data.frame(week, discharges, patientdays,n.pu, n.pat.pu)
+d
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+```{r}
+qic(n.pu,
+    x     = week,
+    data  = d,
+    chart = 'c',
+    #main  = 'Hospital acquired pressure ulcers (C chart)',
+    ylab  = 'Count',
+    xlab  = 'Week')
+
+```
+
+```{r}
+
+
+qic(n.pu, 
+    n        = patientdays,
+    x        = week,
+    data     = d,
+    chart    = 'u',
+    multiply = 1000,
+    #main     = 'Hospital acquired pressure ulcers (U chart)',
+    ylab     = 'Count per 1000 patient days',
+    xlab     = 'Week')
+
+```
+
+```{r}
+q1 = qcc(ATRT[30:60,], type="xbar", newdata=ATRT[61:90,])
+```
+
+
+
+
+
+
+
