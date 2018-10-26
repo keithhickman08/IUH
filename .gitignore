@@ -1,9 +1,12 @@
 Datasets/
+
 Job Aides/
+
 Tableau workbooks/
 
 
-*.gz
+*
+.gz
 *.csv
 *_Rhistory
 *.ppt
@@ -13,3 +16,5 @@ Tableau workbooks/
 *.exe
 *.pyd
 
+
+AppliedDataMining/
