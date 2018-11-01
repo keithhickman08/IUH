@@ -12,7 +12,9 @@
 ~h
 # Command Line History (newest to oldest):
 :wq
-|2,0,1540239031,,"wq"
+|2,0,1541008311,,"wq"
+:i
+|2,0,1541008264,,"i"
 
 # Search String History (newest to oldest):
 
@@ -23,20 +25,43 @@
 # Debug Line History (newest to oldest):
 
 # Registers:
+""-	CHAR	0
+	i
+|3,1,36,0,1,0,1541008276,"i"
 
 # File marks:
-'0  6  0  ~/.gitconfig
-|4,48,6,0,1540239031,"~/.gitconfig"
+'0  2  0  ~/info/notes.txt
+|4,48,2,0,1541008311,"~/info/notes.txt"
+'1  6  0  ~/.gitconfig
+|4,49,6,0,1540239031,"~/.gitconfig"
 
 # Jumplist (newest first):
+-'  2  0  ~/info/notes.txt
+|4,39,2,0,1541008311,"~/info/notes.txt"
+-'  1  0  ~/info/notes.txt
+|4,39,1,0,1541008251,"~/info/notes.txt"
+-'  6  0  ~/.gitconfig
+|4,39,6,0,1540239031,"~/.gitconfig"
 -'  6  0  ~/.gitconfig
 |4,39,6,0,1540239031,"~/.gitconfig"
 -'  4  22  ~/.gitconfig
 |4,39,4,22,1540238947,"~/.gitconfig"
+-'  4  22  ~/.gitconfig
+|4,39,4,22,1540238947,"~/.gitconfig"
+-'  1  0  ~/.gitconfig
+|4,39,1,0,1540238896,"~/.gitconfig"
 -'  1  0  ~/.gitconfig
 |4,39,1,0,1540238896,"~/.gitconfig"
 
 # History of marks within files (newest to oldest):
+
+> ~/info/notes.txt
+	*	1541008303	0
+	"	2	0
+	^	2	0
+	.	1	50
+	+	2	0
+	+	1	50
 
 > ~/.gitconfig
 	*	1540239005	0
